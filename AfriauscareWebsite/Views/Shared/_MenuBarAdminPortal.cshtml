@@ -1,0 +1,78 @@
+﻿@if (Session["Email"] == null)
+{
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+        <a>@Html.ActionLink("Admin Portal", "Index", "HomeAdminPortal", null, new { @class = "navbar-brand" })</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a>@Html.ActionLink("Users", "CreateUser", "User", null, new { @class = "nav-link" })</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Gallery</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Bank Info</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <label class="nav-link disabled text-black-50">Welcome :</label>
+                </li>
+                <li class="nav-item">
+                    <label class="nav-link disabled text-black-50">Username</label>
+                </li>
+                <li class="nav-item">
+                    <a>@Html.ActionLink("Logout", "Login", "User", null, new { @class = "nav-link" })</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+}
+else
+{
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+        <a>@Html.ActionLink("Admin Portal", "Index", "HomeAdminPortal", null, new { @class = "navbar-brand" })</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a>@Html.ActionLink("Users", "CreateUser", "User", null, new { @class = "nav-link" })</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Gallery</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Bank Info</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <label class="nav-link disabled text-black-50">Welcome :</label>
+                </li>
+                <li class="nav-item">
+                    <label class="nav-link disabled text-black-50">@Session["Email"]</label>
+                </li>
+                <li class="nav-item">
+                    <a>@Html.ActionLink("Logout", "Login", "User", null, new { @class = "nav-link" })</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+}
+
+
