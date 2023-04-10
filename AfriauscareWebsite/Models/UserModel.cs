@@ -11,17 +11,17 @@ namespace AfriauscareWebsite.Models
     {
         public int UserId { get; set; }
 
-        [DisplayName("First Name :")]
+        [DisplayName("First Name")]
         public string Username { get; set; }
 
-        [DisplayName("Last Name :")]
+        [DisplayName("Last Name")]
         public string UserLastName { get; set;}
 
-        [DisplayName("Email :")]
+        [DisplayName("Email    ")]
         [Required(ErrorMessage ="Email is Required.")]
         public string UserEmail { get; set; }
 
-        [DisplayName("Password :")]
+        [DisplayName("Password")]
         [Required(ErrorMessage ="Password is Required.")]
         [DataType(DataType.Password)]
         public string UserPassword { get; set; }

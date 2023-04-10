@@ -319,6 +319,7 @@
     <Content Include="Views\HomeAdminPortal\Index.cshtml" />
     <Content Include="Views\Shared\_MenuBarAdminPortal.cshtml" />
     <Content Include="Views\User\CreateUser.cshtml" />
+    <Content Include="Views\User\ViewUser.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

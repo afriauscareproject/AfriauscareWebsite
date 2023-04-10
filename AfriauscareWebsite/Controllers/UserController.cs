@@ -80,5 +80,10 @@ namespace AfriauscareWebsite.Controllers
             return View("CreateUser");
                 
         }
+
+        public ActionResult ViewUser()
+        {
+            return View(objDatabaseEntities.Users.ToList());
+        }
     }
 }

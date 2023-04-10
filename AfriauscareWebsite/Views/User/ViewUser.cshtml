@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AfriauscareWebsite.App_Data.User>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title View Users</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @Html.Partial("_MenuBarAdminPortal")
+    <div class="container">
+        <br />
+        <h2>Users</h2>
+        <br />
+        <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CreateUser", "User")'">Create User</button>
+        <br />
+        <br />
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Is Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserLastName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserActive)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
