@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AfriauscareWebsite.App_Data;
-using AfriauscareWebsite.Models;
+using Afriauscare.BusinessLayer;
+using Afriauscare.DataBaseLayer;
 
 namespace AfriauscareWebsite.Controllers
 {
     public class UserController : Controller
     {
-        AfriAusEntities objDatabaseEntities = new AfriAusEntities();
         // GET: User
         public ActionResult Login()
         {
@@ -21,9 +20,11 @@ namespace AfriauscareWebsite.Controllers
         [HttpPost]
         public ActionResult Login(UserModel objUserModel)
         {
+            UserDAO objUserDao = new UserDAO();
+
             if(ModelState.IsValid)
             {
-                if(objDatabaseEntities.Users.Where(m => m.UserEmail == objUserModel.UserEmail && m.UserPassword == objUserModel.UserPassword).FirstOrDefault() == null)
+                if(objUserDao.getUserbyUserandPassword(objUserModel) == null)
                 {
                     ModelState.AddModelError("Error","The user email and password does not match or do not exists.");
                     return View();
@@ -57,17 +58,8 @@ namespace AfriauscareWebsite.Controllers
         {
             if(ModelState.IsValid)
             {
-                User objUserEntity = new User
-                {
-                    Username = objUserModel.Username,
-                    UserLastName = objUserModel.UserLastName,
-                    UserEmail = objUserModel.UserEmail,
-                    UserPassword = objUserModel.UserPassword,
-                    UserActive = objUserModel.UserActive
-                };
-
-                objDatabaseEntities.Users.Add(objUserEntity);
-                objDatabaseEntities.SaveChanges();
+                UserDAO objUserDAO = new UserDAO();
+                objUserDAO.CreateUser(objUserModel);
 
                 objUserModel.Username = string.Empty;
                 objUserModel.UserLastName = string.Empty;
@@ -83,7 +75,8 @@ namespace AfriauscareWebsite.Controllers
 
         public ActionResult ViewUser()
         {
-            return View(objDatabaseEntities.Users.ToList());
+            UserDAO objUserDAO = new UserDAO();
+            return View(objUserDAO.getUsersAll());
         }
     }
 }

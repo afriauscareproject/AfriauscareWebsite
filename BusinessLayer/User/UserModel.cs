@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace AfriauscareWebsite.Models
+namespace Afriauscare.BusinessLayer
 {
     public class UserModel
     {
