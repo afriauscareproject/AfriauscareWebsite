@@ -30,6 +30,7 @@
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Is Active</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +41,9 @@
                         <td>@Html.DisplayFor(modelItem => item.UserLastName)</td>
                         <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
                         <td>@Html.DisplayFor(modelItem => item.UserActive)</td>
+                        <td>
+                            @Html.ActionLink("Edit","ModifyUser", new { Id = item.UserId})
+                        </td>
                     </tr>
                 }
             </tbody>

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Afriauscare.BusinessLayer
+namespace Afriauscare.BusinessLayer.User
 {
     public class UserModel
     {
@@ -27,7 +27,7 @@ namespace Afriauscare.BusinessLayer
         public string UserPassword { get; set; }
 
         [DisplayName("User Active?")]
-        public Boolean UserActive { get; set; }
+        public bool UserActive { get; set; }
 
         public string message { get; set; }
     }

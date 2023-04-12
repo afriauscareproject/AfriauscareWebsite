@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Afriauscare.BusinessLayer;
+using Afriauscare.BusinessLayer.User;
 using Afriauscare.DataBaseLayer;
 
 namespace AfriauscareWebsite.Controllers
@@ -22,11 +22,11 @@ namespace AfriauscareWebsite.Controllers
         {
             UserDAO objUserDao = new UserDAO();
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                if(objUserDao.getUserbyUserandPassword(objUserModel) == null)
+                if (objUserDao.getUserbyUserandPassword(objUserModel) == null)
                 {
-                    ModelState.AddModelError("Error","The user email and password does not match or do not exists.");
+                    ModelState.AddModelError("Error", "The user email and password does not match or do not exists.");
                     return View();
                 }
                 else
@@ -56,7 +56,7 @@ namespace AfriauscareWebsite.Controllers
         [HttpPost]
         public ActionResult CreateUser(UserModel objUserModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 UserDAO objUserDAO = new UserDAO();
                 objUserDAO.CreateUser(objUserModel);
@@ -70,13 +70,38 @@ namespace AfriauscareWebsite.Controllers
                 return View(objUserModel);
             }
             return View("CreateUser");
-                
+
         }
 
         public ActionResult ViewUser()
         {
             UserDAO objUserDAO = new UserDAO();
-            return View(objUserDAO.getUsersAll());
+            var list = objUserDAO.getUsersAll();
+
+            return View(list);
+        }
+
+        [HttpGet]
+        public ActionResult ModifyUser(int Id)
+        {
+            UserDAO objUserDAO = new UserDAO();
+
+            var objUserModel = objUserDAO.getUserbyUserId(Id);
+            return View(objUserModel);
+        }
+
+        [HttpPost]
+        public ActionResult ModifyUser(User objUser)
+        {
+            UserDAO objUserDAO = new UserDAO();
+
+            if (ModelState.IsValid)
+            {
+                objUserDAO.ModifyUser(objUser);
+            }
+
+            var list = objUserDAO.getUsersAll();
+            return View("ViewUser", list);
         }
     }
 }

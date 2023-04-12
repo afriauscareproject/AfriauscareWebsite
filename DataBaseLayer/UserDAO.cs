@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Afriauscare.BusinessLayer;
+using Afriauscare.BusinessLayer.User;
 
 namespace Afriauscare.DataBaseLayer
 {
@@ -42,14 +42,32 @@ namespace Afriauscare.DataBaseLayer
 
         public List<User> getUsersAll()
         {
-            List<User> userList = new List<User>();
+            using (var DataBase = new AfriAusEntities())
+            {
+                return DataBase.Users.ToList();
+            }
+        }
+
+        public User getUserbyUserId(int userId)
+        {
+            var user = new User();
 
             using (var DataBase = new AfriAusEntities())
             {
-                userList = DataBase.Users.ToList();
+                user = DataBase.Users.Where(u => u.UserId == userId).FirstOrDefault();
             }
 
-            return userList;
+            return user;
+        }
+
+        public void ModifyUser (User objUser)
+        {
+            using(var DataBase = new AfriAusEntities())
+            {
+                DataBase.Users.Add(objUser);
+                DataBase.Entry(objUser).State = System.Data.EntityState.Modified;
+                DataBase.SaveChanges();
+            }
         }
     }
 }
