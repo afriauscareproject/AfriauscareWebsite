@@ -143,6 +143,11 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\carousel.css" />
+    <Content Include="Content\Images\AAC_Logo_white.png" />
+    <Content Include="Content\Images\ack.png" />
+    <Content Include="Content\Images\ack2.png" />
+    <Content Include="Content\Images\logo25-new.png" />
     <Content Include="Content\Images\PHOTO-2021-01-15-12-45-09.jpg" />
     <Content Include="Content\Images\PHOTO-2021-03-07-22-08-15.jpg" />
     <Content Include="Content\Images\PHOTO-2021-03-07-22-08-41.jpg" />
@@ -173,6 +178,8 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Scripts\holder.min.js.download" />
+    <Content Include="Scripts\jquery-3.2.1.slim.min.js.download" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -285,6 +292,7 @@
     <Content Include="Views\User\CreateUser.cshtml" />
     <Content Include="Views\User\ViewUser.cshtml" />
     <Content Include="Views\User\ModifyUser.cshtml" />
+    <Content Include="Scripts\popper.min.js.download" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\Afriauscare.BusinessLayer.csproj">
