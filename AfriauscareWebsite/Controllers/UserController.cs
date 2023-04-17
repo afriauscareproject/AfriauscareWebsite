@@ -103,5 +103,28 @@ namespace AfriauscareWebsite.Controllers
             var list = objUserDAO.getUsersAll();
             return View("ViewUser", list);
         }
+
+        [HttpGet]
+        public ActionResult DisableUser(int Id)
+        {
+            UserDAO objUserDAO = new UserDAO();
+
+            var objUserModel = objUserDAO.getUserbyUserId(Id);
+            return View(objUserModel);
+        }
+
+        [HttpPost]
+        public ActionResult DisableUser(User objUser)
+        {
+            UserDAO objUserDAO = new UserDAO();
+
+            if (ModelState.IsValid)
+            {
+                objUserDAO.DisableUser(objUser.UserId);
+            }
+
+            var list = objUserDAO.getUsersAll();
+            return View("ViewUser", list);
+        }
     }
 }

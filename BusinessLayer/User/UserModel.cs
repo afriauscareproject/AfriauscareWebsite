@@ -27,7 +27,7 @@ namespace Afriauscare.BusinessLayer.User
         public string UserPassword { get; set; }
 
         [DisplayName("User Active?")]
-        public bool UserActive { get; set; }
+        public Nullable<bool> UserActive { get; set; }
 
         public string message { get; set; }
     }

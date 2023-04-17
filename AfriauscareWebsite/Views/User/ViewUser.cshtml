@@ -36,15 +36,16 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Username)</td>
-                        <td>@Html.DisplayFor(modelItem => item.UserLastName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
-                        <td>@Html.DisplayFor(modelItem => item.UserActive)</td>
-                        <td>
-                            @Html.ActionLink("Edit","ModifyUser", new { Id = item.UserId})
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserLastName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
+                    <td>@Html.CheckBox(nameof(item.UserActive),item.UserActive ?? false, new { @class = "form-check-input", @disabled ="disabled" })</td>
+                    <td>
+                        @Html.ActionLink("Edit", "ModifyUser", new { Id = item.UserId })
+                        @Html.ActionLink("Disable", "DisableUser", new { Id = item.UserId })
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

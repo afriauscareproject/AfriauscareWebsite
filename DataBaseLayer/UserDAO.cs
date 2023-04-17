@@ -34,7 +34,7 @@ namespace Afriauscare.DataBaseLayer
 
             using (var DataBase = new AfriAusEntities())
             {
-                user = DataBase.Users.FirstOrDefault(u => u.UserEmail == objUserModel.UserEmail && u.UserPassword == objUserModel.UserPassword);
+                user = DataBase.Users.FirstOrDefault(u => u.UserEmail == objUserModel.UserEmail && u.UserPassword == objUserModel.UserPassword && u.UserActive == true);
             }
 
             return user;
@@ -54,7 +54,7 @@ namespace Afriauscare.DataBaseLayer
 
             using (var DataBase = new AfriAusEntities())
             {
-                user = DataBase.Users.Where(u => u.UserId == userId).FirstOrDefault();
+                user = DataBase.Users.Where(u => u.UserId == userId && u.UserActive == true).FirstOrDefault();
             }
 
             return user;
@@ -66,6 +66,19 @@ namespace Afriauscare.DataBaseLayer
             {
                 DataBase.Users.Add(objUser);
                 DataBase.Entry(objUser).State = System.Data.EntityState.Modified;
+                DataBase.SaveChanges();
+            }
+        }
+
+        public void DisableUser (int id)
+        {
+            using (var DataBase = new AfriAusEntities())
+            {
+                User objUser = (from u in DataBase.Users
+                                where u.UserId == id
+                                select u).SingleOrDefault();
+
+                objUser.UserActive = false;
                 DataBase.SaveChanges();
             }
         }

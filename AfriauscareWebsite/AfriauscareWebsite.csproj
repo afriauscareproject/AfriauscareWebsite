@@ -293,6 +293,7 @@
     <Content Include="Views\User\ViewUser.cshtml" />
     <Content Include="Views\User\ModifyUser.cshtml" />
     <Content Include="Scripts\popper.min.js.download" />
+    <Content Include="Views\User\DisableUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\Afriauscare.BusinessLayer.csproj">
