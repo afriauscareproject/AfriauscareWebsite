@@ -11,8 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title View Users</title>
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/bootstrap")
-    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
 </head>
 <body>
     @Html.Partial("_MenuBarAdminPortal")
@@ -42,13 +42,72 @@
                     <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
                     <td>@Html.CheckBox(nameof(item.UserActive),item.UserActive ?? false, new { @class = "form-check-input", @disabled ="disabled" })</td>
                     <td>
-                        @Html.ActionLink("Edit", "ModifyUser", new { Id = item.UserId })
-                        @Html.ActionLink("Disable", "DisableUser", new { Id = item.UserId })
+                        @Html.ActionLink("Edit", "ModifyUser",new { Id = item.UserId }, new { @class = "btn btn-info"})
+                        <a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.UserId)">Disable</a>
                     </td>
                 </tr>
                 }
             </tbody>
         </table>
+        <input type="hidden" id="UserIdHidden"/>
     </div>
+
+    <div class="modal fade" id="deleteUserModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete User Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to disable the user?</p>
+                    <p id="userNameDisplay"></p>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <a href="#" id="btnConfirmDeleteUser" class="btn btn-info mr-2">Deactivate User</a>
+                        <a href="#" id="btnCancelDeleteUserModal" class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#btnConfirmDeleteUser").click(function () {
+
+            })
+
+            $("#btnCancelDeleteUserModal").click(function () {
+                window.location.href = "/User/ViewUser";
+            })
+
+            //Function which is called when confirming disable a user - Jquery function added to the modal button
+            $("#btnConfirmDeleteUser").click(function () {
+                var _id = $("#UserIdHidden").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/User/DisableUserJson",
+                    data: { UserId: _id },
+                    success: function (result) {
+                        if (result) {
+                            $("#deleteUserModal").modal('hide');
+                            $("#UserIdHidden").val(null);
+                            window.location.href = "/User/ViewUser";
+                        }
+                        else {
+                            alert("The operation did not complete");
+                        }
+                    }
+                });
+            })
+        })
+
+        var Confirm = function (UserId) {
+            $("#UserIdHidden").val(UserId);
+            $("#deleteUserModal").modal('show');
+        }
+    </script>
 </body>
 </html>

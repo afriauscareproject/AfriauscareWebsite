@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Afriauscare.BusinessLayer.User;
+using Afriauscare.BusinessLayer.Error;
 using Afriauscare.DataBaseLayer;
 
 namespace AfriauscareWebsite.Controllers
@@ -22,19 +23,28 @@ namespace AfriauscareWebsite.Controllers
         {
             UserDAO objUserDao = new UserDAO();
 
-            if (ModelState.IsValid)
+            try
             {
-                if (objUserDao.getUserbyUserandPassword(objUserModel) == null)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("Error", "The user email and password does not match or do not exists.");
-                    return View();
-                }
-                else
-                {
-                    Session["Email"] = objUserModel.UserEmail;
-                    return RedirectToAction("Index", "HomeAdminPortal");
-                }
+                    if (objUserDao.getUserbyUserandPassword(objUserModel) == null)
+                    {
+                        ModelState.AddModelError("Error", "The user email and password does not match or do not exists.");
+                        return View();
+                    }
+                    else
+                    {
+                        Session["Email"] = objUserModel.UserEmail;
+                        return RedirectToAction("Index", "HomeAdminPortal");
+                    }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
             }
 
             return View();
@@ -56,19 +66,33 @@ namespace AfriauscareWebsite.Controllers
         [HttpPost]
         public ActionResult CreateUser(UserModel objUserModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                UserDAO objUserDAO = new UserDAO();
-                objUserDAO.CreateUser(objUserModel);
+                if (ModelState.IsValid)
+                {
+                    UserDAO objUserDAO = new UserDAO();
+                    objUserDAO.CreateUser(objUserModel);
 
-                objUserModel.Username = string.Empty;
-                objUserModel.UserLastName = string.Empty;
-                objUserModel.UserEmail = string.Empty;
-                objUserModel.UserPassword = string.Empty;
-                objUserModel.UserActive = false;
-                objUserModel.message = "User added successfully!";
-                return View(objUserModel);
+                    ModelState.Clear();
+                    UserModel objEmptyUserModel = new UserModel()
+                    {
+                        Username = string.Empty,
+                        UserLastName = string.Empty,
+                        UserEmail = string.Empty,
+                        UserPassword = string.Empty,
+                        UserActive = false
+                    };
+                    TempData["UserAlertMessage"] = "User Created Successfully...";
+                    return View("CreateUser", objEmptyUserModel);
+                }
             }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
             return View("CreateUser");
 
         }
@@ -76,9 +100,18 @@ namespace AfriauscareWebsite.Controllers
         public ActionResult ViewUser()
         {
             UserDAO objUserDAO = new UserDAO();
-            var list = objUserDAO.getUsersAll();
 
-            return View(list);
+            try
+            {
+                var userList = objUserDAO.getUsersAll();
+                return View(userList);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
         }
 
         [HttpGet]
@@ -87,6 +120,7 @@ namespace AfriauscareWebsite.Controllers
             UserDAO objUserDAO = new UserDAO();
 
             var objUserModel = objUserDAO.getUserbyUserId(Id);
+
             return View(objUserModel);
         }
 
@@ -100,8 +134,7 @@ namespace AfriauscareWebsite.Controllers
                 objUserDAO.ModifyUser(objUser);
             }
 
-            var list = objUserDAO.getUsersAll();
-            return View("ViewUser", list);
+            return RedirectToAction("ViewUser", "User");
         }
 
         [HttpGet]
@@ -114,17 +147,22 @@ namespace AfriauscareWebsite.Controllers
         }
 
         [HttpPost]
-        public ActionResult DisableUser(User objUser)
+        public JsonResult DisableUserJson(int UserId)
         {
+            bool result = false;
             UserDAO objUserDAO = new UserDAO();
-
-            if (ModelState.IsValid)
+            try
             {
-                objUserDAO.DisableUser(objUser.UserId);
-            }
+                objUserDAO.DisableUser(UserId);
+                result = true;
 
-            var list = objUserDAO.getUsersAll();
-            return View("ViewUser", list);
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            
         }
     }
 }

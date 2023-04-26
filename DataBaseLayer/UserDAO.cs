@@ -48,13 +48,25 @@ namespace Afriauscare.DataBaseLayer
             }
         }
 
-        public User getUserbyUserId(int userId)
+        public User getUserbyUserIdActiveUser(int userId)
         {
             var user = new User();
 
             using (var DataBase = new AfriAusEntities())
             {
                 user = DataBase.Users.Where(u => u.UserId == userId && u.UserActive == true).FirstOrDefault();
+            }
+
+            return user;
+        }
+
+        public User getUserbyUserId(int userId)
+        {
+            var user = new User();
+
+            using (var DataBase = new AfriAusEntities())
+            {
+                user = DataBase.Users.Where(u => u.UserId == userId).FirstOrDefault();
             }
 
             return user;
