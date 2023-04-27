@@ -7,8 +7,8 @@
 
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">*@
     <title>@ViewBag.Title Login Page</title>
     @Styles.Render("~/Content/css")
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
@@ -19,53 +19,65 @@
 <body>
     @Html.Partial("_MenuBarAdminPortal")
     <div class="container">
-        @if (TempData["UserAlertMessage"] != null)
+        @using (Html.BeginForm("CreateUser", "User", FormMethod.Post))
         {
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Success!</strong> @TempData["UserAlertMessage"]
-        </div>
-        }
+        <div class="mx-auto col-12 col-md-10 col-lg-6">
+            <h2>Create User</h2>
+            <br />
+            @if (TempData["UserAlertMessage"] != null)
+            {
+                <div id="CreateUserAlert" class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Success!</strong> @TempData["UserAlertMessage"]
+                </div>
+            }
 
-        @using (Html.BeginForm("CreateUser", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            <div class="mx-auto col-12 col-md-10 col-lg-6">
-                <h2>Create User</h2>
-                <br />
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Username, new { @class = "" })
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Username)
                     @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Username, null, new { @class = "text text-danger" })
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.UserLastName, new { @class = "col-form-label" })
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.UserLastName)
                     @Html.TextBoxFor(model => model.UserLastName, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.UserLastName, null, new { @class = "text text-danger" })
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.UserEmail, new { @class = "col-form-label" })
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.UserEmail)
                     @Html.TextBoxFor(model => model.UserEmail, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.UserEmail, null, new { @class = "text text-danger" })
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.UserPassword, new { @class = "col-form-label" })
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.UserPassword)
                     @Html.PasswordFor(model => model.UserPassword, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.UserPassword, null, new { @class = "text text-danger" })
                 </div>
-                <div class="form-check">
-                    @Html.CheckBoxFor(model => model.UserActive, new { @class = "form-check-input" })
-                    @Html.LabelFor(model => model.UserActive, new { @class = "form-check-label" })
-                    @Html.ValidationMessageFor(model => model.UserActive, null, new { @class = "text text-danger" })
-                </div>
-                <div class="form-group">
-                    @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "HomeAdminPortal")'">Create User</button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewUser", "User")'">Back</button>
-                </div>
             </div>
+            <div class="form-check">
+                @Html.CheckBoxFor(model => model.UserActive, new { @class = "form-check-input" })
+                @Html.LabelFor(model => model.UserActive, new { @class = "form-check-label" })
+                @Html.ValidationMessageFor(model => model.UserActive, null, new { @class = "text text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "HomeAdminPortal")'">Create User</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewUser", "User")'">Back</button>
+            </div>
+        </div>
         }
     </div>
+
+    <script type="text/javascript">
+        setTimeout(function () {
+
+            // Closing the alert message once the user is created
+            $('#CreateUserAlert').alert('close');
+        }, 5300);
+    </script>
 </body>
 </html>
