@@ -7,8 +7,8 @@
 
 <html>
 <head>
-    @*<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">*@
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title Login Page</title>
     @Styles.Render("~/Content/css")
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
@@ -65,7 +65,7 @@
                 @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "HomeAdminPortal")'">Create User</button>
+                <button type="submit" class="btn btn-primary">Create User</button>
                 <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewUser", "User")'">Back</button>
             </div>
         </div>

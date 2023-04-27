@@ -26,5 +26,7 @@ namespace Afriauscare.DataBaseLayer
         }
     
         public DbSet<User> Users { get; set; }
+        public DbSet<Gallery> Galleries { get; set; }
+        public DbSet<GalleryContent> GalleryContents { get; set; }
     }
 }

@@ -63,6 +63,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AfriAuscareDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Gallery.cs">
+      <DependentUpon>AfriAuscareDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GalleryContent.cs">
+      <DependentUpon>AfriAuscareDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GalleryDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs">
       <DependentUpon>AfriAuscareDataModel.tt</DependentUpon>

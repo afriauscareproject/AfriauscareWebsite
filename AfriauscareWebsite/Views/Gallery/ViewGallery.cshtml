@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Afriauscare.BusinessLayer.Gallery.GalleryModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewGallery</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Content/css")
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</head>
+<body>
+    @Html.Partial("_MenuBarAdminPortal")
+
+    <div class="container">
+        <br />
+        <h2>Gallery Administration</h2>
+        <br />
+        <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CreateGallery", "Gallery")'">Create Gallery</button>
+        <br />
+        <br />
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.GalleryId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.GalleryTitle)</td>
+                        <td>@Html.DisplayFor(modelItem => item.GalleryDescription)</td>
+                        <td>
+                            @Html.ActionLink("Edit", "ModifyUser", new { Id = item.GalleryId }, new { @class = "btn btn-info" })
+                            <a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.GalleryId)">Disable</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <input type="hidden" id="GalleryIdHidden" />
+    </div>
+</body>
+</html>
