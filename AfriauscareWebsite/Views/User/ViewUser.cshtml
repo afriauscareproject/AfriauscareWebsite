@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Afriauscare.DataBaseLayer.User>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title View Users</title>
+    @Styles.Render("~/Content/css")
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</head>
+<body>
+    @Html.Partial("_MenuBarAdminPortal")
+    <div class="container">
+        <br />
+        <h2>Users</h2>
+        <br />
+        <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CreateUser", "User")'">Create User</button>
+        <br />
+        <br />
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Is Active</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserLastName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
+                    <td>@Html.CheckBox(nameof(item.UserActive),item.UserActive ?? false, new { @class = "form-check-input", @disabled ="disabled" })</td>
+                    <td>
+                        @Html.ActionLink("Edit", "ModifyUser",new { Id = item.UserId }, new { @class = "btn btn-info"})
+                        <a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.UserId)">Disable</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <input type="hidden" id="UserIdHidden"/>
+    </div>
+
+    <div class="modal fade" id="deleteUserModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Disable User Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to disable the user?</p>
+                    <p id="userNameDisplay"></p>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <a href="#" id="btnConfirmDeleteUser" class="btn btn-info mr-2">Deactivate User</a>
+                        <a href="#" id="btnCancelDeleteUserModal" class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btnCancelDeleteUserModal").click(function () {
+                window.location.href = "/User/ViewUser";
+            })
+
+            //Function which is called when confirming disable a user - Jquery function added to the modal button
+            $("#btnConfirmDeleteUser").click(function () {
+                var _id = $("#UserIdHidden").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/User/DisableUserJson",
+                    data: { UserId: _id },
+                    success: function (result) {
+                        if (result) {
+                            $("#deleteUserModal").modal('hide');
+                            $("#UserIdHidden").val(null);
+                            window.location.href = "/User/ViewUser";
+                        }
+                        else {
+                            alert("The operation did not complete");
+                        }
+                    }
+                });
+            })
+        })
+
+        var Confirm = function (UserId) {
+            $("#UserIdHidden").val(UserId);
+            $("#deleteUserModal").modal('show');
+        }
+    </script>
+</body>
+</html>

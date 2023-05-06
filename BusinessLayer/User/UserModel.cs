@@ -5,29 +5,29 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace AfriauscareWebsite.Models
+namespace Afriauscare.BusinessLayer.User
 {
     public class UserModel
     {
         public int UserId { get; set; }
 
-        [DisplayName("First Name :")]
+        [DisplayName("First Name")]
         public string Username { get; set; }
 
-        [DisplayName("Last Name :")]
+        [DisplayName("Last Name")]
         public string UserLastName { get; set;}
 
-        [DisplayName("Email :")]
+        [DisplayName("Email    ")]
         [Required(ErrorMessage ="Email is Required.")]
         public string UserEmail { get; set; }
 
-        [DisplayName("Password :")]
+        [DisplayName("Password")]
         [Required(ErrorMessage ="Password is Required.")]
         [DataType(DataType.Password)]
         public string UserPassword { get; set; }
 
         [DisplayName("User Active?")]
-        public Boolean UserActive { get; set; }
+        public bool UserActive { get; set; }
 
         public string message { get; set; }
     }

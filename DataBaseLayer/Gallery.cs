@@ -7,18 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AfriauscareWebsite.App_Data
+namespace Afriauscare.DataBaseLayer
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Gallery
     {
-        public int UserId { get; set; }
-        public string Username { get; set; }
-        public string UserLastName { get; set; }
-        public string UserEmail { get; set; }
-        public string UserPassword { get; set; }
-        public Nullable<bool> UserActive { get; set; }
+        public Gallery()
+        {
+            this.GalleryContents = new HashSet<GalleryContent>();
+        }
+    
+        public int GalleryId { get; set; }
+        public string GalleryTitle { get; set; }
+        public string GalleryDescription { get; set; }
+    
+        public virtual ICollection<GalleryContent> GalleryContents { get; set; }
     }
 }

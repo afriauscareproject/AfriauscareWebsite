@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.33423.255
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AfriauscareWebsite", "AfriauscareWebsite\AfriauscareWebsite.csproj", "{AFBB195D-9A84-4BA5-82B3-75610257C283}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Afriauscare.BusinessLayer", "BusinessLayer\Afriauscare.BusinessLayer.csproj", "{6F745DB0-C1D3-4230-A370-DECA545B135E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Afriauscare.DataBaseLayer", "DataBaseLayer\Afriauscare.DataBaseLayer.csproj", "{98C468B7-112B-45AC-BC5F-0266237837E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{AFBB195D-9A84-4BA5-82B3-75610257C283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFBB195D-9A84-4BA5-82B3-75610257C283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFBB195D-9A84-4BA5-82B3-75610257C283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F745DB0-C1D3-4230-A370-DECA545B135E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F745DB0-C1D3-4230-A370-DECA545B135E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F745DB0-C1D3-4230-A370-DECA545B135E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F745DB0-C1D3-4230-A370-DECA545B135E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98C468B7-112B-45AC-BC5F-0266237837E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98C468B7-112B-45AC-BC5F-0266237837E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98C468B7-112B-45AC-BC5F-0266237837E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98C468B7-112B-45AC-BC5F-0266237837E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

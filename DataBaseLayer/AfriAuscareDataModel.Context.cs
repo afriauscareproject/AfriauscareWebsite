@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AfriauscareWebsite.App_Data
+namespace Afriauscare.DataBaseLayer
 {
     using System;
     using System.Data.Entity;
@@ -26,5 +26,7 @@ namespace AfriauscareWebsite.App_Data
         }
     
         public DbSet<User> Users { get; set; }
+        public DbSet<Gallery> Galleries { get; set; }
+        public DbSet<GalleryContent> GalleryContents { get; set; }
     }
 }

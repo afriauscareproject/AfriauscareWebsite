@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AfriauscareWebsite.App_Data;
-using AfriauscareWebsite.Models;
+using Afriauscare.BusinessLayer.User;
+using Afriauscare.BusinessLayer.Error;
+using Afriauscare.DataBaseLayer;
 
 namespace AfriauscareWebsite.Controllers
 {
     public class UserController : Controller
     {
-        AfriAusEntities objDatabaseEntities = new AfriAusEntities();
         // GET: User
         public ActionResult Login()
         {
@@ -21,19 +21,30 @@ namespace AfriauscareWebsite.Controllers
         [HttpPost]
         public ActionResult Login(UserModel objUserModel)
         {
-            if(ModelState.IsValid)
-            {
-                if(objDatabaseEntities.Users.Where(m => m.UserEmail == objUserModel.UserEmail && m.UserPassword == objUserModel.UserPassword).FirstOrDefault() == null)
-                {
-                    ModelState.AddModelError("Error","The user email and password does not match or do not exists.");
-                    return View();
-                }
-                else
-                {
-                    Session["Email"] = objUserModel.UserEmail;
-                    return RedirectToAction("Index", "HomeAdminPortal");
-                }
+            UserDAO objUserDao = new UserDAO();
 
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (objUserDao.getUserbyUserandPassword(objUserModel) == null)
+                    {
+                        ModelState.AddModelError("Error", "The user email and password does not match or do not exists.");
+                        return View();
+                    }
+                    else
+                    {
+                        Session["Email"] = objUserModel.UserEmail;
+                        return RedirectToAction("Index", "HomeAdminPortal");
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
             }
 
             return View();
@@ -55,30 +66,103 @@ namespace AfriauscareWebsite.Controllers
         [HttpPost]
         public ActionResult CreateUser(UserModel objUserModel)
         {
-            if(ModelState.IsValid)
+            try
             {
-                User objUserEntity = new User
+                if (ModelState.IsValid)
                 {
-                    Username = objUserModel.Username,
-                    UserLastName = objUserModel.UserLastName,
-                    UserEmail = objUserModel.UserEmail,
-                    UserPassword = objUserModel.UserPassword,
-                    UserActive = objUserModel.UserActive
-                };
+                    UserDAO objUserDAO = new UserDAO();
+                    objUserDAO.CreateUser(objUserModel);
 
-                objDatabaseEntities.Users.Add(objUserEntity);
-                objDatabaseEntities.SaveChanges();
-
-                objUserModel.Username = string.Empty;
-                objUserModel.UserLastName = string.Empty;
-                objUserModel.UserEmail = string.Empty;
-                objUserModel.UserPassword = string.Empty;
-                objUserModel.UserActive = false;
-                objUserModel.message = "User added successfully!";
-                return View(objUserModel);
+                    ModelState.Clear();
+                    UserModel objEmptyUserModel = new UserModel()
+                    {
+                        Username = string.Empty,
+                        UserLastName = string.Empty,
+                        UserEmail = string.Empty,
+                        UserPassword = string.Empty,
+                        UserActive = false
+                    };
+                    TempData["UserAlertMessage"] = "User Created Successfully...";
+                    return View("CreateUser", objEmptyUserModel);
+                }
             }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
             return View("CreateUser");
-                
+
+        }
+
+        public ActionResult ViewUser()
+        {
+            UserDAO objUserDAO = new UserDAO();
+
+            try
+            {
+                var userList = objUserDAO.getUsersAll();
+                return View(userList);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ModifyUser(int Id)
+        {
+            UserDAO objUserDAO = new UserDAO();
+
+            var objUserModel = objUserDAO.getUserbyUserId(Id);
+
+            return View(objUserModel);
+        }
+
+        [HttpPost]
+        public ActionResult ModifyUser(User objUser)
+        {
+            UserDAO objUserDAO = new UserDAO();
+
+            if (ModelState.IsValid)
+            {
+                objUserDAO.ModifyUser(objUser);
+            }
+
+            return RedirectToAction("ViewUser", "User");
+        }
+
+        [HttpGet]
+        public ActionResult DisableUser(int Id)
+        {
+            UserDAO objUserDAO = new UserDAO();
+
+            var objUserModel = objUserDAO.getUserbyUserId(Id);
+            return View(objUserModel);
+        }
+
+        [HttpPost]
+        public JsonResult DisableUserJson(int UserId)
+        {
+            bool result = false;
+            UserDAO objUserDAO = new UserDAO();
+            try
+            {
+                objUserDAO.DisableUser(UserId);
+                result = true;
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            
         }
     }
 }
