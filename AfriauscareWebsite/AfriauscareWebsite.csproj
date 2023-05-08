@@ -132,6 +132,7 @@
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeAdminPortalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -289,7 +290,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Session\Login.cshtml" />
     <Content Include="Views\HomeAdminPortal\Index.cshtml" />
     <Content Include="Views\Shared\_MenuBarAdminPortal.cshtml" />
     <Content Include="Views\User\CreateUser.cshtml" />
@@ -299,6 +300,7 @@
     <Content Include="Views\User\DisableUser.cshtml" />
     <Content Include="Views\Gallery\ViewGallery.cshtml" />
     <Content Include="Views\Gallery\CreateGallery.cshtml" />
+    <Content Include="Views\Session\EndSession.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\Afriauscare.BusinessLayer.csproj">

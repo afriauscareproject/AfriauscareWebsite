@@ -11,49 +11,16 @@ namespace AfriauscareWebsite.Controllers
 {
     public class UserController : Controller
     {
-        // GET: User
-        public ActionResult Login()
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            UserModel objUserModel = new UserModel();
-            return View(objUserModel);
-        }
-
-        [HttpPost]
-        public ActionResult Login(UserModel objUserModel)
-        {
-            UserDAO objUserDao = new UserDAO();
-
-            try
+            if (Session["UserEmail"] != null)
             {
-                if (ModelState.IsValid)
-                {
-                    if (objUserDao.getUserbyUserandPassword(objUserModel) == null)
-                    {
-                        ModelState.AddModelError("Error", "The user email and password does not match or do not exists.");
-                        return View();
-                    }
-                    else
-                    {
-                        Session["Email"] = objUserModel.UserEmail;
-                        return RedirectToAction("Index", "HomeAdminPortal");
-                    }
-
-                }
+                base.OnActionExecuting(filterContext);
             }
-            catch (Exception ex)
+            else
             {
-                ErrorModel objErrorModel = new ErrorModel();
-                objErrorModel.ErrorMessage = ex.Message;
-                return RedirectToAction("Error", "Error", objErrorModel);
+                filterContext.Result = new RedirectResult("~/Session/EndSession");
             }
-
-            return View();
-        }
-
-        public ActionResult Logout()
-        {
-            Session.Abandon();
-            return RedirectToAction("Index", "HomeAdminPortal");
         }
 
         public ActionResult CreateUser()

@@ -11,6 +11,18 @@ namespace AfriauscareWebsite.Controllers
 {
     public class GalleryController : Controller
     {
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (Session["UserEmail"] != null)
+            {
+                base.OnActionExecuting(filterContext);
+            }
+            else
+            {
+                RedirectToAction("EndSession", "HomeAdminPortal");
+            }
+        }
+
         // GET: Gallery
         public ActionResult ViewGallery()
         {
