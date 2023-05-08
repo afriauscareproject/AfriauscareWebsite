@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContactInformation\ContactInformationModel.cs" />
     <Compile Include="Error\ErrorModel.cs" />
     <Compile Include="Gallery\GalleryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

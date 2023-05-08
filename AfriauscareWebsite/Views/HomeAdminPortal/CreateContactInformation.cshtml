@@ -1,0 +1,100 @@
+﻿@model Afriauscare.BusinessLayer.ContactInformation.ContactInformationModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    <script src="~/Scripts/jquery-3.3.1.slim.min"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    @Styles.Render("~/Content/bootstrap")
+
+    <title>CreateContactInformation</title>
+</head>
+<body>
+    @Html.Partial("_MenuBarAdminPortal")
+
+    <div class="container">
+        @using (Html.BeginForm("CreateContactInformation", "HomeAdminPortal", FormMethod.Post))
+        {
+        <div class="mx-auto col-12 col-md-10 col-lg-6">
+            <h2>Create Contact Information</h2>
+            <br />
+
+            @if (TempData["ContactInformationAlertMessage"] != null)
+            {
+                <div id="CreateContactInformationAlert" class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Success!</strong> @TempData["ContactInformationAlertMessage"]
+                </div>
+            }
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Email_address)
+                    @Html.TextBoxFor(model => model.Email_address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email_address, null, new { @class = "text text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Phone_number)
+                    @Html.TextBoxFor(model => model.Phone_number, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Phone_number, null, new { @class = "text text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Mobile_number)
+                    @Html.TextBoxFor(model => model.Mobile_number, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Mobile_number, null, new { @class = "text text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Fax_number)
+                    @Html.TextBoxFor(model => model.Fax_number, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Fax_number, null, new { @class = "text text-danger" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Contact_address)
+                    @Html.TextBoxFor(model => model.Contact_address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Contact_address, null, new { @class = "text text-danger" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.State_id)
+                    <select class="form-control">
+                        <option>Select State</option>
+                        <option>Northern Territory</option>
+                        <option>New South Wales</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Suburb_id)
+                    <select class="form-control">
+                        <option>Select Suburb</option>
+                        <option>Richmond</option>
+                        <option>South Yarra</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewContactInformation", "HomeAdminPortal")'">Back</button>
+            </div>
+        </div>
+        }
+    </div>
+</body>
+</html>

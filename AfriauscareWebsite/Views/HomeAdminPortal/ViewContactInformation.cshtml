@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Afriauscare.BusinessLayer.ContactInformation.ContactInformationModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title View Contact Information</title>
+    @Styles.Render("~/Content/css")
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</head>
+<body>
+    @Html.Partial("_MenuBarAdminPortal")
+    <div class="container">
+        <br />
+        <h2>Contact Information</h2>
+        <br />
+        <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CreateContactInformation", "HomeAdminPortal")'">Create Contact Information</button>
+        <br />
+        <br />
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Contact Id</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Contact_id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email_address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Contact_address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Phone_number)</td>
+                        <td>
+                            @Html.ActionLink("Edit", "ModifyContactInformation", new { Id = item.Contact_id }, new { @class = "btn btn-info" })
+                            @*<a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.Contact_id)">Disable</a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <input type="hidden" id="ContactIdHidden" />
+    </div>
+</body>
+</html>
