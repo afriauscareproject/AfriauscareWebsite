@@ -60,7 +60,7 @@
                 </div>
    
                 <div class="form-check">
-                    @Html.CheckBox(nameof(Model.UserActive), Model.UserActive ?? false, new { @class = "form-check-input" })
+                    @Html.CheckBoxFor(model => model.UserActive, new { @class = "form-check-input" })
                     @Html.LabelFor(model => model.UserActive, new { @class = "form-check-label" })
                     @Html.ValidationMessageFor(model => model.UserActive, null, new { @class = "text text-danger" })
                 </div>
