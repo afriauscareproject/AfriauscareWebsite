@@ -8,6 +8,7 @@ namespace AfriauscareWebsite.Controllers
 {
     public class HomeAdminPortalController : Controller
     {
+        //Function that validates if the session is created/active. If not active/valid, it will redirect to the EndSession View
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (Session["UserEmail"] != null)

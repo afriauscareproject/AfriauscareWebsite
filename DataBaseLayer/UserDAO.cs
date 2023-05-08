@@ -40,12 +40,30 @@ namespace Afriauscare.DataBaseLayer
             return user;
         }
 
-        public List<User> getUsersAll()
+        public List<UserModel> getUsersAll()
         {
+            List<UserModel> listUser = new List<UserModel>();
+
             using (var DataBase = new AfriAusEntities())
             {
-                return DataBase.Users.ToList();
+                var list = DataBase.Users.ToList();
+
+                foreach (var item in list)
+                {
+                    UserModel objUser = new UserModel()
+                    {
+                        UserId = item.UserId,
+                        Username = item.Username,
+                        UserLastName = item.UserLastName,
+                        UserEmail = item.UserEmail,
+                        UserPassword = item.UserPassword,
+                        UserActive = item.UserActive
+                    };
+                    listUser.Add(objUser);
+                }
             }
+
+            return listUser;
         }
 
         public User getUserbyUserIdActiveUser(int userId)
@@ -60,22 +78,39 @@ namespace Afriauscare.DataBaseLayer
             return user;
         }
 
-        public User getUserbyUserId(int userId)
+        public UserModel getUserbyUserId(int userId)
         {
             var user = new User();
+            UserModel objUserModel = new UserModel();
 
             using (var DataBase = new AfriAusEntities())
             {
                 user = DataBase.Users.Where(u => u.UserId == userId).FirstOrDefault();
+                objUserModel.UserId = user.UserId;
+                objUserModel.Username = user.Username;
+                objUserModel.UserLastName = user.UserLastName;
+                objUserModel.UserEmail = user.UserEmail;
+                objUserModel.UserPassword = user.UserPassword;
+                objUserModel.UserActive = user.UserActive;
             }
 
-            return user;
+            return objUserModel;
         }
 
-        public void ModifyUser (User objUser)
+        public void ModifyUser (UserModel objUserPar)
         {
             using(var DataBase = new AfriAusEntities())
             {
+                User objUser = new User()
+                {
+                    UserId = objUserPar.UserId,
+                    Username = objUserPar.Username,
+                    UserLastName = objUserPar.UserLastName,
+                    UserEmail = objUserPar.UserEmail,
+                    UserPassword = objUserPar.UserPassword,
+                    UserActive = objUserPar.UserActive
+                };
+
                 DataBase.Users.Add(objUser);
                 DataBase.Entry(objUser).State = System.Data.EntityState.Modified;
                 DataBase.SaveChanges();

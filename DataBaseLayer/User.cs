@@ -19,6 +19,6 @@ namespace Afriauscare.DataBaseLayer
         public string UserLastName { get; set; }
         public string UserEmail { get; set; }
         public string UserPassword { get; set; }
-        public Nullable<bool> UserActive { get; set; }
+        public bool UserActive { get; set; }
     }
 }

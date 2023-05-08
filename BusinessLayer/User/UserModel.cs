@@ -17,8 +17,9 @@ namespace Afriauscare.BusinessLayer.User
         [DisplayName("Last Name")]
         public string UserLastName { get; set;}
 
-        [DisplayName("Email    ")]
+        [DisplayName("Email")]
         [Required(ErrorMessage ="Email is Required.")]
+        [StringLength(50,ErrorMessage = "The maximum lenght for Email is 50 characters")]
         public string UserEmail { get; set; }
 
         [DisplayName("Password")]

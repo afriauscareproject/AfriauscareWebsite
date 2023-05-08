@@ -1,4 +1,5 @@
 ﻿@model Afriauscare.BusinessLayer.User.UserModel
+
 @{
     Layout = null;
 }
@@ -57,7 +58,7 @@
                 </div>
             </div>
             <div class="form-check">
-                @Html.CheckBoxFor(model => model.UserActive, new { @class = "form-check-input" })
+                @Html.CheckBoxFor(model => Model.UserActive, new { @class = "form-check-input" })
                 @Html.LabelFor(model => model.UserActive, new { @class = "form-check-label" })
                 @Html.ValidationMessageFor(model => model.UserActive, null, new { @class = "text text-danger" })
             </div>

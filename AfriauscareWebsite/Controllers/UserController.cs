@@ -11,6 +11,7 @@ namespace AfriauscareWebsite.Controllers
 {
     public class UserController : Controller
     {
+        //Function that validates if the session is created/active. If not active/valid, it will redirect to the EndSession View
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (Session["UserEmail"] != null)
@@ -85,23 +86,52 @@ namespace AfriauscareWebsite.Controllers
         public ActionResult ModifyUser(int Id)
         {
             UserDAO objUserDAO = new UserDAO();
-
-            var objUserModel = objUserDAO.getUserbyUserId(Id);
-
-            return View(objUserModel);
+            try
+            {
+                var objUserModel = objUserDAO.getUserbyUserId(Id);
+                return View(objUserModel);
+            }
+            catch(Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
         }
 
         [HttpPost]
-        public ActionResult ModifyUser(User objUser)
+        public ActionResult ModifyUser(UserModel objUser)
         {
             UserDAO objUserDAO = new UserDAO();
 
-            if (ModelState.IsValid)
+            try
             {
-                objUserDAO.ModifyUser(objUser);
+                if (ModelState.IsValid)
+                {
+                    objUserDAO.ModifyUser(objUser);
+
+                    ModelState.Clear();
+                    UserModel objEmptyUserModel = new UserModel()
+                    {
+                        Username = string.Empty,
+                        UserLastName = string.Empty,
+                        UserEmail = string.Empty,
+                        UserPassword = string.Empty,
+                        UserActive = false
+                    };
+                    TempData["UserAlertMessage"] = "User Modifed Successfully...";
+
+                    return View("ModifyUser", objEmptyUserModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
             }
 
-            return RedirectToAction("ViewUser", "User");
+            return View("ModifyUser");
         }
 
         [HttpGet]

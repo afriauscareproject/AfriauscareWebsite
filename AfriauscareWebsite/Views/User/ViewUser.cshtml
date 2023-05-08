@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Afriauscare.DataBaseLayer.User>
+﻿@model IEnumerable<Afriauscare.BusinessLayer.User.UserModel>
 
 @{
     Layout = null;
@@ -41,7 +41,7 @@
                     <td>@Html.DisplayFor(modelItem => item.Username)</td>
                     <td>@Html.DisplayFor(modelItem => item.UserLastName)</td>
                     <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
-                    <td>@Html.CheckBox(nameof(item.UserActive),item.UserActive ?? false, new { @class = "form-check-input", @disabled ="disabled" })</td>
+                    <td>@Html.CheckBoxFor(modelItem => item.UserActive , new { @class = "form-check-input", @disabled ="disabled" })</td>
                     <td>
                         @Html.ActionLink("Edit", "ModifyUser",new { Id = item.UserId }, new { @class = "btn btn-info"})
                         <a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.UserId)">Disable</a>
