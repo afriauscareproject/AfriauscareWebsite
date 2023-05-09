@@ -30,7 +30,7 @@
                     <label class="nav-link disabled text-black-50">Username</label>
                 </li>
                 <li class="nav-item">
-                    <a>@Html.ActionLink("Logout", "Login", "User", null, new { @class = "nav-link" })</a>
+                    <a>@Html.ActionLink("Logout", "EndSession", "Session", null, new { @class = "nav-link" })</a>
                 </li>
             </ul>
         </div>
@@ -68,7 +68,7 @@ else
                     <label class="nav-link disabled text-black-50">@Session["UserEmail"]</label>
                 </li>
                 <li class="nav-item">
-                    <a>@Html.ActionLink("Logout", "Login", "Session", null, new { @class = "nav-link" })</a>
+                    <a>@Html.ActionLink("Logout", "EndSession", "Session", null, new { @class = "nav-link" })</a>
                 </li>
             </ul>
         </div>
