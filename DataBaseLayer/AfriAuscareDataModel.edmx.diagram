@@ -9,6 +9,10 @@
         <EntityTypeShape EntityType="AfriAusModel.Gallery" Width="1.5" PointX="0.75" PointY="3.375" />
         <EntityTypeShape EntityType="AfriAusModel.GalleryContent" Width="1.5" PointX="3" PointY="3.125" />
         <AssociationConnector Association="AfriAusModel.FK__GalleryCo__Galle__71D1E811" />
+        <EntityTypeShape EntityType="AfriAusModel.contact_information" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="AfriAusModel.state" Width="1.5" PointX="5.375" PointY="1.125" />
+        <EntityTypeShape EntityType="AfriAusModel.suburb" Width="1.5" PointX="7.625" PointY="0.875" />
+        <AssociationConnector Association="AfriAusModel.FK_suburbs_states" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

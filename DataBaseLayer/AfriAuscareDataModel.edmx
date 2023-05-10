@@ -5,6 +5,20 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AfriAusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="contact_information">
+          <Key>
+            <PropertyRef Name="contact_id" />
+          </Key>
+          <Property Name="contact_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="phone_number" Type="varchar" MaxLength="30" />
+          <Property Name="mobile_number" Type="varchar" MaxLength="30" />
+          <Property Name="fax_number" Type="varchar" MaxLength="30" />
+          <Property Name="email_address" Type="varchar" MaxLength="50" />
+          <Property Name="contact_address" Type="varchar" MaxLength="100" />
+          <Property Name="state_id" Type="int" />
+          <Property Name="suburb_id" Type="int" />
+          <Property Name="postcode" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="Gallery">
           <Key>
             <PropertyRef Name="GalleryId" />
@@ -23,6 +37,24 @@
           <Property Name="GalleryContentIndex" Type="int" />
           <Property Name="GalleryContentIsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="states">
+          <Key>
+            <PropertyRef Name="state_id" />
+          </Key>
+          <Property Name="state_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="state_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="state_alias" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="suburbs">
+          <Key>
+            <PropertyRef Name="suburb_id" />
+          </Key>
+          <Property Name="suburb_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="state_id" Type="int" />
+          <Property Name="suburb_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="suburb_postcode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="suburb_alias" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserId" />
@@ -32,7 +64,7 @@
           <Property Name="UserLastName" Type="varchar" MaxLength="30" />
           <Property Name="UserEmail" Type="varchar" MaxLength="50" />
           <Property Name="UserPassword" Type="varchar" MaxLength="30" />
-          <Property Name="UserActive" Type="bit" />
+          <Property Name="UserActive" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK__GalleryCo__Galle__71D1E811">
           <End Role="Gallery" Type="Self.Gallery" Multiplicity="0..1" />
@@ -46,13 +78,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_suburbs_states">
+          <End Role="states" Type="Self.states" Multiplicity="0..1" />
+          <End Role="suburbs" Type="Self.suburbs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="states">
+              <PropertyRef Name="state_id" />
+            </Principal>
+            <Dependent Role="suburbs">
+              <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AfriAusModelStoreContainer">
+          <EntitySet Name="contact_information" EntityType="Self.contact_information" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gallery" EntityType="Self.Gallery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GalleryContent" EntityType="Self.GalleryContent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="suburbs" EntityType="Self.suburbs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__GalleryCo__Galle__71D1E811" Association="Self.FK__GalleryCo__Galle__71D1E811">
             <End Role="Gallery" EntitySet="Gallery" />
             <End Role="GalleryContent" EntitySet="GalleryContent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_suburbs_states" Association="Self.FK_suburbs_states">
+            <End Role="states" EntitySet="states" />
+            <End Role="suburbs" EntitySet="suburbs" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -68,7 +119,7 @@
           <Property Name="UserLastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserPassword" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="UserActive" Type="Boolean" />
+          <Property Name="UserActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityContainer Name="AfriAusEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.User" />
@@ -77,6 +128,13 @@
           <AssociationSet Name="FK__GalleryCo__Galle__71D1E811" Association="AfriAusModel.FK__GalleryCo__Galle__71D1E811">
             <End Role="Gallery" EntitySet="Galleries" />
             <End Role="GalleryContent" EntitySet="GalleryContents" />
+          </AssociationSet>
+          <EntitySet Name="contact_information" EntityType="AfriAusModel.contact_information" />
+          <EntitySet Name="states" EntityType="AfriAusModel.state" />
+          <EntitySet Name="suburbs" EntityType="AfriAusModel.suburb" />
+          <AssociationSet Name="FK_suburbs_states" Association="AfriAusModel.FK_suburbs_states">
+            <End Role="state" EntitySet="states" />
+            <End Role="suburb" EntitySet="suburbs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Gallery">
@@ -108,6 +166,52 @@
             </Principal>
             <Dependent Role="GalleryContent">
               <PropertyRef Name="GalleryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="contact_information">
+          <Key>
+            <PropertyRef Name="contact_id" />
+          </Key>
+          <Property Name="contact_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="phone_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="mobile_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="fax_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="email_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contact_address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="state_id" Type="Int32" />
+          <Property Name="suburb_id" Type="Int32" />
+          <Property Name="postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="state_id" />
+          </Key>
+          <Property Name="state_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="state_name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="state_alias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="suburbs" Relationship="AfriAusModel.FK_suburbs_states" FromRole="state" ToRole="suburb" />
+        </EntityType>
+        <EntityType Name="suburb">
+          <Key>
+            <PropertyRef Name="suburb_id" />
+          </Key>
+          <Property Name="suburb_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="state_id" Type="Int32" />
+          <Property Name="suburb_name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="suburb_postcode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="suburb_alias" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="state" Relationship="AfriAusModel.FK_suburbs_states" FromRole="suburb" ToRole="state" />
+        </EntityType>
+        <Association Name="FK_suburbs_states">
+          <End Type="AfriAusModel.state" Role="state" Multiplicity="0..1" />
+          <End Type="AfriAusModel.suburb" Role="suburb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="state_id" />
+            </Principal>
+            <Dependent Role="suburb">
+              <PropertyRef Name="state_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -146,6 +250,41 @@
                 <ScalarProperty Name="GalleryContentPath" ColumnName="GalleryContentPath" />
                 <ScalarProperty Name="GalleryId" ColumnName="GalleryId" />
                 <ScalarProperty Name="GalleryContentID" ColumnName="GalleryContentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contact_information">
+            <EntityTypeMapping TypeName="AfriAusModel.contact_information">
+              <MappingFragment StoreEntitySet="contact_information">
+                <ScalarProperty Name="postcode" ColumnName="postcode" />
+                <ScalarProperty Name="suburb_id" ColumnName="suburb_id" />
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+                <ScalarProperty Name="contact_address" ColumnName="contact_address" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="fax_number" ColumnName="fax_number" />
+                <ScalarProperty Name="mobile_number" ColumnName="mobile_number" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="contact_id" ColumnName="contact_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="states">
+            <EntityTypeMapping TypeName="AfriAusModel.state">
+              <MappingFragment StoreEntitySet="states">
+                <ScalarProperty Name="state_alias" ColumnName="state_alias" />
+                <ScalarProperty Name="state_name" ColumnName="state_name" />
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suburbs">
+            <EntityTypeMapping TypeName="AfriAusModel.suburb">
+              <MappingFragment StoreEntitySet="suburbs">
+                <ScalarProperty Name="suburb_alias" ColumnName="suburb_alias" />
+                <ScalarProperty Name="suburb_postcode" ColumnName="suburb_postcode" />
+                <ScalarProperty Name="suburb_name" ColumnName="suburb_name" />
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+                <ScalarProperty Name="suburb_id" ColumnName="suburb_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Afriauscare.BusinessLayer.ContactInformation
 {
@@ -22,17 +19,24 @@ namespace Afriauscare.BusinessLayer.ContactInformation
         public string Fax_number { get; set; }
 
         [DisplayName("Email Address")]
+        [Required(ErrorMessage = "Email is required")]
         public string Email_address { get; set; }
 
         [DisplayName("Address")]
+        [Required(ErrorMessage = "Address is required")]
         public string Contact_address { get; set; }
 
         [DisplayName("State")]
-        public int State_id { get; set; }
+        [Required(ErrorMessage = "State is required")]
+        public string State_id { get; set; }
+        public IEnumerable<SelectListItem> States { get; set; }
 
         [DisplayName("Suburb")]
-        public int Suburb_id { get; set; }
+        [Required(ErrorMessage = "Suburb is required")]
+        public string Suburb_id { get; set; }
+        public IEnumerable<SelectListItem> Suburbs { get; set; }
 
+        [Required]
         [DisplayName("Postcode")]
         public string Postcode { get; set; }
     }

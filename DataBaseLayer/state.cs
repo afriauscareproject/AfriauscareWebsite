@@ -12,17 +12,17 @@ namespace DataBaseLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Gallery
+    public partial class state
     {
-        public Gallery()
+        public state()
         {
-            this.GalleryContents = new HashSet<GalleryContent>();
+            this.suburbs = new HashSet<suburb>();
         }
     
-        public int GalleryId { get; set; }
-        public string GalleryTitle { get; set; }
-        public string GalleryDescription { get; set; }
+        public int state_id { get; set; }
+        public string state_name { get; set; }
+        public string state_alias { get; set; }
     
-        public virtual ICollection<GalleryContent> GalleryContents { get; set; }
+        public virtual ICollection<suburb> suburbs { get; set; }
     }
 }

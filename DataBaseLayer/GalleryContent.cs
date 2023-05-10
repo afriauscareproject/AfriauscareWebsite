@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Afriauscare.DataBaseLayer
+namespace DataBaseLayer
 {
     using System;
     using System.Collections.Generic;

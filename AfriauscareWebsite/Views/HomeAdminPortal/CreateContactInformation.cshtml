@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/css")
     <script src="~/Scripts/jquery-3.3.1.slim.min"></script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="~/Scripts/popper.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     @Styles.Render("~/Content/bootstrap")
@@ -23,78 +24,106 @@
     <div class="container">
         @using (Html.BeginForm("CreateContactInformation", "HomeAdminPortal", FormMethod.Post))
         {
-        <div class="mx-auto col-12 col-md-10 col-lg-6">
-            <h2>Create Contact Information</h2>
-            <br />
+            <div class="mx-auto col-12 col-md-10 col-lg-6">
+                <h2>Create Contact Information</h2>
+                <br />
 
-            @if (TempData["ContactInformationAlertMessage"] != null)
-            {
-                <div id="CreateContactInformationAlert" class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Success!</strong> @TempData["ContactInformationAlertMessage"]
-                </div>
-            }
+                @if (TempData["ContactInformationAlertMessage"] != null)
+                {
+                    <div id="CreateContactInformationAlert" class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Success!</strong> @TempData["ContactInformationAlertMessage"]
+                    </div>
+                }
 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Email_address)
-                    @Html.TextBoxFor(model => model.Email_address, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Email_address, null, new { @class = "text text-danger" })
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Email_address)
+                        @Html.TextBoxFor(model => model.Email_address, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Email_address, null, new { @class = "text text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Phone_number)
+                        @Html.TextBoxFor(model => model.Phone_number, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Phone_number, null, new { @class = "text text-danger" })
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Phone_number)
-                    @Html.TextBoxFor(model => model.Phone_number, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Phone_number, null, new { @class = "text text-danger" })
-                </div>
-            </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Mobile_number)
-                    @Html.TextBoxFor(model => model.Mobile_number, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Mobile_number, null, new { @class = "text text-danger" })
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Mobile_number)
+                        @Html.TextBoxFor(model => model.Mobile_number, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Mobile_number, null, new { @class = "text text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Fax_number)
+                        @Html.TextBoxFor(model => model.Fax_number, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Fax_number, null, new { @class = "text text-danger" })
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Fax_number)
-                    @Html.TextBoxFor(model => model.Fax_number, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Fax_number, null, new { @class = "text text-danger" })
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Contact_address)
+                        @Html.TextBoxFor(model => model.Contact_address, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Contact_address, null, new { @class = "text text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Postcode)
+                        @Html.TextBoxFor(model => model.Postcode, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Postcode, null, new { @class = "text text-danger" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Contact_address)
-                    @Html.TextBoxFor(model => model.Contact_address, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Contact_address, null, new { @class = "text text-danger" })
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.State_id)
+                        @Html.DropDownListFor(model => model.State_id, new SelectList(Model.States, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "States" })
+                        @Html.ValidationMessageFor(model => model.State_id, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Suburb_id)
+                        @Html.DropDownListFor(model => model.Suburb_id, new SelectList(Model.Suburbs, "Value", "Text"), htmlAttributes: new { @class = "form-control", @id = "Suburbs" })
+                        @Html.ValidationMessageFor(model => model.Suburb_id, null, new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.State_id)
-                    <select class="form-control">
-                        <option>Select State</option>
-                        <option>Northern Territory</option>
-                        <option>New South Wales</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Suburb_id)
-                    <select class="form-control">
-                        <option>Select Suburb</option>
-                        <option>Richmond</option>
-                        <option>South Yarra</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="form-group">
-                @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
+                <div class="form-group">
+                    @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewContactInformation", "HomeAdminPortal")'">Back</button>
+                </div>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Create</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewContactInformation", "HomeAdminPortal")'">Back</button>
-            </div>
-        </div>
         }
     </div>
+
+    <script type="text/javascript">
+
+        //Function that populates the Suburb when a state dropdownlist changes the selection
+        $('#States').change(function () {
+            var selectedState = $("#States").val();
+            var suburbsSelect = $('#Suburbs');
+            suburbsSelect.empty();
+            if (selectedState != null && selectedState != '') {
+                $.getJSON('@Url.Action("GetSuburbs")', { state_id: selectedState }, function (suburbs) {
+                    if (suburbs != null && !jQuery.isEmptyObject(suburbs))
+                    {
+                        $.each(suburbs, function (index, suburb) {
+                            suburbsSelect.append($('<option/>', {
+                                value: suburb.Value,
+                                text: suburb.Text
+                            }));
+                        });
+                    };
+                });
+            }
+        });
+
+        setTimeout(function () {
+
+            // Closing the alert message once the user is created
+            $('#CreateContactInformationAlert').alert('close');
+        }, 5300);
+    </script>
 </body>
 </html>
