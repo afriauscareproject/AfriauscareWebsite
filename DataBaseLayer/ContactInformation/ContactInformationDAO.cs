@@ -57,5 +57,27 @@ namespace Afriauscare.DataBaseLayer
             }
 
         }
+
+        public ContactInformationModel GetContactInformationbyId(int ContactId)
+        {
+            var contactInformation = new contact_information();
+            ContactInformationModel objContactModel = new ContactInformationModel();
+
+            using (var DataBase = new AfriAusEntities())
+            {
+                contactInformation = DataBase.contact_information.Where(u => u.contact_id == ContactId).FirstOrDefault();
+                objContactModel.Contact_id = contactInformation.contact_id;
+                objContactModel.Email_address = contactInformation.email_address;
+                objContactModel.Phone_number = contactInformation.phone_number;
+                objContactModel.Mobile_number = contactInformation.mobile_number;
+                objContactModel.Fax_number = contactInformation.fax_number;
+                objContactModel.Contact_address = contactInformation.contact_address;
+                objContactModel.State_id = contactInformation.state_id.ToString();
+                objContactModel.Suburb_id = contactInformation.suburb_id.ToString();
+                objContactModel.Postcode = contactInformation.postcode;
+            }
+
+            return objContactModel;
+        }
     }
 }

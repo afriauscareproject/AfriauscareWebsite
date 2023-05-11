@@ -14,6 +14,7 @@
     @Styles.Render("~/Content/css")
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </head>
 <body>
     @Html.Partial("_MenuBarAdminPortal")
@@ -38,13 +39,14 @@
                 @foreach (var item in Model)
                 {
                 <tr>
+                    <td style="display:none">@Html.DisplayFor(modelItem => item.UserId)</td>
                     <td>@Html.DisplayFor(modelItem => item.Username)</td>
                     <td>@Html.DisplayFor(modelItem => item.UserLastName)</td>
                     <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
-                    <td>@Html.CheckBoxFor(modelItem => item.UserActive , new { @class = "form-check-input", @disabled ="disabled" })</td>
+                    <td>@Html.CheckBoxFor(modelItem => item.UserActive, new { @class = "form-check-input", @disabled = "disabled" })</td>
                     <td>
-                        @Html.ActionLink("Edit", "ModifyUser",new { Id = item.UserId }, new { @class = "btn btn-info"})
-                        <a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.UserId)">Disable</a>
+                        @Html.ActionLink("Edit", "ModifyUser", new { Id = item.UserId }, new { @class = "btn btn-info" })
+                        <button class="btnDeleteUser btn btn-danger">Deactivate</button>
                     </td>
                 </tr>
                 }
@@ -61,12 +63,13 @@
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to disable the user?</p>
-                    <p id="userNameDisplay"></p>
+                    <strong><label id="lblName"></label></strong>
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
                         <a href="#" id="btnConfirmDeleteUser" class="btn btn-info mr-2">Deactivate User</a>
                         <a href="#" id="btnCancelDeleteUserModal" class="btn btn-danger">Cancel</a>
+
                     </div>
                 </div>
             </div>
@@ -102,10 +105,16 @@
             })
         })
 
-        var Confirm = function (UserId) {
-            $("#UserIdHidden").val(UserId);
+        $(".btnDeleteUser").click(function () {
+            debugger;
+            var currentTds = $(this).closest("tr").find("td"); // find all td of selected row
+            var userId = $(currentTds).eq(0).text();
+            var userName = $(currentTds).eq(1).text(); // eq= cell , text = inner text
+            var userLastName = $(currentTds).eq(2).text();
+            $("#lblName").html(userName + ' ' + userLastName);
+            $("#UserIdHidden").val(userId);
             $("#deleteUserModal").modal('show');
-        }
+        });
     </script>
 </body>
 </html>

@@ -43,7 +43,7 @@
                         <td>@Html.DisplayFor(modelItem => item.Contact_address)</td>
                         <td>@Html.DisplayFor(modelItem => item.Phone_number)</td>
                         <td>
-                            @Html.ActionLink("Edit", "ModifyContactInformation", new { Id = item.Contact_id }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("Edit", "ModifyContactInformation", new { ContactId = item.Contact_id }, new { @class = "btn btn-info" })
                             @*<a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.Contact_id)">Disable</a>*@
                         </td>
                     </tr>

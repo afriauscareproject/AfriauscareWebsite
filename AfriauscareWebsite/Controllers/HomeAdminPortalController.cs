@@ -134,5 +134,36 @@ namespace AfriauscareWebsite.Controllers
             return Json(suburbs, JsonRequestBehavior.AllowGet);
 
         }
+
+        [HttpGet]
+        public ActionResult ModifyContactInformation(int ContactId)
+        {
+            ContactInformationDAO objContactDAO = new ContactInformationDAO();
+            try
+            {
+                var objContactModel = objContactDAO.GetContactInformationbyId(ContactId);
+
+                StatesDAO objStateDao = new StatesDAO();
+                List<SelectListItem> emptyList = new List<SelectListItem>();
+                var first_item = new SelectListItem()
+                {
+                    Value = null,
+                    Text = "--- Select Suburb ---"
+                };
+                emptyList.Add(first_item);
+
+                objContactModel.States = objStateDao.GetStates();
+                objContactModel.States.Where(s => s.Value == objContactModel.State_id);
+                objContactModel.Suburbs = emptyList;
+
+                return View(objContactModel);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+        }
     }
 }

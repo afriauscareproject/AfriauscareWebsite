@@ -303,6 +303,7 @@
     <Content Include="Views\Session\EndSession.cshtml" />
     <Content Include="Views\HomeAdminPortal\CreateContactInformation.cshtml" />
     <Content Include="Views\HomeAdminPortal\ViewContactInformation.cshtml" />
+    <Content Include="Views\HomeAdminPortal\ModifyContactInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\Afriauscare.BusinessLayer.csproj">
