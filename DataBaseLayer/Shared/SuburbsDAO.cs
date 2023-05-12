@@ -28,6 +28,11 @@ namespace Afriauscare.DataBaseLayer.Shared
                     Text = "--- Select Suburb ---"
                 };
                 list.Insert(0, first_item);
+                foreach (var item in list)
+                {
+                    item.Value = item.Value.Trim();
+                }
+
                 return new SelectList(list, "Value", "Text");
             }
         }

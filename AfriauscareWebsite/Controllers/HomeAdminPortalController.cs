@@ -144,17 +144,11 @@ namespace AfriauscareWebsite.Controllers
                 var objContactModel = objContactDAO.GetContactInformationbyId(ContactId);
 
                 StatesDAO objStateDao = new StatesDAO();
-                List<SelectListItem> emptyList = new List<SelectListItem>();
-                var first_item = new SelectListItem()
-                {
-                    Value = null,
-                    Text = "--- Select Suburb ---"
-                };
-                emptyList.Add(first_item);
+                SuburbsDAO objSuburbDao = new SuburbsDAO();
 
                 objContactModel.States = objStateDao.GetStates();
-                objContactModel.States.Where(s => s.Value == objContactModel.State_id);
-                objContactModel.Suburbs = emptyList;
+                objContactModel.Suburbs = objSuburbDao.GetSuburbs(objContactModel.State_id);
+
 
                 return View(objContactModel);
             }
@@ -164,6 +158,50 @@ namespace AfriauscareWebsite.Controllers
                 objErrorModel.ErrorMessage = ex.Message;
                 return RedirectToAction("Error", "Error", objErrorModel);
             }
+        }
+
+        [HttpPost]
+        public ActionResult ModifyContactInformation(ContactInformationModel objContactModel)
+        {
+            ContactInformationDAO objContactDao = new ContactInformationDAO();
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    objContactDao.ModifyContactInformation(objContactModel);
+
+                    ModelState.Clear();
+                    StatesDAO objStateDao = new StatesDAO();
+                    SuburbsDAO objSuburbDao = new SuburbsDAO();
+
+                    ContactInformationModel objEmptyModel = new ContactInformationModel()
+                    {
+                        Contact_id = 0,
+                        Email_address = string.Empty,
+                        Phone_number = string.Empty,
+                        Mobile_number = string.Empty,
+                        Fax_number = string.Empty,
+                        Contact_address = string.Empty,
+                        State_id = string.Empty,
+                        States = objStateDao.GetStates(),
+                        Suburb_id = string.Empty,
+                        Suburbs = objSuburbDao.GetSuburbs("0"),
+                        Postcode = string.Empty
+                    };
+                    TempData["ContactInformationAlertMessage"] = "Contact Information Modifed Successfully...";
+
+                    return View("ModifyContactInformation", objEmptyModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+
+            return View("ModifyContactInformation");
         }
     }
 }
