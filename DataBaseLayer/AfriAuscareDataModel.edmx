@@ -18,6 +18,7 @@
           <Property Name="state_id" Type="int" />
           <Property Name="suburb_id" Type="int" />
           <Property Name="postcode" Type="varchar" MaxLength="10" />
+          <Property Name="is_default" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Gallery">
           <Key>
@@ -182,6 +183,7 @@
           <Property Name="state_id" Type="Int32" />
           <Property Name="suburb_id" Type="Int32" />
           <Property Name="postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="is_default" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="state">
           <Key>
@@ -256,6 +258,7 @@
           <EntitySetMapping Name="contact_information">
             <EntityTypeMapping TypeName="AfriAusModel.contact_information">
               <MappingFragment StoreEntitySet="contact_information">
+                <ScalarProperty Name="is_default" ColumnName="is_default" />
                 <ScalarProperty Name="postcode" ColumnName="postcode" />
                 <ScalarProperty Name="suburb_id" ColumnName="suburb_id" />
                 <ScalarProperty Name="state_id" ColumnName="state_id" />

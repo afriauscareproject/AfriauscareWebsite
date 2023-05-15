@@ -86,7 +86,11 @@
                     @Html.ValidationMessageFor(model => model.Suburb_id, null, new { @class = "text-danger" })
                 </div>
             </div>
-
+            <div class="form-check">
+                @Html.CheckBoxFor(model => model.Is_default, new { @class = "form-check-input" })
+                @Html.LabelFor(model => model.Is_default, new { @class = "form-check-label" })
+                @Html.ValidationMessageFor(model => model.Is_default, null, new { @class = "text text-danger" })
+            </div>
             <div class="form-group">
                 @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
             </div>

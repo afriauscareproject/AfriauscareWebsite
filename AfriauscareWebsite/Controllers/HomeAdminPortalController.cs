@@ -65,6 +65,10 @@ namespace AfriauscareWebsite.Controllers
                 if (ModelState.IsValid)
                 {
                     ContactInformationDAO objContactDAO = new ContactInformationDAO();
+                    if (objContactModel.Is_default)
+                    {
+                        objContactDAO.ClearIsDefaultField();
+                    }
                     objContactDAO.CreateContactInformation(objContactModel);
 
                     ModelState.Clear();
@@ -77,7 +81,8 @@ namespace AfriauscareWebsite.Controllers
                         Contact_address = string.Empty,
                         State_id = string.Empty,
                         Suburb_id = string.Empty,
-                        Postcode = string.Empty
+                        Postcode = string.Empty,
+                        Is_default = false
                     };
 
                     StatesDAO objStateDao = new StatesDAO();
@@ -164,16 +169,22 @@ namespace AfriauscareWebsite.Controllers
         public ActionResult ModifyContactInformation(ContactInformationModel objContactModel)
         {
             ContactInformationDAO objContactDao = new ContactInformationDAO();
+            StatesDAO objStateDao = new StatesDAO();
+            SuburbsDAO objSuburbDao = new SuburbsDAO();
 
             try
             {
                 if (ModelState.IsValid)
                 {
+                    if (objContactModel.Is_default)
+                    {
+                        objContactDao.ClearIsDefaultField();
+                    }
+
                     objContactDao.ModifyContactInformation(objContactModel);
 
                     ModelState.Clear();
-                    StatesDAO objStateDao = new StatesDAO();
-                    SuburbsDAO objSuburbDao = new SuburbsDAO();
+
 
                     ContactInformationModel objEmptyModel = new ContactInformationModel()
                     {
@@ -201,7 +212,10 @@ namespace AfriauscareWebsite.Controllers
                 return RedirectToAction("Error", "Error", objErrorModel);
             }
 
-            return View("ModifyContactInformation");
+            objContactModel.States = objStateDao.GetStates();
+            objContactModel.Suburbs = objSuburbDao.GetSuburbs(objContactModel.State_id);
+
+            return View("ModifyContactInformation",objContactModel);
         }
     }
 }

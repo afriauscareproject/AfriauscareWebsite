@@ -49,7 +49,8 @@ namespace Afriauscare.DataBaseLayer
                     contact_address = objContactModel.Contact_address,
                     state_id = Int16.Parse(objContactModel.State_id),
                     suburb_id = Int16.Parse(objContactModel.Suburb_id),
-                    postcode = objContactModel.Postcode
+                    postcode = objContactModel.Postcode,
+                    is_default = objContactModel.Is_default
                 };
 
                 DataBase.contact_information.Add(objContactInformation);
@@ -75,6 +76,7 @@ namespace Afriauscare.DataBaseLayer
                 objContactModel.State_id = contactInformation.state_id.ToString();
                 objContactModel.Suburb_id = contactInformation.suburb_id.ToString();
                 objContactModel.Postcode = contactInformation.postcode;
+                objContactModel.Is_default = contactInformation.is_default;
             }
 
             return objContactModel;
@@ -94,12 +96,26 @@ namespace Afriauscare.DataBaseLayer
                     contact_address = objModel.Contact_address,
                     state_id = Int16.Parse(objModel.State_id),
                     suburb_id = Int16.Parse(objModel.Suburb_id),
-                    postcode = objModel.Postcode
+                    postcode = objModel.Postcode,
+                    is_default = objModel.Is_default
                 };
 
                 DataBase.contact_information.Add(objContactInformation);
                 DataBase.Entry(objContactInformation).State = System.Data.EntityState.Modified;
                 DataBase.SaveChanges();
+            }
+        }
+
+        public void ClearIsDefaultField()
+        {
+            using (var Database = new AfriAusEntities())
+            {
+                var listDefaultValues = Database.contact_information.Where(c => c.is_default == true);
+                foreach (var item in listDefaultValues)
+                {
+                    item.is_default = false;
+                }
+                Database.SaveChanges();
             }
         }
     }

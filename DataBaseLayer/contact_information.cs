@@ -23,5 +23,6 @@ namespace Afriauscare.DataBaseLayer
         public Nullable<int> state_id { get; set; }
         public Nullable<int> suburb_id { get; set; }
         public string postcode { get; set; }
+        public bool is_default { get; set; }
     }
 }

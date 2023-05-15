@@ -36,8 +36,11 @@ namespace Afriauscare.BusinessLayer.ContactInformation
         public string Suburb_id { get; set; }
         public IEnumerable<SelectListItem> Suburbs { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Postcode is required")]
         [DisplayName("Postcode")]
         public string Postcode { get; set; }
+
+        [DisplayName("Is default?")]
+        public bool Is_default { get; set; }
     }
 }
