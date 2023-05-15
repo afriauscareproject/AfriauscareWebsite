@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Afriauscare.DataBaseLayer;
+using Afriauscare.BusinessLayer.Gallery;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -25,6 +27,14 @@ namespace AfriauscareWebsite.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Gallery()
+        {
+            GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
+            List<GalleryContentModel> list = objGalleryContentDao.getImagesAll();
+
+            return View(list);
         }
     }
 }

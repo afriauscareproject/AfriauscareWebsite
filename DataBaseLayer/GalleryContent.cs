@@ -18,8 +18,8 @@ namespace Afriauscare.DataBaseLayer
         public int GalleryContentID { get; set; }
         public Nullable<int> GalleryId { get; set; }
         public string GalleryContentPath { get; set; }
-        public Nullable<int> GalleryContentIndex { get; set; }
-        public Nullable<bool> GalleryContentIsActive { get; set; }
+        public int GalleryContentIndex { get; set; }
+        public bool GalleryContentIsActive { get; set; }
         public byte[] GalleryContentImage { get; set; }
     
         public virtual Gallery Gallery { get; set; }

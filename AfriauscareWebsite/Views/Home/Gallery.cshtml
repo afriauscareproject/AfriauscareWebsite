@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Afriauscare.BusinessLayer.Gallery.GalleryContentModel>
+
+@{
+    ViewBag.Title = "Gallery";
+}
+
+@foreach(var item in Model)
+{
+    <img alt="@item.GalleryContentId" src="data:image/jpg;base64,@Convert.ToBase64String(item.GalleryContentImage)" style="height:300px;width:300px"/>
+}
+

@@ -25,5 +25,27 @@ namespace Afriauscare.DataBaseLayer
                 Database.SaveChanges();
             }
         }
+
+        public List<GalleryContentModel> getImagesAll()
+        {
+            List<GalleryContentModel> listGallery = new List<GalleryContentModel>();
+
+            using (var Database = new AfriAusEntities())
+            {
+                var list = Database.GalleryContents.Where(g => g.GalleryContentIsActive == true).ToList();
+
+                foreach (var item in list)
+                {
+                    GalleryContentModel objGalleryContent = new GalleryContentModel()
+                    {
+                        GalleryContentIndex = item.GalleryContentIndex,
+                        GalleryContentImage = item.GalleryContentImage
+                    };
+                    listGallery.Add(objGalleryContent);
+                }
+            }
+
+            return listGallery;
+        }
     }
 }
