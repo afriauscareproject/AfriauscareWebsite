@@ -94,7 +94,8 @@
     <Compile Include="GalleryContent.cs">
       <DependentUpon>AfriAuscareDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="GalleryDAO.cs" />
+    <Compile Include="GalleryContent\GalleryContentDAO.cs" />
+    <Compile Include="GalleryContent\GalleryDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\StatesDAO.cs" />
     <Compile Include="Shared\SuburbsDAO.cs" />

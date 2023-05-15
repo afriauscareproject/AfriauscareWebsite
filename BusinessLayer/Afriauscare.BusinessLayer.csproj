@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="ContactInformation\ContactInformationModel.cs" />
     <Compile Include="Error\ErrorModel.cs" />
+    <Compile Include="Gallery\GalleryContentModel.cs" />
     <Compile Include="Gallery\GalleryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\UserBusiness.cs" />

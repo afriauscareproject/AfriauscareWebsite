@@ -9,6 +9,7 @@
 
 namespace Afriauscare.DataBaseLayer
 {
+    using global::DataBaseLayer;
     using System;
     using System.Collections.Generic;
     
@@ -19,6 +20,7 @@ namespace Afriauscare.DataBaseLayer
         public string GalleryContentPath { get; set; }
         public Nullable<int> GalleryContentIndex { get; set; }
         public Nullable<bool> GalleryContentIsActive { get; set; }
+        public byte[] GalleryContentImage { get; set; }
     
         public virtual Gallery Gallery { get; set; }
     }

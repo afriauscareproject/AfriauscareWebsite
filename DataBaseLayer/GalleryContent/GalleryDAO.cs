@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Afriauscare.BusinessLayer.Gallery;
+using DataBaseLayer;
 
 namespace Afriauscare.DataBaseLayer
 {
@@ -31,5 +32,27 @@ namespace Afriauscare.DataBaseLayer
 
             return listReturn;
         }
+
+        public int CreateGallery(GalleryModel objModel)
+        {
+            var galleryId = 0;
+
+            using (var DataBase = new AfriAusEntities())
+            {
+                Gallery objGallery = new Gallery()
+                {
+                    GalleryTitle = objModel.GalleryTitle,
+                    GalleryDescription = objModel.GalleryDescription,
+                    GalleryEventDate = objModel.GalleryEventDate
+                };
+
+                DataBase.Galleries.Add(objGallery);
+                DataBase.SaveChanges();
+                galleryId = objGallery.GalleryId;
+            }
+
+            return galleryId;
+        }
+
     }
 }

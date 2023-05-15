@@ -24,7 +24,7 @@
     @Html.Partial("_MenuBarAdminPortal")
 
     <div class="container">
-        @using (Html.BeginForm("CreateGallery", "Gallery", FormMethod.Post))
+        @using (Html.BeginForm("CreateGallery", "Gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div class="mx-auto col-12 col-md-10 col-lg-6">
                 <h2>Create Gallery</h2>
@@ -58,8 +58,15 @@
                 <br />
                 <fieldset class="border p-1">
                     <legend class="w-auto">Select your files</legend>
-                    <div class="mb-lg-3">
+                    @*<div class="mb-lg-3">
                         <input class="form-control" type="file" id="MultipleFileContent" multiple>
+                    </div>*@
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.imageList, "", new { @type = "file", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.imageList, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </fieldset>
 

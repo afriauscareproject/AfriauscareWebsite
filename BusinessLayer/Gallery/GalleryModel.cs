@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace Afriauscare.BusinessLayer.Gallery
 {
@@ -16,5 +14,11 @@ namespace Afriauscare.BusinessLayer.Gallery
 
         [DisplayName("Gallery Description")]
         public string GalleryDescription { set; get; }
+
+        [DisplayName("Event Date")]
+        public DateTime GalleryEventDate { set; get; }
+
+        [DisplayName("Select your files")]
+        public HttpPostedFileBase[] imageList { set; get; }
     }
 }

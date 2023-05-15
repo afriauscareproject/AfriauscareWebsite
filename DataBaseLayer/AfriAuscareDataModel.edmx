@@ -27,6 +27,7 @@
           <Property Name="GalleryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GalleryTitle" Type="varchar" MaxLength="50" />
           <Property Name="GalleryDescription" Type="varchar" MaxLength="100" />
+          <Property Name="GalleryEventDate" Type="date" />
         </EntityType>
         <EntityType Name="GalleryContent">
           <Key>
@@ -37,6 +38,7 @@
           <Property Name="GalleryContentPath" Type="varchar" MaxLength="200" />
           <Property Name="GalleryContentIndex" Type="int" />
           <Property Name="GalleryContentIsActive" Type="bit" />
+          <Property Name="GalleryContentImage" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="states">
           <Key>
@@ -146,6 +148,7 @@
           <Property Name="GalleryTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="GalleryDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="GalleryContents" Relationship="AfriAusModel.FK__GalleryCo__Galle__71D1E811" FromRole="Gallery" ToRole="GalleryContent" />
+          <Property Name="GalleryEventDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="GalleryContent">
           <Key>
@@ -157,6 +160,7 @@
           <Property Name="GalleryContentIndex" Type="Int32" />
           <Property Name="GalleryContentIsActive" Type="Boolean" />
           <NavigationProperty Name="Gallery" Relationship="AfriAusModel.FK__GalleryCo__Galle__71D1E811" FromRole="GalleryContent" ToRole="Gallery" />
+          <Property Name="GalleryContentImage" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK__GalleryCo__Galle__71D1E811">
           <End Type="AfriAusModel.Gallery" Role="Gallery" Multiplicity="0..1" />
@@ -238,6 +242,7 @@
           <EntitySetMapping Name="Galleries">
             <EntityTypeMapping TypeName="AfriAusModel.Gallery">
               <MappingFragment StoreEntitySet="Gallery">
+                <ScalarProperty Name="GalleryEventDate" ColumnName="GalleryEventDate" />
                 <ScalarProperty Name="GalleryDescription" ColumnName="GalleryDescription" />
                 <ScalarProperty Name="GalleryTitle" ColumnName="GalleryTitle" />
                 <ScalarProperty Name="GalleryId" ColumnName="GalleryId" />
@@ -247,6 +252,7 @@
           <EntitySetMapping Name="GalleryContents">
             <EntityTypeMapping TypeName="AfriAusModel.GalleryContent">
               <MappingFragment StoreEntitySet="GalleryContent">
+                <ScalarProperty Name="GalleryContentImage" ColumnName="GalleryContentImage" />
                 <ScalarProperty Name="GalleryContentIsActive" ColumnName="GalleryContentIsActive" />
                 <ScalarProperty Name="GalleryContentIndex" ColumnName="GalleryContentIndex" />
                 <ScalarProperty Name="GalleryContentPath" ColumnName="GalleryContentPath" />

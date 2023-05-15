@@ -7,8 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Afriauscare.DataBaseLayer
+namespace DataBaseLayer
 {
+    using Afriauscare.DataBaseLayer;
     using System;
     using System.Collections.Generic;
     
@@ -22,6 +23,7 @@ namespace Afriauscare.DataBaseLayer
         public int GalleryId { get; set; }
         public string GalleryTitle { get; set; }
         public string GalleryDescription { get; set; }
+        public Nullable<System.DateTime> GalleryEventDate { get; set; }
     
         public virtual ICollection<GalleryContent> GalleryContents { get; set; }
     }

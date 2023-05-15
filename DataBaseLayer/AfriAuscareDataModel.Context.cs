@@ -9,6 +9,7 @@
 
 namespace Afriauscare.DataBaseLayer
 {
+    using global::DataBaseLayer;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
