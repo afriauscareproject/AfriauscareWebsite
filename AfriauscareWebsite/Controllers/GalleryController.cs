@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Afriauscare.BusinessLayer.Gallery;
 using Afriauscare.BusinessLayer.Error;
@@ -44,36 +42,56 @@ namespace AfriauscareWebsite.Controllers
         [HttpPost]
         public ActionResult CreateGallery(GalleryModel objGalleryModel)
         {
-            GalleryDAO objGalleryDao = new GalleryDAO();
-            GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
-
-            if (ModelState.IsValid)
+            
+            try
             {
-                var galleryId = objGalleryDao.CreateGallery(objGalleryModel);
-
-                foreach (var file in objGalleryModel.imageList)
+                GalleryDAO objGalleryDao = new GalleryDAO();
+                GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
+                GalleryModel objGalleryEmptyModel = new GalleryModel()
                 {
-                    byte[] fileBytes;
-                    int index = 0;
+                    GalleryTitle = string.Empty,
+                    GalleryDescription = string.Empty,
+                    GalleryEventDate = DateTime.Today
+                };
 
-                    using (BinaryReader br = new BinaryReader(file.InputStream))
+                if (ModelState.IsValid)
+                {
+                    var galleryId = objGalleryDao.CreateGallery(objGalleryModel);
+                    int index = 1;
+                    byte[] fileBytes;
+
+                    foreach (var file in objGalleryModel.imageList)
                     {
-                        fileBytes = br.ReadBytes(file.ContentLength);
+                        using (BinaryReader br = new BinaryReader(file.InputStream))
+                        {
+                            fileBytes = br.ReadBytes(file.ContentLength);
+                        }
+
+                        GalleryContentModel objGallerycontent = new GalleryContentModel
+                        {
+                            GalleryContentImage = fileBytes,
+                            GalleryContentIndex = index,
+                            GalleryContentIsActive = true,
+                            GalleryContentPath = string.Empty
+                        };
+                        objGalleryContentDao.CreateGalleryContent(objGallerycontent, galleryId);
+                        index = index + 1;
                     }
 
-                    GalleryContentModel objGallerycontent = new GalleryContentModel
-                    {
-                        GalleryContentImage = fileBytes,
-                        GalleryContentIndex = index,
-                        GalleryContentIsActive = true,
-                        GalleryContentPath = string.Empty
-                    };
-                    objGalleryContentDao.CreateGalleryContent(objGallerycontent, galleryId);
-                    index = index++;
-                }
-            }
+                    ModelState.Clear();
+                    TempData["GalleryAlertMessage"] = "Gallery Created Successfully...";
 
-            return View();
+                    return View("CreateGallery", objGalleryEmptyModel);
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
         }
 
     }

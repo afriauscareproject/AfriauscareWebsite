@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using Afriauscare.BusinessLayer.Shared;
 
 namespace Afriauscare.BusinessLayer.Gallery
 {
@@ -25,7 +26,7 @@ namespace Afriauscare.BusinessLayer.Gallery
         public DateTime GalleryEventDate { set; get; }
 
         [DisplayName("Select your files")]
-        [Required(ErrorMessage = "Images are required.")]
+        [ImageListValidation(ErrorMessage = "Images are required.")]
         public HttpPostedFileBase[] imageList { set; get; }
     }
 }
