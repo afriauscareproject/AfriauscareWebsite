@@ -28,5 +28,7 @@ namespace Afriauscare.BusinessLayer.Gallery
         [DisplayName("Select your files")]
         [ImageListValidation(ErrorMessage = "Images are required.")]
         public HttpPostedFileBase[] imageList { set; get; }
+
+        public byte[] DefaultImage { set; get; }
     }
 }

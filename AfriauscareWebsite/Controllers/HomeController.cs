@@ -36,5 +36,22 @@ namespace AfriauscareWebsite.Controllers
 
             return View(list);
         }
+
+        public ActionResult Gallery2()
+        {
+            GalleryDAO objGalleryDao = new GalleryDAO();
+            GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
+            GalleryContentModel objGalleryContent = new GalleryContentModel();
+
+            List<GalleryModel> list = objGalleryDao.getGalleryAll();
+
+            foreach(var item in list)
+            {
+                objGalleryContent = objGalleryContentDao.getFirstImageFromGallery(item.GalleryId);
+                item.DefaultImage = objGalleryContent.GalleryContentImage;
+            }
+
+            return View(list);
+        }
     }
 }
