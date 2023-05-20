@@ -9,7 +9,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+    <nav class="navbar navbar-expand-lg navbar-dark text-light bg-danger">
         <a>@Html.ActionLink("Afri-Aus Care", "Index", "Home", null, new { @class = "navbar-brand" })</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -66,40 +66,39 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-lg-3">
-                        <img src="~/Content/Images/logo25-new.png"/>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="">Regulations</a></li>
-                            <li><a href="#" class="">Terms and Conditions</a></li>
-                            <li><a href="#" class="">Privacy and Policy</a></li>
-                            <li><a href="#" class="">Careers</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
-                        <h4 class="footer-heading">Stay In Touch</h4>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
-                        <p>Contact Us</p>
-                        <p>0433 526 553</p>
-                        <p>info@afri-auscare.org</p>
-                        <p>562-564 SPRINGVALE ROAD SPRINGVALE SOUTH 3172</p>
-                    </div>
+    </div>
+    <footer style="background-color:black">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3">
+                    <img src="~/Content/Images/logo25-new.png" />
                 </div>
-                <div class="row">
-                    <img src="~/Content/Images/ack.png" />
-                    <p>AFRI AUS CARE ACKNOWLEDGE THE TRADITIONAL OWNERS OF THE LAND</p>
+                <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="">Regulations</a></li>
+                        <li><a href="#" class="">Terms and Conditions</a></li>
+                        <li><a href="#" class="">Privacy and Policy</a></li>
+                        <li><a href="#" class="">Careers</a></li>
+                    </ul>
                 </div>
+                <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
+                    <h4 class="footer-heading">Stay In Touch</h4>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
+                    <p>Contact Us</p>
+                    <p>0433 526 553</p>
+                    <p>info@afri-auscare.org</p>
+                    <p>562-564 SPRINGVALE ROAD SPRINGVALE SOUTH 3172</p>
+                </div>
+            </div>
+            <div class="row">
+                <img src="~/Content/Images/ack.png" />
+                <p>AFRI AUS CARE ACKNOWLEDGE THE TRADITIONAL OWNERS OF THE LAND</p>
             </div>
             <br />
             <p class="font-weight-bold">&copy; @DateTime.Now.Year - Developed by VIT MITS Students</p>
-        </footer>
-    </div>
-
+        </div>
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

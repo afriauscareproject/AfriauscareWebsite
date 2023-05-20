@@ -31,22 +31,24 @@
                     <th scope="col">Email Address</th>
                     <th scope="col">Address</th>
                     <th scope="col">Phone Number</th>
+                    <th scope="col">Is Default</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Contact_id)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Email_address)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Contact_address)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Phone_number)</td>
-                        <td>
-                            @Html.ActionLink("Edit", "ModifyContactInformation", new { ContactId = item.Contact_id }, new { @class = "btn btn-info" })
-                            @*<a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.Contact_id)">Disable</a>*@
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Contact_id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email_address)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Contact_address)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Phone_number)</td>
+                    <td>@Html.CheckBoxFor(modelItem => item.Is_default, new { @class = "form-check-input", @disabled = "disabled" })</td>
+                    <td>
+                        @Html.ActionLink("Edit", "ModifyContactInformation", new { ContactId = item.Contact_id }, new { @class = "btn btn-info" })
+                        @*<a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.Contact_id)">Disable</a>*@
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

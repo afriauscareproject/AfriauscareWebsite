@@ -13,10 +13,12 @@ namespace Afriauscare.BusinessLayer.Gallery
 
         [DisplayName("Gallery Title")]
         [Required(ErrorMessage = "Gallery Title is required.")]
+        [StringLength(50, ErrorMessage = "The maximum lenght for Gallery Title is 50 characters.")]
         public string GalleryTitle { set; get; }
 
         [DisplayName("Gallery Description")]
         [Required(ErrorMessage = "Gallery Description is required.")]
+        [StringLength(100, ErrorMessage = "The maximum lenght for First Name is 100 characters.")]
         public string GalleryDescription { set; get; }
 
         [DisplayName("Event Date")]

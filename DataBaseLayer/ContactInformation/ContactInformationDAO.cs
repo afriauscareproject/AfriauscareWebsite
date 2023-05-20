@@ -27,7 +27,8 @@ namespace Afriauscare.DataBaseLayer
                         Contact_address = item.contact_address,
                         State_id = item.state_id.ToString(),
                         Suburb_id = item.suburb_id.ToString(),
-                        Postcode = item.postcode
+                        Postcode = item.postcode,
+                        Is_default = item.is_default
                     };
                     listContact.Add(objUser);
                 }

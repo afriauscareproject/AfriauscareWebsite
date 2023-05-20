@@ -10,20 +10,25 @@ namespace Afriauscare.BusinessLayer.ContactInformation
         public int Contact_id { get; set; }
 
         [DisplayName("Phone Number")]
+        [StringLength(30, ErrorMessage = "The maximum lenght for Phone Number is 30 characters.")]
         public string Phone_number { get; set; }
 
         [DisplayName("Mobile Number")]
+        [StringLength(30, ErrorMessage = "The maximum lenght for Mobile Number is 30 characters.")]
         public string Mobile_number { get; set; }
 
         [DisplayName("Fax Number")]
+        [StringLength(30, ErrorMessage = "The maximum lenght for Fax Number is 30 characters.")]
         public string Fax_number { get; set; }
 
         [DisplayName("Email Address")]
         [Required(ErrorMessage = "Email is required")]
+        [StringLength(50, ErrorMessage = "The maximum lenght for Email Address is 50 characters.")]
         public string Email_address { get; set; }
 
         [DisplayName("Address")]
         [Required(ErrorMessage = "Address is required")]
+        [StringLength(100, ErrorMessage = "The maximum lenght for Address is 100 characters.")]
         public string Contact_address { get; set; }
 
         [DisplayName("State")]
@@ -38,6 +43,7 @@ namespace Afriauscare.BusinessLayer.ContactInformation
 
         [Required(ErrorMessage ="Postcode is required")]
         [DisplayName("Postcode")]
+        [StringLength(10, ErrorMessage = "The maximum lenght for Postcode is 10 characters.")]
         public string Postcode { get; set; }
 
         [DisplayName("Is default?")]

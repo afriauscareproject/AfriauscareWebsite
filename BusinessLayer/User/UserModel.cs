@@ -12,9 +12,11 @@ namespace Afriauscare.BusinessLayer.User
         public int UserId { get; set; }
 
         [DisplayName("First Name")]
+        [StringLength(30, ErrorMessage = "The maximum lenght for First Name is 30 characters.")]
         public string Username { get; set; }
 
         [DisplayName("Last Name")]
+        [StringLength(30, ErrorMessage = "The maximum lenght for Last Name is 30 characters.")]
         public string UserLastName { get; set;}
 
         [DisplayName("Email")]
@@ -25,6 +27,7 @@ namespace Afriauscare.BusinessLayer.User
         [DisplayName("Password")]
         [Required(ErrorMessage ="Password is Required.")]
         [DataType(DataType.Password)]
+        [StringLength(30, ErrorMessage = "The maximum lenght for Password is 30 characters.")]
         public string UserPassword { get; set; }
 
         [DisplayName("User Active?")]
