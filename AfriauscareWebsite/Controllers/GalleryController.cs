@@ -46,16 +46,19 @@ namespace AfriauscareWebsite.Controllers
             
             try
             {
-                int maxFileSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["MaxFileSize"]);
-                ImageListValidation objImagelistVal = new ImageListValidation();
-                if (!objImagelistVal.FileSizeValidation(objGalleryModel.imageList, maxFileSize))
+                if (objGalleryModel.imageList[0] != null)
                 {
-                    ModelState.AddModelError("imageList", "One or more files size are larger than 2MB.");
-                }
+                    int maxFileSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["MaxFileSize"]);
+                    ImageListValidation objImagelistVal = new ImageListValidation();
+                    if (!objImagelistVal.FileSizeValidation(objGalleryModel.imageList, maxFileSize))
+                    {
+                        ModelState.AddModelError("imageList", "One or more files size are larger than 2MB.");
+                    }
 
-                if (!objImagelistVal.FileExtensionValidation(objGalleryModel.imageList))
-                {
-                    ModelState.AddModelError("imageList", "Image files are permitted only (png, jpg, jpeg).");
+                    if (!objImagelistVal.FileExtensionValidation(objGalleryModel.imageList))
+                    {
+                        ModelState.AddModelError("imageList", "Image files are permitted only (png, jpg, jpeg).");
+                    }
                 }
 
                 GalleryDAO objGalleryDao = new GalleryDAO();

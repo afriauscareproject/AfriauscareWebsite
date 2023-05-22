@@ -119,5 +119,29 @@ namespace Afriauscare.DataBaseLayer
                 Database.SaveChanges();
             }
         }
+
+        public ContactInformationModel GetContactInformationDefault()
+        {
+            using (var DataBase = new AfriAusEntities())
+            {
+                var data = DataBase.contact_information.Where(c => c.is_default == true).FirstOrDefault();
+
+                ContactInformationModel objContactInformation = new ContactInformationModel()
+                {
+                    Contact_id = data.contact_id,
+                    Email_address = data.email_address,
+                    Phone_number = data.phone_number,
+                    Mobile_number = data.mobile_number,
+                    Fax_number = data.fax_number,
+                    Contact_address = data.contact_address,
+                    State_id = data.state_id.ToString(),
+                    Suburb_id = data.suburb_id.ToString(),
+                    Postcode = data.postcode,
+                    Is_default = data.is_default
+                };
+
+                return objContactInformation;
+            }
+        }
     }
 }
