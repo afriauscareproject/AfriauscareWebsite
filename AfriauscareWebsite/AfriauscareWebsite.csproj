@@ -306,6 +306,7 @@
     <Content Include="Views\HomeAdminPortal\ModifyContactInformation.cshtml" />
     <Content Include="Views\Home\Gallery.cshtml" />
     <Content Include="Views\Home\Gallery2.cshtml" />
+    <Content Include="Views\Gallery\ViewGalleryContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\Afriauscare.BusinessLayer.csproj">

@@ -5,6 +5,7 @@ using Afriauscare.BusinessLayer.Gallery;
 using Afriauscare.BusinessLayer.Error;
 using Afriauscare.DataBaseLayer;
 using System.IO;
+using Afriauscare.BusinessLayer.Shared;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -45,6 +46,18 @@ namespace AfriauscareWebsite.Controllers
             
             try
             {
+                int maxFileSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["MaxFileSize"]);
+                ImageListValidation objImagelistVal = new ImageListValidation();
+                if (!objImagelistVal.FileSizeValidation(objGalleryModel.imageList, maxFileSize))
+                {
+                    ModelState.AddModelError("imageList", "One or more files size are larger than 2MB.");
+                }
+
+                if (!objImagelistVal.FileExtensionValidation(objGalleryModel.imageList))
+                {
+                    ModelState.AddModelError("imageList", "Image files are permitted only (png, jpg, jpeg).");
+                }
+
                 GalleryDAO objGalleryDao = new GalleryDAO();
                 GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
                 GalleryModel objGalleryEmptyModel = new GalleryModel()
@@ -94,5 +107,12 @@ namespace AfriauscareWebsite.Controllers
             
         }
 
+        public ActionResult ViewGalleryContent(int galleryId)
+        {
+            GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
+            List<GalleryContentModel> list = objGalleryContentDao.getImagesFromGallery(galleryId);
+
+            return PartialView("ViewGalleryContent", list);
+        }
     }
 }
