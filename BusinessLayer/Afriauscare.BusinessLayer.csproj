@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BankInformation\BankInformationModel.cs" />
     <Compile Include="ContactInformation\ContactInformationModel.cs" />
     <Compile Include="Error\ErrorModel.cs" />
     <Compile Include="Gallery\GalleryContentModel.cs" />

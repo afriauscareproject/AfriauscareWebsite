@@ -12,15 +12,17 @@ namespace Afriauscare.DataBaseLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class GalleryContent
+    public partial class bank
     {
-        public int GalleryContentID { get; set; }
-        public Nullable<int> GalleryId { get; set; }
-        public string GalleryContentPath { get; set; }
-        public int GalleryContentIndex { get; set; }
-        public bool GalleryContentIsActive { get; set; }
-        public byte[] GalleryContentImage { get; set; }
+        public bank()
+        {
+            this.bank_information = new HashSet<bank_information>();
+        }
     
-        public virtual Gallery Gallery { get; set; }
+        public int bank_id { get; set; }
+        public string bank_name { get; set; }
+        public string bank_alias { get; set; }
+    
+        public virtual ICollection<bank_information> bank_information { get; set; }
     }
 }

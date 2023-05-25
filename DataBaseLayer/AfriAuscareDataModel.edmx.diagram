@@ -13,6 +13,9 @@
         <EntityTypeShape EntityType="AfriAusModel.state" Width="1.5" PointX="5.375" PointY="1.125" />
         <EntityTypeShape EntityType="AfriAusModel.suburb" Width="1.5" PointX="7.625" PointY="0.875" />
         <AssociationConnector Association="AfriAusModel.FK_suburbs_states" />
+        <EntityTypeShape EntityType="AfriAusModel.bank_information" Width="1.5" PointX="3" PointY="7" />
+        <EntityTypeShape EntityType="AfriAusModel.bank" Width="1.5" PointX="0.75" PointY="7.25" />
+        <AssociationConnector Association="AfriAusModel.FK__bank_info__bank___1FCDBCEB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -9,7 +9,6 @@
 
 namespace Afriauscare.DataBaseLayer
 {
-    using global::DataBaseLayer;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -32,5 +31,7 @@ namespace Afriauscare.DataBaseLayer
         public DbSet<contact_information> contact_information { get; set; }
         public DbSet<state> states { get; set; }
         public DbSet<suburb> suburbs { get; set; }
+        public DbSet<bank_information> bank_information { get; set; }
+        public DbSet<bank> banks { get; set; }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Afriauscare.BusinessLayer.ContactInformation;
 using Afriauscare.BusinessLayer.Error;
+using Afriauscare.BusinessLayer.BankInformation;
 using Afriauscare.DataBaseLayer.Shared;
 using Afriauscare.DataBaseLayer;
+using Afriauscare.DataBaseLayer.BankInformation;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -217,5 +217,141 @@ namespace AfriauscareWebsite.Controllers
 
             return View("ModifyContactInformation",objContactModel);
         }
+
+        public ActionResult ViewBankInformation()
+        {
+            BankInformationDAO objDAO = new BankInformationDAO();
+            List<BankInformationModel> list = objDAO.GetBankInformation();
+
+            return View(list);
+        }
+
+        public ActionResult CreateBankInformation()
+        {
+            BankInformationModel objModel = new BankInformationModel();
+            BanksDAO objBanksDao = new BanksDAO();
+
+            objModel.Banks = objBanksDao.GetBanks();
+
+            return View(objModel);
+        }
+
+        [HttpPost]
+        public ActionResult CreateBankInformation(BankInformationModel objBankModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    BankInformationDAO objBankDAO = new BankInformationDAO();
+                    if (objBankModel.Is_default)
+                    {
+                        objBankDAO.ClearIsDefaultField();
+                    }
+                    objBankDAO.CreateBankInformation(objBankModel);
+
+                    ModelState.Clear();
+                    BankInformationModel objEmptyBankModel = new BankInformationModel()
+                    {
+                        Abn_number = string.Empty,
+                        Bsb_number = string.Empty,
+                        Account_number = string.Empty,
+                        Is_default = false
+                    };
+
+                    BanksDAO objBankDao = new BanksDAO();
+
+                    objEmptyBankModel.Banks = objBankDao.GetBanks();
+
+                    TempData["BankInformationAlertMessage"] = "Bank Information Created ...";
+                    return View("CreateBankInformation", objEmptyBankModel);
+                }
+                else
+                {
+                    BanksDAO objBankDao = new BanksDAO();
+
+                    objBankModel.Banks = objBankDao.GetBanks();
+
+                    return View("CreateBankInformation", objBankModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+
+
+        }
+
+        [HttpGet]
+        public ActionResult ModifyBankInformation(int BankInformationId)
+        {
+            BankInformationDAO objBankDAO = new BankInformationDAO();
+            try
+            {
+                var objBankModel = objBankDAO.GetBankInformationbyId(BankInformationId);
+
+                BanksDAO objBankDao = new BanksDAO();
+
+                objBankModel.Banks = objBankDao.GetBanks();
+
+                return View(objBankModel);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ModifyBankInformation(BankInformationModel objBankModel)
+        {
+            BankInformationDAO objBankInformationDao = new BankInformationDAO();
+            BanksDAO objBankDao = new BanksDAO();
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (objBankModel.Is_default)
+                    {
+                        objBankInformationDao.ClearIsDefaultField();
+                    }
+
+                    objBankInformationDao.ModifyBankInformation(objBankModel);
+
+                    ModelState.Clear();
+
+                    BankInformationModel objEmptyModel = new BankInformationModel()
+                    {
+                        Bank_information_id = 0,
+                        Bank_id = 0,
+                        Abn_number = string.Empty,
+                        Account_number = string.Empty,
+                        Bsb_number = string.Empty,
+                        Is_default = false
+                    };
+                    TempData["BankInformationAlertMessage"] = "Bank Information Modifed Successfully...";
+                    objEmptyModel.Banks = objBankDao.GetBanks();
+
+                    return View("ModifyBankInformation", objEmptyModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+
+            objBankModel.Banks = objBankDao.GetBanks();
+
+            return View("ModifyBankInformation", objBankModel);
+        }
+
     }
 }

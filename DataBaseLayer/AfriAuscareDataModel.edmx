@@ -5,6 +5,25 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AfriAusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bank_information">
+          <Key>
+            <PropertyRef Name="bank_information_id" />
+          </Key>
+          <Property Name="bank_information_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bank_id" Type="int" Nullable="false" />
+          <Property Name="abn_number" Type="varchar" MaxLength="30" />
+          <Property Name="bsb_number" Type="varchar" MaxLength="30" />
+          <Property Name="account_number" Type="varchar" MaxLength="30" />
+          <Property Name="is_default" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="banks">
+          <Key>
+            <PropertyRef Name="bank_id" />
+          </Key>
+          <Property Name="bank_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bank_name" Type="varchar" MaxLength="50" />
+          <Property Name="bank_alias" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="contact_information">
           <Key>
             <PropertyRef Name="contact_id" />
@@ -36,8 +55,8 @@
           <Property Name="GalleryContentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GalleryId" Type="int" />
           <Property Name="GalleryContentPath" Type="varchar" MaxLength="200" />
-          <Property Name="GalleryContentIndex" Type="int" />
-          <Property Name="GalleryContentIsActive" Type="bit" />
+          <Property Name="GalleryContentIndex" Type="int" Nullable="false" />
+          <Property Name="GalleryContentIsActive" Type="bit" Nullable="false" />
           <Property Name="GalleryContentImage" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="states">
@@ -69,7 +88,19 @@
           <Property Name="UserPassword" Type="varchar" MaxLength="30" />
           <Property Name="UserActive" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK__GalleryCo__Galle__71D1E811">
+        <Association Name="FK__bank_info__bank___1FCDBCEB">
+          <End Role="banks" Type="Self.banks" Multiplicity="1" />
+          <End Role="bank_information" Type="Self.bank_information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="banks">
+              <PropertyRef Name="bank_id" />
+            </Principal>
+            <Dependent Role="bank_information">
+              <PropertyRef Name="bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GalleryCo__Galle__1A14E395">
           <End Role="Gallery" Type="Self.Gallery" Multiplicity="0..1" />
           <End Role="GalleryContent" Type="Self.GalleryContent" Multiplicity="*" />
           <ReferentialConstraint>
@@ -94,13 +125,19 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AfriAusModelStoreContainer">
+          <EntitySet Name="bank_information" EntityType="Self.bank_information" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="banks" EntityType="Self.banks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="contact_information" EntityType="Self.contact_information" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gallery" EntityType="Self.Gallery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GalleryContent" EntityType="Self.GalleryContent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="suburbs" EntityType="Self.suburbs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__GalleryCo__Galle__71D1E811" Association="Self.FK__GalleryCo__Galle__71D1E811">
+          <AssociationSet Name="FK__bank_info__bank___1FCDBCEB" Association="Self.FK__bank_info__bank___1FCDBCEB">
+            <End Role="banks" EntitySet="banks" />
+            <End Role="bank_information" EntitySet="bank_information" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GalleryCo__Galle__1A14E395" Association="Self.FK__GalleryCo__Galle__1A14E395">
             <End Role="Gallery" EntitySet="Gallery" />
             <End Role="GalleryContent" EntitySet="GalleryContent" />
           </AssociationSet>
@@ -139,6 +176,12 @@
             <End Role="state" EntitySet="states" />
             <End Role="suburb" EntitySet="suburbs" />
           </AssociationSet>
+          <EntitySet Name="bank_information" EntityType="AfriAusModel.bank_information" />
+          <EntitySet Name="banks" EntityType="AfriAusModel.bank" />
+          <AssociationSet Name="FK__bank_info__bank___1FCDBCEB" Association="AfriAusModel.FK__bank_info__bank___1FCDBCEB">
+            <End Role="bank" EntitySet="banks" />
+            <End Role="bank_information" EntitySet="bank_information" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Gallery">
           <Key>
@@ -157,8 +200,8 @@
           <Property Name="GalleryContentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GalleryId" Type="Int32" />
           <Property Name="GalleryContentPath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="GalleryContentIndex" Type="Int32" />
-          <Property Name="GalleryContentIsActive" Type="Boolean" />
+          <Property Name="GalleryContentIndex" Type="Int32" Nullable="false" />
+          <Property Name="GalleryContentIsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Gallery" Relationship="AfriAusModel.FK__GalleryCo__Galle__71D1E811" FromRole="GalleryContent" ToRole="Gallery" />
           <Property Name="GalleryContentImage" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
         </EntityType>
@@ -218,6 +261,39 @@
             </Principal>
             <Dependent Role="suburb">
               <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="bank_information">
+          <Key>
+            <PropertyRef Name="bank_information_id" />
+          </Key>
+          <Property Name="bank_information_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bank_id" Type="Int32" Nullable="false" />
+          <Property Name="abn_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="bsb_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="account_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="is_default" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="bank" Relationship="AfriAusModel.FK__bank_info__bank___1FCDBCEB" FromRole="bank_information" ToRole="bank" />
+        </EntityType>
+        <EntityType Name="bank">
+          <Key>
+            <PropertyRef Name="bank_id" />
+          </Key>
+          <Property Name="bank_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bank_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="bank_alias" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="bank_information" Relationship="AfriAusModel.FK__bank_info__bank___1FCDBCEB" FromRole="bank" ToRole="bank_information" />
+        </EntityType>
+        <Association Name="FK__bank_info__bank___1FCDBCEB">
+          <End Type="AfriAusModel.bank" Role="bank" Multiplicity="1" />
+          <End Type="AfriAusModel.bank_information" Role="bank_information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bank">
+              <PropertyRef Name="bank_id" />
+            </Principal>
+            <Dependent Role="bank_information">
+              <PropertyRef Name="bank_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -294,6 +370,27 @@
                 <ScalarProperty Name="suburb_name" ColumnName="suburb_name" />
                 <ScalarProperty Name="state_id" ColumnName="state_id" />
                 <ScalarProperty Name="suburb_id" ColumnName="suburb_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bank_information">
+            <EntityTypeMapping TypeName="AfriAusModel.bank_information">
+              <MappingFragment StoreEntitySet="bank_information">
+                <ScalarProperty Name="is_default" ColumnName="is_default" />
+                <ScalarProperty Name="account_number" ColumnName="account_number" />
+                <ScalarProperty Name="bsb_number" ColumnName="bsb_number" />
+                <ScalarProperty Name="abn_number" ColumnName="abn_number" />
+                <ScalarProperty Name="bank_id" ColumnName="bank_id" />
+                <ScalarProperty Name="bank_information_id" ColumnName="bank_information_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="banks">
+            <EntityTypeMapping TypeName="AfriAusModel.bank">
+              <MappingFragment StoreEntitySet="banks">
+                <ScalarProperty Name="bank_alias" ColumnName="bank_alias" />
+                <ScalarProperty Name="bank_name" ColumnName="bank_name" />
+                <ScalarProperty Name="bank_id" ColumnName="bank_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
