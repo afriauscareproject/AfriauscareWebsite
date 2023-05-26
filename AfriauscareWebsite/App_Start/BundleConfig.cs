@@ -33,6 +33,10 @@ namespace AfriauscareWebsite
                       "~/Content/bootstrap.css",
                       //"~/Content/Site.css",
                       "~/Content/carousel.css"));
+
+            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/bootstrap.css"));
         }
     }
 }

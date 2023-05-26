@@ -33,21 +33,21 @@
     </div>
 </div>
 
-    <script>
-        $(".ViewMorePictures").click(function () {
-            var id = this.id;
-            id = id.replace('ViewMorePictures-', '');
-           $.ajax({
-                url: "@Url.Action("ViewGalleryContent", "Gallery")",
-                data: { galleryId: id},
-                success: function (data) {
-                    $("#showmodal .modal-dialog").html(data);
-                    $("#showmodal").modal("show");
-                }
-            });
+<script>
+    $(".ViewMorePictures").click(function () {
+        var id = this.id;
+        id = id.replace('ViewMorePictures-', '');
+        $.ajax({
+            url: "@Url.Action("ViewGalleryContent", "Gallery")",
+            data: { galleryId: id},
+            success: function (data) {
+                $("#showmodal .modal-dialog").html(data);
+                $("#showmodal").modal("show");
+            }
         });
+    });
 
-    </script>
+</script>
 
 
 
