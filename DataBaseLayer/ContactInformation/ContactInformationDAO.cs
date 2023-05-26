@@ -143,5 +143,18 @@ namespace Afriauscare.DataBaseLayer
                 return objContactInformation;
             }
         }
+
+        public void DeleteContactInformation(int contactInformationId)
+        {
+            using (var DataBase = new AfriAusEntities())
+            {
+                if (DataBase.contact_information.Any(c => c.contact_id == contactInformationId))
+                {
+                    contact_information recordToDelete = new contact_information() { contact_id = contactInformationId };
+                    DataBase.Entry(recordToDelete).State = System.Data.EntityState.Deleted;
+                    DataBase.SaveChanges();
+                }
+            }
+        }
     }
 }

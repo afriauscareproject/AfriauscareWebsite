@@ -7,13 +7,24 @@ namespace Afriauscare.DataBaseLayer.BankInformation
 {
     public class BankInformationDAO
     {
-        public List<BankInformationModel> GetBankInformation()
+        public List<BankInformationModel> GetBankInformationAll()
         {
             List<BankInformationModel> listReturn = new List<BankInformationModel>();
 
             using (var DataBase = new AfriAusEntities())
             {
-                var BankInformationList = DataBase.bank_information.ToList();
+                var BankInformationList = (from b in DataBase.bank_information
+                                           join bnk in DataBase.banks
+                                           on b.bank_id equals bnk.bank_id
+                                           select new {
+                                               b.bank_information_id,
+                                               b.bank_id,
+                                               bnk.bank_name,
+                                               b.abn_number,
+                                               b.bsb_number,
+                                               b.account_number,
+                                               b.is_default
+                                           }).ToList();
 
                 foreach (var item in BankInformationList)
                 {
@@ -21,6 +32,7 @@ namespace Afriauscare.DataBaseLayer.BankInformation
                     {
                         Bank_information_id = item.bank_information_id,
                         Bank_id = item.bank_id,
+                        Bank_Name = item.bank_name,
                         Abn_number = item.abn_number,
                         Bsb_number = item.bsb_number,
                         Account_number = item.account_number,
@@ -100,6 +112,19 @@ namespace Afriauscare.DataBaseLayer.BankInformation
                 DataBase.bank_information.Add(objBankInformation);
                 DataBase.Entry(objBankInformation).State = System.Data.EntityState.Modified;
                 DataBase.SaveChanges();
+            }
+        }
+
+        public void DeleteBankInformation(int bankInformationId)
+        {
+            using (var DataBase = new AfriAusEntities())
+            {
+                if (DataBase.bank_information.Any(b => b.bank_information_id == bankInformationId))
+                {
+                    bank_information recordToDelete = new bank_information() { bank_information_id = bankInformationId };
+                    DataBase.Entry(recordToDelete).State = System.Data.EntityState.Deleted;
+                    DataBase.SaveChanges();
+                }
             }
         }
     }

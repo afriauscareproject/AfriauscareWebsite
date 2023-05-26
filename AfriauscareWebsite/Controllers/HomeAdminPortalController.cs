@@ -33,11 +33,19 @@ namespace AfriauscareWebsite.Controllers
 
         public ActionResult ViewContactInformation()
         {
-            List<ContactInformationModel> list = new List<ContactInformationModel>();
             ContactInformationDAO objDAO = new ContactInformationDAO();
-            list = objDAO.GetContactInformationAll();
+            try
+            {
+                List<ContactInformationModel> list = objDAO.GetContactInformationAll();
+                return View(list);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
 
-            return View(list);
         }
 
         public ActionResult CreateContactInformation()
@@ -45,16 +53,26 @@ namespace AfriauscareWebsite.Controllers
             ContactInformationModel objModel = new ContactInformationModel();
             StatesDAO objStateDao = new StatesDAO();
             List<SelectListItem> emptyList = new List<SelectListItem>();
-            var first_item = new SelectListItem()
+            try
             {
-                Value = null,
-                Text = "--- Select Suburb ---"
-            };
-            emptyList.Add(first_item);
+                var first_item = new SelectListItem()
+                {
+                    Value = null,
+                    Text = "--- Select Suburb ---"
+                };
+                emptyList.Add(first_item);
 
-            objModel.States = objStateDao.GetStates();
-            objModel.Suburbs = emptyList;
-            return View(objModel);
+                objModel.States = objStateDao.GetStates();
+                objModel.Suburbs = emptyList;
+                return View(objModel);
+            }
+            catch(Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
         }
 
         [HttpPost]
@@ -126,17 +144,6 @@ namespace AfriauscareWebsite.Controllers
                 return RedirectToAction("Error", "Error", objErrorModel);
             }
 
-
-        }
-
-        [HttpGet]
-        public ActionResult GetSuburbs(string state_id)
-        {
-
-            var suburbsDao = new SuburbsDAO();
-
-            IEnumerable<SelectListItem> suburbs = suburbsDao.GetSuburbs(state_id);
-            return Json(suburbs, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -221,9 +228,19 @@ namespace AfriauscareWebsite.Controllers
         public ActionResult ViewBankInformation()
         {
             BankInformationDAO objDAO = new BankInformationDAO();
-            List<BankInformationModel> list = objDAO.GetBankInformation();
 
-            return View(list);
+            try
+            {
+                List<BankInformationModel> list = objDAO.GetBankInformationAll();
+                return View(list);
+            }
+            catch(Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
         }
 
         public ActionResult CreateBankInformation()
@@ -231,9 +248,18 @@ namespace AfriauscareWebsite.Controllers
             BankInformationModel objModel = new BankInformationModel();
             BanksDAO objBanksDao = new BanksDAO();
 
-            objModel.Banks = objBanksDao.GetBanks();
-
-            return View(objModel);
+            try
+            {
+                objModel.Banks = objBanksDao.GetBanks();
+                return View(objModel);
+            }
+            catch(Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
         }
 
         [HttpPost]
@@ -353,5 +379,65 @@ namespace AfriauscareWebsite.Controllers
             return View("ModifyBankInformation", objBankModel);
         }
 
+        [HttpPost]
+        public JsonResult DeleteBankInformationJson(int BankInformationId)
+        {
+            bool result = false;
+            BankInformationDAO objBankInformationDAO = new BankInformationDAO();
+            try
+            {
+                objBankInformationDAO.DeleteBankInformation(BankInformationId);
+                result = true;
+                TempData["BankInformationAlertMessage"] = "Bank Information Deleted Successfully...";
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public JsonResult DeleteContactInformationJson(int ContactInformationId)
+        {
+            bool result = false;
+            ContactInformationDAO objContactInformationDAO = new ContactInformationDAO();
+       
+            try
+            {
+                objContactInformationDAO.DeleteContactInformation(ContactInformationId);
+                result = true;
+                TempData["ContactInformationAlertMessage"] = "Contact Information Deleted Successfully...";
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult GetSuburbs(string state_id)
+        {
+
+            var suburbsDao = new SuburbsDAO();
+
+            try
+            {
+                IEnumerable<SelectListItem> suburbs = suburbsDao.GetSuburbs(state_id);
+                return Json(suburbs, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+
+        }
     }
 }

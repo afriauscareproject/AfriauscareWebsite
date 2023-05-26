@@ -32,5 +32,7 @@ namespace Afriauscare.BusinessLayer.BankInformation
 
         [DisplayName("Is default?")]
         public bool Is_default { get; set; }
+
+        public string Bank_Name { get; set; }
     }
 }

@@ -152,6 +152,7 @@ namespace AfriauscareWebsite.Controllers
             {
                 objUserDAO.DisableUser(UserId);
                 result = true;
+                TempData["UserAlertMessage"] = "User Deactivated Successfully...";
 
                 return Json(result, JsonRequestBehavior.AllowGet);
             }

@@ -21,6 +21,14 @@
         <br />
         <h2>Contact Information</h2>
         <br />
+        @if (TempData["ContactInformationAlertMessage"] != null)
+        {
+            <div id="DeleteContactInformationAlert" class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Success!</strong> @TempData["ContactInformationAlertMessage"]
+            </div>
+        }
+
         <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CreateContactInformation", "HomeAdminPortal")'">Create Contact Information</button>
         <br />
         <br />
@@ -38,21 +46,95 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Contact_id)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Email_address)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Contact_address)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Phone_number)</td>
-                    <td>@Html.CheckBoxFor(modelItem => item.Is_default, new { @class = "form-check-input", @disabled = "disabled" })</td>
-                    <td>
-                        @Html.ActionLink("Edit", "ModifyContactInformation", new { ContactId = item.Contact_id }, new { @class = "btn btn-info" })
-                        @*<a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.Contact_id)">Disable</a>*@
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Contact_id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email_address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Contact_address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Phone_number)</td>
+                        <td>@Html.CheckBoxFor(modelItem => item.Is_default, new { @class = "form-check-input", @disabled = "disabled" })</td>
+                        <td>
+                            @Html.ActionLink("Edit", "ModifyContactInformation", new { ContactId = item.Contact_id }, new { @class = "btn btn-info" })
+                            @if (item.Is_default)
+                            {
+                                <button class="btnDeleteContactInformation btn btn-danger" disabled title="A default record cannot be deleted">Delete</button>
+                            }
+                            else
+                            {
+                                <button class="btnDeleteContactInformation btn btn-danger">Delete</button>
+                            }
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
         <input type="hidden" id="ContactIdHidden" />
     </div>
+
+    <div class="modal fade" id="deleteContactInformationModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the contact information selected?</p>
+                    <strong><label id="lblAddress"></label></strong>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <a href="#" id="btnConfirmDeleteContactInformation" class="btn btn-info mr-2">Confirm</a>
+                        <a href="#" id="btnCancelDeleteContactInformationModal" class="btn btn-danger">Cancel</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btnCancelDeleteContactInformationModal").click(function () {
+                window.location.href = "/HomeAdminPortal/ViewContactInformation";
+            })
+
+            //Function which is called when confirming disable a user - Jquery function added to the modal button
+            $("#btnConfirmDeleteContactInformation").click(function () {
+                var _id = $("#ContactIdHidden").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/HomeAdminPortal/DeleteContactInformationJson",
+                    data: { ContactInformationId: _id },
+                    success: function (result) {
+                        if (result) {
+                            $("#deleteContactInformationModal").modal('hide');
+                            $("#ContactIdHidden").val(null);
+                            window.location.href = "/HomeAdminPortal/ViewContactInformation";
+                        }
+                        else {
+                            alert("The operation did not complete");
+                        }
+                    }
+                });
+            })
+        })
+
+        $(".btnDeleteContactInformation").click(function () {
+            debugger;
+            var currentTds = $(this).closest("tr").find("td"); // find all td of selected row
+            var ContactInformationId = $(currentTds).eq(0).text();
+            var Address = $(currentTds).eq(2).text(); // eq= cell , text = inner text
+            $("#lblAddress").html(Address);
+            $("#ContactIdHidden").val(ContactInformationId);
+            $("#deleteContactInformationModal").modal('show');
+        });
+
+        setTimeout(function () {
+
+            // Closing the alert message once the user is created
+            $('#DeleteContactInformationAlert').alert('close');
+        }, 5300);
+    </script>
 </body>
 </html>
