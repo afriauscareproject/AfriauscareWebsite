@@ -7,7 +7,7 @@ using Afriauscare.BusinessLayer.Shared;
 
 namespace Afriauscare.BusinessLayer.Gallery
 {
-    public class GalleryModel
+    public class GalleryModifyModel
     {
         public int GalleryId { set; get; }
 
@@ -28,7 +28,6 @@ namespace Afriauscare.BusinessLayer.Gallery
         public DateTime GalleryEventDate { set; get; }
 
         [DisplayName("Select your files")]
-        [ImageListValidation(ErrorMessage = "Images are required.")]
         public HttpPostedFileBase[] imageList { set; get; }
 
         public byte[] DefaultImage { set; get; }

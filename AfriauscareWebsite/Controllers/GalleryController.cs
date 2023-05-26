@@ -117,5 +117,76 @@ namespace AfriauscareWebsite.Controllers
 
             return PartialView("ViewGalleryContent", list);
         }
+
+        [HttpGet]
+        public ActionResult ModifyGallery(int GalleryId)
+        {
+            GalleryDAO objGalleryDAO = new GalleryDAO();
+            try
+            {
+                var objGalleryModel = objGalleryDAO.GetGalleryById(GalleryId);
+
+                return View(objGalleryModel);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel
+                {
+                    ErrorMessage = ex.Message
+                };
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ModifyGallery(GalleryModifyModel objGalleryModel)
+        {
+            try
+            {
+                if (objGalleryModel.imageList[0] != null)
+                {
+                    int maxFileSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["MaxFileSize"]);
+                    ImageListValidation objImagelistVal = new ImageListValidation();
+                    if (!objImagelistVal.FileSizeValidation(objGalleryModel.imageList, maxFileSize))
+                    {
+                        ModelState.AddModelError("imageList", "One or more files size are larger than 2MB.");
+                    }
+
+                    if (!objImagelistVal.FileExtensionValidation(objGalleryModel.imageList))
+                    {
+                        ModelState.AddModelError("imageList", "Image files are permitted only (png, jpg, jpeg).");
+                    }
+                }
+
+                if (ModelState.IsValid)
+                {
+                    GalleryDAO objGalleryDao = new GalleryDAO();
+                    GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
+                    GalleryModifyModel objGalleryEmptyModel = new GalleryModifyModel()
+                    {
+                        GalleryTitle = string.Empty,
+                        GalleryDescription = string.Empty,
+                        GalleryEventDate = DateTime.Today
+                    };
+
+                    objGalleryDao.ModifyGallery(objGalleryModel);
+
+                    ModelState.Clear();
+                    TempData["GalleryAlertMessage"] = "Gallery Updated Successfully...";
+
+                    return View("ModifyGallery", objGalleryEmptyModel);
+                }
+                else
+                {
+                    return View("ModifyGallery");
+                }
+            }
+            catch(Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+        }
     }
 }

@@ -51,5 +51,42 @@ namespace Afriauscare.DataBaseLayer
             return galleryId;
         }
 
+        public GalleryModifyModel GetGalleryById(int GalleryId)
+        {
+            using (var DataBase = new AfriAusEntities())
+            {
+                var objGallery = DataBase.Galleries.Where(g => g.GalleryId == GalleryId).SingleOrDefault();
+
+                GalleryModifyModel objGalleryReturn = new GalleryModifyModel
+                {
+                    GalleryId = objGallery.GalleryId,
+                    GalleryTitle = objGallery.GalleryTitle,
+                    GalleryDescription = objGallery.GalleryDescription,
+                    GalleryEventDate = objGallery.GalleryEventDate
+                };
+
+                return objGalleryReturn;
+            }
+        
+}
+
+        public void ModifyGallery(GalleryModifyModel objGalleryModel)
+        {
+            using (var DataBase = new AfriAusEntities())
+            {
+                Gallery objGalleryUpdate = new Gallery()
+                {
+                    GalleryId = objGalleryModel.GalleryId,
+                    GalleryTitle = objGalleryModel.GalleryTitle,
+                    GalleryDescription = objGalleryModel.GalleryDescription,
+                    GalleryEventDate = objGalleryModel.GalleryEventDate
+                };
+
+                DataBase.Galleries.Add(objGalleryUpdate);
+                DataBase.Entry(objGalleryUpdate).State = System.Data.EntityState.Modified;
+                DataBase.SaveChanges();
+            }
+        }
+
     }
 }

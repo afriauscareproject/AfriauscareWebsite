@@ -1,4 +1,4 @@
-﻿@model Afriauscare.BusinessLayer.Gallery.GalleryModel
+﻿@model Afriauscare.BusinessLayer.Gallery.GalleryModifyModel
 @{
     Layout = null;
 }
@@ -20,14 +20,16 @@
     @Html.Partial("_MenuBarAdminPortal")
 
     <div class="container">
-        @using (Html.BeginForm("CreateGallery", "Gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("ModifyGallery", "Gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
         <div class="mx-auto col-12 col-md-10 col-lg-6">
-            <h2>Create Gallery</h2>
+            <h2>Modify Gallery</h2>
             <br />
+            @Html.HiddenFor(model => model.GalleryId)
+
             @if (TempData["GalleryAlertMessage"] != null)
             {
-                <div id="CreateGalleryAlert" class="alert alert-success">
+                <div id="ModifyGalleryAlert" class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Success!</strong> @TempData["GalleryAlertMessage"]
                 </div>
@@ -48,13 +50,13 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     @Html.LabelFor(model => model.GalleryEventDate)
-                    @Html.TextBoxFor(model => model.GalleryEventDate, new { type = "date", @class = "form-control" })
+                    @Html.EditorFor(model => model.GalleryEventDate, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.GalleryEventDate, null, new { @class = "text text-danger" })
                 </div>
             </div>
             <br />
             <fieldset class="border p-1">
-                <legend class="w-auto">Select your files</legend>
+                <legend class="w-auto">Add More files</legend>
                 <div class="form-group">
                     <div class="col-md-10">
                         @Html.TextBoxFor(model => model.imageList, "", new { @type = "file", @multiple = "multiple" })
@@ -67,7 +69,7 @@
                 @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Create Gallery</button>
+                <button type="submit" class="btn btn-primary">Modify Gallery</button>
                 <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewGallery", "Gallery")'">Back</button>
             </div>
         </div>
@@ -78,7 +80,7 @@
         setTimeout(function () {
 
             // Closing the alert message once the user is created
-            $('#CreateGalleryAlert').alert('close');
+            $('#ModifyGalleryAlert').alert('close');
         }, 5300);
     </script>
 </body>

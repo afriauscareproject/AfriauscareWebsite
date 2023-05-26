@@ -310,6 +310,7 @@
     <Content Include="Views\HomeAdminPortal\ViewBankInformation.cshtml" />
     <Content Include="Views\HomeAdminPortal\CreateBankInformation.cshtml" />
     <Content Include="Views\HomeAdminPortal\ModifyBankInformation.cshtml" />
+    <Content Include="Views\Gallery\ModifyGallery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\Afriauscare.BusinessLayer.csproj">

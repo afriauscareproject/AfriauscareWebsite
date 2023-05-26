@@ -43,7 +43,7 @@
                         <td>@Html.DisplayFor(modelItem => item.GalleryTitle)</td>
                         <td>@Html.DisplayFor(modelItem => item.GalleryDescription)</td>
                         <td>
-                            @Html.ActionLink("Edit", "ModifyUser", new { Id = item.GalleryId }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("Edit", "ModifyGallery", new { GalleryId = item.GalleryId }, new { @class = "btn btn-info" })
                             <a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.GalleryId)">Disable</a>
                         </td>
                     </tr>
