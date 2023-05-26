@@ -9,12 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    @Styles.Render("~/Content/css")
-    <script src="~/Scripts/jquery-3.3.1.slim.min"></script>
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script src="~/Scripts/popper.min.js"></script>
-    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-    @Styles.Render("~/Content/bootstrap")
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Modify Bank Information</title>
 </head>
@@ -24,57 +19,57 @@
     <div class="container">
         @using (Html.BeginForm("ModifyBankInformation", "HomeAdminPortal", FormMethod.Post))
         {
-        <div class="mx-auto col-12 col-md-10 col-lg-6">
-            <h2>Create Bank Information</h2>
-            <br />
-            @Html.HiddenFor(model => model.Bank_information_id)
+            <div class="mx-auto col-12 col-md-10 col-lg-6">
+                <h2>Create Bank Information</h2>
+                <br />
+                @Html.HiddenFor(model => model.Bank_information_id)
 
-            @if (TempData["BankInformationAlertMessage"] != null)
-            {
-                <div id="ModifyBankInformationAlert" class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Success!</strong> @TempData["BankInformationAlertMessage"]
-                </div>
-            }
+                @if (TempData["BankInformationAlertMessage"] != null)
+                {
+                    <div id="ModifyBankInformationAlert" class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Success!</strong> @TempData["BankInformationAlertMessage"]
+                    </div>
+                }
 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Bank_id)
-                    @Html.DropDownListFor(model => model.Bank_id, new SelectList(Model.Banks, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "States" })
-                    @Html.ValidationMessageFor(model => model.Bank_id, null, new { @class = "text-danger" })
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Bank_id)
+                        @Html.DropDownListFor(model => model.Bank_id, new SelectList(Model.Banks, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "States" })
+                        @Html.ValidationMessageFor(model => model.Bank_id, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Abn_number)
+                        @Html.TextBoxFor(model => model.Abn_number, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Abn_number, null, new { @class = "text text-danger" })
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Abn_number)
-                    @Html.TextBoxFor(model => model.Abn_number, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Abn_number, null, new { @class = "text text-danger" })
-                </div>
-            </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Bsb_number)
-                    @Html.TextBoxFor(model => model.Bsb_number, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Bsb_number, null, new { @class = "text text-danger" })
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Bsb_number)
+                        @Html.TextBoxFor(model => model.Bsb_number, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Bsb_number, null, new { @class = "text text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Account_number)
+                        @Html.TextBoxFor(model => model.Account_number, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Account_number, null, new { @class = "text text-danger" })
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.Account_number)
-                    @Html.TextBoxFor(model => model.Account_number, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Account_number, null, new { @class = "text text-danger" })
+                <div class="form-check">
+                    @Html.CheckBoxFor(model => model.Is_default, new { @class = "form-check-input" })
+                    @Html.LabelFor(model => model.Is_default, new { @class = "form-check-label" })
+                    @Html.ValidationMessageFor(model => model.Is_default, null, new { @class = "text text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Modify</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewBankInformation", "HomeAdminPortal")'">Back</button>
                 </div>
             </div>
-            <div class="form-check">
-                @Html.CheckBoxFor(model => model.Is_default, new { @class = "form-check-input" })
-                @Html.LabelFor(model => model.Is_default, new { @class = "form-check-label" })
-                @Html.ValidationMessageFor(model => model.Is_default, null, new { @class = "text text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Modify</button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewBankInformation", "HomeAdminPortal")'">Back</button>
-            </div>
-        </div>
         }
     </div>
 
@@ -86,5 +81,9 @@
             $('#ModifyBankInformationAlert').alert('close');
         }, 5300);
     </script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/Scripts/popper.min.js" type="module"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
 </body>
 </html>

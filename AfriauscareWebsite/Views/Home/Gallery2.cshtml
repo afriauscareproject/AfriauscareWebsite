@@ -4,7 +4,6 @@
     ViewBag.Title = "Gallery";
 }
 
-@Styles.Render("~/Content/css")
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/bootstrap.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
@@ -34,7 +33,6 @@
     </div>
 </div>
 
-@section scripts{
     <script>
         $(".ViewMorePictures").click(function () {
             var id = this.id;
@@ -50,7 +48,6 @@
         });
 
     </script>
-}
 
 
 

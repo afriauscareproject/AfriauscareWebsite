@@ -2,47 +2,38 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title Home Admin Portal</title>
-    @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/bootstrap")
-</head>
-<body>
-    @Html.Partial("_MenuBarAdminPortal")
-    <div class="container">
-        <br />
-        <h2>Last Changes Registered</h2>
-        <br />
-        <br />
-        <table class="table table-striped table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Username</th>
-                    <th scope="col">Action</th>
-                    <th scope="col">Module</th>
-                    <th scope="col">Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">John doe</th>
-                    <td>Disable</td>
-                    <td>Gallery</td>
-                    <td>01-04-2023 18:00</td>
-                </tr>
-                <tr>
-                    <th scope="row">Mark Fong</th>
-                    <td>Delete</td>
-                    <td>User</td>
-                    <td>02-04-2023 22:05</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+<title>@ViewBag.Title Home Admin Portal</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+@Html.Partial("_MenuBarAdminPortal")
+<div class="container">
+    <br />
+    <h2>Last Changes Registered</h2>
+    <br />
+    <br />
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Action</th>
+                <th scope="col">Module</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">John doe</th>
+                <td>Disable</td>
+                <td>Gallery</td>
+                <td>01-04-2023 18:00</td>
+            </tr>
+            <tr>
+                <th scope="row">Mark Fong</th>
+                <td>Delete</td>
+                <td>User</td>
+                <td>02-04-2023 22:05</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
