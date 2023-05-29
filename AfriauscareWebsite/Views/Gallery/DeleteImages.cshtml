@@ -1,0 +1,56 @@
+﻿@model IList<Afriauscare.BusinessLayer.Gallery.GalleryContentModel>
+
+@using (Html.BeginForm("DeleteImages", "Gallery", FormMethod.Post))
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="title">@Model.First().GalleryName</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Select</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Image Name</th>
+                        <th scope="col">File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(var i = 0; i < Model.Count; i++)
+                    {
+                    <tr>
+                        @Html.HiddenFor(modelItem => Model[i].GalleryContentId)
+                        @Html.HiddenFor(modelItem => Model[i].GalleryId)
+                        <td>@Html.CheckBoxFor(modelItem => Model[i].GalleryContentIsActive)</td>
+                        <td>@Html.DisplayFor(modelItem => Model[i].GalleryContentId)</td>
+                        <td>@Html.DisplayFor(modelItem => Model[i].GalleryFileName)</td>
+                        <td><img src="data:image/jpg;base64,@Convert.ToBase64String(Model[i].GalleryContentImage)" alt="" style="height:50px;width:50px"></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            @if (Model.Count == 1)
+            {
+                <button type="submit" class="btn btn-info mr-2" disabled title="To delete images, there must be more than one image">Delete Images</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-info mr-2">Delete Images</button>
+            }
+            <a href="#" id="btnCancelModal" class="btn btn-danger">Cancel</a>
+        </div>
+    </div>
+}
+
+
+<script>
+    $("#btnCancelModal").click(function () {
+        $("#DeleteImagesModal").modal("hide");
+    });
+</script>

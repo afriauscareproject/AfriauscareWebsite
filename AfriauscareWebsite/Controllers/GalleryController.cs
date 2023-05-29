@@ -88,7 +88,8 @@ namespace AfriauscareWebsite.Controllers
                             GalleryContentImage = fileBytes,
                             GalleryContentIndex = index,
                             GalleryContentIsActive = true,
-                            GalleryContentPath = string.Empty
+                            GalleryContentPath = string.Empty,
+                            GalleryFileName = file.FileName
                         };
                         objGalleryContentDao.CreateGalleryContent(objGallerycontent, galleryId);
                         index = index + 1;
@@ -171,6 +172,31 @@ namespace AfriauscareWebsite.Controllers
 
                     objGalleryDao.ModifyGallery(objGalleryModel);
 
+                    if (objGalleryModel.imageList[0] != null)
+                    {
+                        byte[] fileBytes;
+
+                        foreach (var file in objGalleryModel.imageList)
+                        {
+                            using (BinaryReader br = new BinaryReader(file.InputStream))
+                            {
+                                fileBytes = br.ReadBytes(file.ContentLength);
+                            }
+
+                            GalleryContentModel objGallerycontent = new GalleryContentModel
+                            {
+                                GalleryContentImage = fileBytes,
+                                GalleryContentIndex = 0,
+                                GalleryContentIsActive = true,
+                                GalleryContentPath = string.Empty,
+                                GalleryFileName = file.FileName
+                            };
+                            objGalleryContentDao.CreateGalleryContent(objGallerycontent, objGalleryModel.GalleryId);
+                        }
+
+                        objGalleryContentDao.AssignImagesIndexes(objGalleryModel.GalleryId);
+                    }
+
                     ModelState.Clear();
                     TempData["GalleryAlertMessage"] = "Gallery Updated Successfully...";
 
@@ -187,6 +213,39 @@ namespace AfriauscareWebsite.Controllers
                 objErrorModel.ErrorMessage = ex.Message;
                 return RedirectToAction("Error", "Error", objErrorModel);
             }
+        }
+
+        public ActionResult ViewGalleryContentDelete(int galleryId)
+        {
+            GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
+            List<GalleryContentModel> list = objGalleryContentDao.getImagesFromGalleryAll(galleryId);
+
+            return PartialView("DeleteImages", list);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteImages(IList<GalleryContentModel> model)
+        {
+            int galleryId = 0;
+            GalleryContentDAO objGalleryDao = new GalleryContentDAO();
+
+            foreach (var item in model)
+            {
+                galleryId = item.GalleryId;
+
+                if (item.GalleryContentIsActive)
+                {
+                    objGalleryDao.DeleteGalleryContent(item.GalleryContentId);
+                }
+               
+            }
+
+            objGalleryDao.AssignImagesIndexes(galleryId);
+            GalleryDAO objGalleryDAO = new GalleryDAO();
+            var objGalleryModel = objGalleryDAO.GetGalleryById(galleryId);
+            TempData["GalleryAlertMessage"] = "Images Deleted Successfully...";
+
+            return View("ModifyGallery", objGalleryModel);
         }
     }
 }

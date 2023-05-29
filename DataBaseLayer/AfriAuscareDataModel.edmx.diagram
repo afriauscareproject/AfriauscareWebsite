@@ -16,6 +16,8 @@
         <EntityTypeShape EntityType="AfriAusModel.bank_information" Width="1.5" PointX="3" PointY="7" />
         <EntityTypeShape EntityType="AfriAusModel.bank" Width="1.5" PointX="0.75" PointY="7.25" />
         <AssociationConnector Association="AfriAusModel.FK__bank_info__bank___1FCDBCEB" />
+        <EntityTypeShape EntityType="AfriAusModel.log_user_activity" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="AfriAusModel.FK_log_user_activity_user" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

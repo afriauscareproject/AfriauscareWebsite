@@ -14,11 +14,18 @@ namespace Afriauscare.DataBaseLayer
     
     public partial class User
     {
+        public User()
+        {
+            this.log_user_activity = new HashSet<log_user_activity>();
+        }
+    
         public int UserId { get; set; }
         public string Username { get; set; }
         public string UserLastName { get; set; }
         public string UserEmail { get; set; }
         public string UserPassword { get; set; }
         public bool UserActive { get; set; }
+    
+        public virtual ICollection<log_user_activity> log_user_activity { get; set; }
     }
 }

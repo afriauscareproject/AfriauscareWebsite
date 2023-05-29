@@ -18,5 +18,11 @@ namespace Afriauscare.BusinessLayer.Gallery
 
         public byte[] GalleryContentImage { set; get; }
 
+        public string GalleryName { set; get; }
+
+        public string GalleryFileName { set; get; }
+
+        public int GalleryId { set; get; }
+
     }
 }

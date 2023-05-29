@@ -103,6 +103,9 @@
     </Compile>
     <Compile Include="GalleryContent\GalleryContentDAO.cs" />
     <Compile Include="GalleryContent\GalleryDAO.cs" />
+    <Compile Include="log_user_activity.cs">
+      <DependentUpon>AfriAuscareDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\BanksDAO.cs" />
     <Compile Include="Shared\StatesDAO.cs" />

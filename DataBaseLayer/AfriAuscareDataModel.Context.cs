@@ -33,5 +33,6 @@ namespace Afriauscare.DataBaseLayer
         public DbSet<suburb> suburbs { get; set; }
         public DbSet<bank_information> bank_information { get; set; }
         public DbSet<bank> banks { get; set; }
+        public DbSet<log_user_activity> log_user_activity { get; set; }
     }
 }

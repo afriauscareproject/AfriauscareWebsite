@@ -12,16 +12,14 @@ namespace Afriauscare.DataBaseLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class GalleryContent
+    public partial class log_user_activity
     {
-        public int GalleryContentID { get; set; }
-        public Nullable<int> GalleryId { get; set; }
-        public string GalleryContentPath { get; set; }
-        public int GalleryContentIndex { get; set; }
-        public bool GalleryContentIsActive { get; set; }
-        public byte[] GalleryContentImage { get; set; }
-        public string GalleryContentImageName { get; set; }
+        public int log_user_id { get; set; }
+        public int user_id { get; set; }
+        public string module_name { get; set; }
+        public string action_executed { get; set; }
+        public System.DateTime datetime_action { get; set; }
     
-        public virtual Gallery Gallery { get; set; }
+        public virtual User User { get; set; }
     }
 }
