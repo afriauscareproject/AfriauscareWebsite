@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Afriauscare.BusinessLayer.ContactInformation.ContactInformationModel
+@{
     ViewBag.Title = "Contact Us";
 }
 
@@ -34,11 +35,11 @@
 
             <div class="et_pb_text_1 col-lg-5 col-md-6" style="text-align:center">
                 <h3>Contact</h3> <br />
-                <p>Phone (03) 8526 9918</p>
-                <p>Mobile 0433 526 553</p>
-                <p>Fax 03 9792 1111</p>
-                <p><a href="mailto:info@afri-auscare.org">info@afri-auscare.org</a></p>
-                <p>562 – 564 Springvale Road,<br /> Springvale South, VIC, 3172</p>
+                <p>Phone @Model.Phone_number</p>
+                <p>Mobile @Model.Mobile_number</p>
+                <p>Fax @Model.Fax_number</p>
+                <p><a href="mailto: @Model.Email_address">@Model.Email_address</a></p>
+                <p>@Model.Contact_address,<br /> @Model.Suburb_name, @Model.State_name, @Model.Postcode</p>
             </div>
         </div>
     </div>

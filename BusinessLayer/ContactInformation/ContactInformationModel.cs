@@ -48,5 +48,9 @@ namespace Afriauscare.BusinessLayer.ContactInformation
 
         [DisplayName("Is default?")]
         public bool Is_default { get; set; }
+
+        public string State_name { get; set; }
+
+        public string Suburb_name { get; set; }
     }
 }

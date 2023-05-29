@@ -159,11 +159,11 @@
                         <div class="col-lg-2 col-md-6 footer-contact">
                             <h4>Contact Us</h4>
                             <p>
-                                562-564 SPRINGVALE <br>
-                                ROAD SPRINGVALE<br>
-                                SOUTH 3172 <br><br>
-                                <strong>Phone:</strong> 0433 526 553<br>
-                                <strong>Email:</strong> info@afri-auscare.org<br>
+                                @TempData["Address"] <br>
+                                @TempData["Suburb"]<br>
+                                @TempData["State"] , @TempData["Postcode"]<br><br>
+                                <strong>Phone:</strong> @TempData["Phone"]<br>
+                                <strong>Email:</strong> @TempData["Email"]<br>
                             </p>
                         </div>
 

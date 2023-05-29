@@ -34,18 +34,21 @@ namespace Afriauscare.DataBaseLayer.Shared
             using (var DataBase = new AfriAusEntities())
             {
                 var LogUserList = (from L in DataBase.log_user_activity
-                                           join U in DataBase.Users
-                                           on L.user_id equals U.UserId
-                                           select new
-                                           {
-                                               L.log_user_id,
-                                               L.user_id,
-                                               U.Username,
-                                               U.UserLastName,
-                                               L.module_name,
-                                               L.action_executed,
-                                               L.datetime_action
-                                           }).ToList();
+                                   join U in DataBase.Users
+                                   on L.user_id equals U.UserId
+                                   orderby L.datetime_action descending
+                                   select new
+                                   {
+                                       L.log_user_id,
+                                       L.user_id,
+                                       U.Username,
+                                       U.UserLastName,
+                                       L.module_name,
+                                       L.action_executed,
+                                       L.datetime_action
+                                   })
+                                   .Take(10)
+                                   .ToList();
 
                 foreach (var item in LogUserList)
                 {

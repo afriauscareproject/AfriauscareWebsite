@@ -36,5 +36,24 @@ namespace Afriauscare.DataBaseLayer.Shared
                 return new SelectList(list, "Value", "Text");
             }
         }
+
+        public string GetSuburbNameById(int suburbId)
+        {
+            string suburbName = string.Empty;
+
+            using (var DataBase = new AfriAusEntities())
+            {
+                var result = (from s in DataBase.suburbs
+                              where s.suburb_id == suburbId
+                              select new
+                              {
+                                  s.suburb_name
+                              }).SingleOrDefault();
+
+                suburbName = result.suburb_name;
+            }
+
+            return suburbName;
+        }
     }
 }

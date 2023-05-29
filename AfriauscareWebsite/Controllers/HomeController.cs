@@ -9,6 +9,9 @@ using Afriauscare.BusinessLayer.BankInformation;
 using Afriauscare.DataBaseLayer.BankInformation;
 using Afriauscare.DataBaseLayer.ContactInformation;
 using Afriauscare.BusinessLayer.ContactInformation;
+using Afriauscare.BusinessLayer.Shared;
+using Afriauscare.DataBaseLayer.Shared;
+using Afriauscare.BusinessLayer.Error;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -16,6 +19,29 @@ namespace AfriauscareWebsite.Controllers
     {
         public ActionResult Index()
         {
+            ContactInformationDAO objContactInformationDAO = new ContactInformationDAO();
+            StatesDAO objStateDao = new StatesDAO();
+            SuburbsDAO objSuburbDao = new SuburbsDAO();
+
+            try
+            {
+                ContactInformationModel objContactModel = objContactInformationDAO.GetContactInformationDefault();
+
+                TempData["Address"] = objContactModel.Contact_address;
+                TempData["Suburb"] = objSuburbDao.GetSuburbNameById(Int16.Parse(objContactModel.Suburb_id));
+                TempData["State"] = objStateDao.GetStateNameById(Int16.Parse(objContactModel.State_id));
+                TempData["Postcode"] = objContactModel.Postcode;
+                TempData["Phone"] = objContactModel.Phone_number;
+                TempData["Email"] = objContactModel.Email_address;
+            }
+            catch(Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
+
             return View();
         }
 
@@ -26,9 +52,31 @@ namespace AfriauscareWebsite.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ContactInformationDAO objContactInformationDAO = new ContactInformationDAO();
+            StatesDAO objStateDao = new StatesDAO();
+            SuburbsDAO objSuburbDao = new SuburbsDAO();
 
-            return View();
+            try
+            {
+                ContactInformationModel objContactModel = objContactInformationDAO.GetContactInformationDefault();
+                objContactModel.State_name = objStateDao.GetStateNameById(Int16.Parse(objContactModel.State_id));
+                objContactModel.Suburb_name = objSuburbDao.GetSuburbNameById(Int16.Parse(objContactModel.Suburb_id));
+
+                TempData["Address"] = objContactModel.Contact_address;
+                TempData["Suburb"] = objSuburbDao.GetSuburbNameById(Int16.Parse(objContactModel.Suburb_id));
+                TempData["State"] = objStateDao.GetStateNameById(Int16.Parse(objContactModel.State_id));
+                TempData["Postcode"] = objContactModel.Postcode;
+                TempData["Phone"] = objContactModel.Phone_number;
+                TempData["Email"] = objContactModel.Email_address;
+
+                return View(objContactModel);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
         }
 
         public ActionResult Gallery()
@@ -45,28 +93,69 @@ namespace AfriauscareWebsite.Controllers
             GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
             GalleryContentModel objGalleryContent = new GalleryContentModel();
 
-            List<GalleryModel> list = objGalleryDao.getGalleryAll();
-
-            foreach(var item in list)
+            try
             {
-                objGalleryContent = objGalleryContentDao.getFirstImageFromGallery(item.GalleryId);
-                item.DefaultImage = objGalleryContent.GalleryContentImage;
-            }
+                List<GalleryModel> list = objGalleryDao.getGalleryAll();
 
-            return View(list);
+                foreach (var item in list)
+                {
+                    objGalleryContent = objGalleryContentDao.getFirstImageFromGallery(item.GalleryId);
+                    item.DefaultImage = objGalleryContent.GalleryContentImage;
+                }
+
+                ContactInformationDAO objContactInformationDAO = new ContactInformationDAO();
+                StatesDAO objStateDao = new StatesDAO();
+                SuburbsDAO objSuburbDao = new SuburbsDAO();
+                ContactInformationModel objContactModel = objContactInformationDAO.GetContactInformationDefault();
+
+                TempData["Address"] = objContactModel.Contact_address;
+                TempData["Suburb"] = objSuburbDao.GetSuburbNameById(Int16.Parse(objContactModel.Suburb_id));
+                TempData["State"] = objStateDao.GetStateNameById(Int16.Parse(objContactModel.State_id));
+                TempData["Postcode"] = objContactModel.Postcode;
+                TempData["Phone"] = objContactModel.Phone_number;
+                TempData["Email"] = objContactModel.Email_address;
+
+                return View(list);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
         }
 
         public ActionResult Donate()
         {
             BankInformationDAO objBankDAO = new BankInformationDAO();
             ContactInformationDAO objContactInformationDAO = new ContactInformationDAO();
+            StatesDAO objStateDao = new StatesDAO();
+            SuburbsDAO objSuburbDao = new SuburbsDAO();
 
-            BankInformationModel objBankModel = objBankDAO.GetBankInformationDefault();
-            ContactInformationModel objContactModel = objContactInformationDAO.GetContactInformationDefault();
-            objBankModel.Phone_Number = objContactModel.Phone_number;
-            objBankModel.Mobile_Number = objContactModel.Mobile_number;
+            try
+            {
+                BankInformationModel objBankModel = objBankDAO.GetBankInformationDefault();
+                ContactInformationModel objContactModel = objContactInformationDAO.GetContactInformationDefault();
+                objBankModel.Phone_Number = objContactModel.Phone_number;
+                objBankModel.Mobile_Number = objContactModel.Mobile_number;
 
-            return View(objBankModel);
+                TempData["Address"] = objContactModel.Contact_address;
+                TempData["Suburb"] = objSuburbDao.GetSuburbNameById(Int16.Parse(objContactModel.Suburb_id));
+                TempData["State"] = objStateDao.GetStateNameById(Int16.Parse(objContactModel.State_id));
+                TempData["Postcode"] = objContactModel.Postcode;
+                TempData["Phone"] = objContactModel.Phone_number;
+                TempData["Email"] = objContactModel.Email_address;
+
+                return View(objBankModel);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
         }
     }
 }

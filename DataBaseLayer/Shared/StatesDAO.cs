@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Objects.SqlClient;
+using Afriauscare.BusinessLayer.Shared;
 
 namespace Afriauscare.DataBaseLayer.Shared
 {
@@ -31,6 +32,25 @@ namespace Afriauscare.DataBaseLayer.Shared
 
                 return new SelectList(list, "Value", "Text");
             }
+        }
+
+        public string GetStateNameById(int stateId)
+        {
+            string stateName = string.Empty;
+
+            using (var DataBase = new AfriAusEntities())
+            {
+                var result = (from s in DataBase.states
+                              where s.state_id == stateId
+                              select new
+                              {
+                                 s.state_name
+                              }).SingleOrDefault();
+
+                stateName = result.state_name;
+            }
+
+            return stateName;
         }
     }
 }
