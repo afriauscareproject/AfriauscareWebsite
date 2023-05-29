@@ -146,5 +146,19 @@ namespace Afriauscare.DataBaseLayer
                 Database.SaveChanges();
             }
         }
+
+        public void DeleteGalleryContentByGalleryId(int galleryId)
+        {
+            using (var DataBase = new AfriAusEntities())
+            {
+                List<GalleryContent> list = DataBase.GalleryContents.Where(gc => gc.GalleryId == galleryId).ToList();
+
+                foreach (var item in list)
+                {
+                    DataBase.GalleryContents.Remove(item);
+                }
+                DataBase.SaveChanges();
+            }
+        }
     }
 }

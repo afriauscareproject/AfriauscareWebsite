@@ -5,7 +5,7 @@ using Afriauscare.BusinessLayer.ContactInformation;
 using Afriauscare.BusinessLayer.Error;
 using Afriauscare.BusinessLayer.BankInformation;
 using Afriauscare.DataBaseLayer.Shared;
-using Afriauscare.DataBaseLayer;
+using Afriauscare.DataBaseLayer.ContactInformation;
 using Afriauscare.DataBaseLayer.BankInformation;
 using Afriauscare.BusinessLayer.Shared;
 

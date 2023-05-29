@@ -34,5 +34,9 @@ namespace Afriauscare.BusinessLayer.BankInformation
         public bool Is_default { get; set; }
 
         public string Bank_Name { get; set; }
+
+        public string Phone_Number { get; set; }
+
+        public string Mobile_Number { get; set; }
     }
 }

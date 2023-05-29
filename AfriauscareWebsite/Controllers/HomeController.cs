@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using Afriauscare.DataBaseLayer;
 using Afriauscare.BusinessLayer.Gallery;
+using Afriauscare.BusinessLayer.BankInformation;
+using Afriauscare.DataBaseLayer.BankInformation;
+using Afriauscare.DataBaseLayer.ContactInformation;
+using Afriauscare.BusinessLayer.ContactInformation;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -54,7 +58,15 @@ namespace AfriauscareWebsite.Controllers
 
         public ActionResult Donate()
         {
-            return View();
+            BankInformationDAO objBankDAO = new BankInformationDAO();
+            ContactInformationDAO objContactInformationDAO = new ContactInformationDAO();
+
+            BankInformationModel objBankModel = objBankDAO.GetBankInformationDefault();
+            ContactInformationModel objContactModel = objContactInformationDAO.GetContactInformationDefault();
+            objBankModel.Phone_Number = objContactModel.Phone_number;
+            objBankModel.Mobile_Number = objContactModel.Mobile_number;
+
+            return View(objBankModel);
         }
     }
 }

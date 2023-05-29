@@ -127,5 +127,42 @@ namespace Afriauscare.DataBaseLayer.BankInformation
                 }
             }
         }
+
+        public BankInformationModel GetBankInformationDefault()
+        {
+            List<BankInformationModel> listReturn = new List<BankInformationModel>();
+
+            using (var DataBase = new AfriAusEntities())
+            {
+                var objBankInformation = (from b in DataBase.bank_information
+                                           join bnk in DataBase.banks
+                                           on b.bank_id equals bnk.bank_id
+                                           where b.is_default == true
+                                           select new
+                                           {
+                                               b.bank_information_id,
+                                               b.bank_id,
+                                               bnk.bank_name,
+                                               b.abn_number,
+                                               b.bsb_number,
+                                               b.account_number,
+                                               b.is_default
+                                           }).SingleOrDefault();
+
+                
+                BankInformationModel objGallery = new BankInformationModel
+                {
+                    Bank_information_id = objBankInformation.bank_information_id,
+                    Bank_id = objBankInformation.bank_id,
+                    Bank_Name = objBankInformation.bank_name,
+                    Abn_number = objBankInformation.abn_number,
+                    Bsb_number = objBankInformation.bsb_number,
+                    Account_number = objBankInformation.account_number,
+                    Is_default = objBankInformation.is_default
+                };
+
+                return objGallery;
+            }
+        }
     }
 }

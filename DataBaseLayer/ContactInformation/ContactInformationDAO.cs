@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Afriauscare.BusinessLayer.ContactInformation;
 
-namespace Afriauscare.DataBaseLayer
+namespace Afriauscare.DataBaseLayer.ContactInformation
 {
     public class ContactInformationDAO
     {

@@ -282,5 +282,40 @@ namespace AfriauscareWebsite.Controllers
 
             return View("ModifyGallery", objGalleryModel);
         }
+
+        [HttpPost]
+        public JsonResult DeleteGalleryJson(int GalleryId)
+        {
+            bool result = false;
+            GalleryDAO objGalleryDAO = new GalleryDAO();
+            GalleryContentDAO objGalleryContentDAO = new GalleryContentDAO();
+
+            try
+            {
+                objGalleryContentDAO.DeleteGalleryContentByGalleryId(GalleryId);
+                objGalleryDAO.DeleteGallery(GalleryId);
+                result = true;
+
+                LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                {
+                    User_id = Int16.Parse(Session["UserId"].ToString()),
+                    Module_Name = "Gallery",
+                    Action_Excuted = "Delete",
+                    Datetime_action = DateTime.Now
+                };
+
+                objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
+                TempData["GalleryAlertMessage"] = "Gallery Deleted Successfully...";
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+        }
     }
 }

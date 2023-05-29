@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Afriauscare.BusinessLayer.BankInformation.BankInformationModel
+@{
     ViewBag.Title = "Donate";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -30,13 +31,13 @@
         <div class="row" style="margin-top:20px;">
             <div class="col-lg-5 col-md-6 d-flex">
                 <p style="padding-bottom: 1em; font-family: 'Poppins',Helvetica,Arial,Lucida,sans-serif;font-size:20px;">
-                    <i class="bi bi-phone-fill" style="font-size:x-large;">&nbsp;</i><strong>Mobile:</strong> 0433 526 553<br>
-                    <i class="bi bi-person" style="font-size:x-large;"></i> <strong>Phone:</strong> 0433 526 553<br>
+                    <i class="bi bi-phone-fill" style="font-size:x-large;">&nbsp;</i><strong>Mobile:</strong> @Model.Mobile_Number<br>
+                    <i class="bi bi-person" style="font-size:x-large;"></i> <strong>Phone:</strong> @Model.Phone_Number<br>
                     <br />
-                    Our ABN: 48 898 939 062 <br><br>
-                    Bank: Commonwealth Bank of Australia<br><br>
-                    Account BSB: 063 167 <br><br>
-                    A/C: 10841841<br /><br />
+                    Our ABN: @Model.Abn_number <br><br>
+                    Bank: @Model.Bank_Name<br><br>
+                    Account BSB: @Model.Bsb_number <br><br>
+                    A/C: @Model.Account_number<br /><br />
                     <span>   <a href="" class="btn-get-started animate__animated animate__fadeInUp">Donate</a></span>
                 </p>
 
