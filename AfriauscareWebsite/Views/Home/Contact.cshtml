@@ -1,17 +1,76 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contact Us";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<section>
+<div class="hero-container">
+    <div class="row">
+        <div class="col-lg-12 col-md-6 d-flex" style="background-image: url(/Content/Images/contact_.jpg); height: 350.9px">
+        </div>
+    </div>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+</div>
+</section>
+<section id="about" class="about">
+    <div class="container">
+
+        <div class="row" style="margin-top:20px;">
+            <div class="et_pb_text_1 col-lg-5 col-md-6">
+                <h3>STAY IN TOUCH</h3> <br />
+                <p>connect with us on our social media sites to stay up to date on all our latest programs and events. Or send us a message below if you have any enquires. </p>
+                <i class="bi bi-facebook" style="font-size:xx-large;"></i> &nbsp;
+                <i class="bi bi-youtube" style="font-size:xx-large;"></i>
+            </div>
+            <div class="et_pb_text_1 col-lg-2 col-md-6" style="text-align:center">
+                <h3>OPENING HOURS</h3> <br />
+                <p>Mon: 5am – 10pm</p>
+                <p>Mon: 5am – 10pm</p>
+                <p>Wed: 5am – 10pm</p>
+                <p>Thu: 5am – 10pm</p>
+                <p>Fri: 5am – 10pm</p>
+                <p>Sat: 6 am – 10pm</p>
+                <p>Sun: 6 am – 10pm</p>
+            </div>
+
+            <div class="et_pb_text_1 col-lg-5 col-md-6" style="text-align:center">
+                <h3>Contact</h3> <br />
+                <p>Phone (03) 8526 9918</p>
+                <p>Mobile 0433 526 553</p>
+                <p>Fax 03 9792 1111</p>
+                <p><a href="mailto:info@afri-auscare.org">info@afri-auscare.org</a></p>
+                <p>562 – 564 Springvale Road,<br /> Springvale South, VIC, 3172</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="get-in-touch">
+    <h1 class="title">Get in touch</h1>
+    <form class="contact-form">
+        <div class="row">
+            <div class="form-field col x-100">
+                <input id="name" class="input-text js-input" type="text" required>
+                <label class="label" for="name">Name</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-field col x-100">
+                <input id="email" class="input-text js-input" type="email" required>
+                <label class="label" for="email">E-mail</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-field col x-100">
+                <input id="message" class="input-text js-input" type="text" required>
+                <label class="label" for="message">Message</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-field col x-100 align-center">
+                <input class="submit-btn" type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+</section>

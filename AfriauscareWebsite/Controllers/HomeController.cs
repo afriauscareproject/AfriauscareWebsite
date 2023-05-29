@@ -17,8 +17,6 @@ namespace AfriauscareWebsite.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
@@ -52,6 +50,11 @@ namespace AfriauscareWebsite.Controllers
             }
 
             return View(list);
+        }
+
+        public ActionResult Donate()
+        {
+            return View();
         }
     }
 }
