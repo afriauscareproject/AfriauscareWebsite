@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Afriauscare.BusinessLayer.User;
 using Afriauscare.BusinessLayer.Error;
 using Afriauscare.DataBaseLayer;
+using Afriauscare.DataBaseLayer.Shared;
+using Afriauscare.BusinessLayer.Shared;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -50,6 +49,17 @@ namespace AfriauscareWebsite.Controllers
                         UserPassword = string.Empty,
                         UserActive = false
                     };
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "User",
+                        Action_Excuted = "Create",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                     TempData["UserAlertMessage"] = "User Created Successfully...";
                     return View("CreateUser", objEmptyUserModel);
                 }
@@ -119,6 +129,18 @@ namespace AfriauscareWebsite.Controllers
                         UserPassword = string.Empty,
                         UserActive = false
                     };
+
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "User",
+                        Action_Excuted = "Modify",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                     TempData["UserAlertMessage"] = "User Modifed Successfully...";
 
                     return View("ModifyUser", objEmptyUserModel);
@@ -152,6 +174,18 @@ namespace AfriauscareWebsite.Controllers
             {
                 objUserDAO.DisableUser(UserId);
                 result = true;
+
+                LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                {
+                    User_id = Int16.Parse(Session["UserId"].ToString()),
+                    Module_Name = "User",
+                    Action_Excuted = "Disable",
+                    Datetime_action = DateTime.Now
+                };
+
+                objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                 TempData["UserAlertMessage"] = "User Deactivated Successfully...";
 
                 return Json(result, JsonRequestBehavior.AllowGet);

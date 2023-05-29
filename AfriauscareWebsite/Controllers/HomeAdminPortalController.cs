@@ -7,6 +7,7 @@ using Afriauscare.BusinessLayer.BankInformation;
 using Afriauscare.DataBaseLayer.Shared;
 using Afriauscare.DataBaseLayer;
 using Afriauscare.DataBaseLayer.BankInformation;
+using Afriauscare.BusinessLayer.Shared;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -28,7 +29,10 @@ namespace AfriauscareWebsite.Controllers
         // GET: HomeAdminPortal
         public ActionResult Index()
         {
-            return View();
+            LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+            List<LogUserActivityModel> objLogActivityList = objLogUserDao.GetLogUserInformation();
+
+            return View(objLogActivityList);
         }
 
         public ActionResult ViewContactInformation()
@@ -114,6 +118,17 @@ namespace AfriauscareWebsite.Controllers
 
                     objEmptyContactModel.States = objStateDao.GetStates();
                     objEmptyContactModel.Suburbs = emptyList;
+
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "ContactInformation",
+                        Action_Excuted = "Create",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
 
                     TempData["ContactInformationAlertMessage"] = "Contact Information Created ...";
                     return View("CreateContactInformation", objEmptyContactModel);
@@ -207,6 +222,18 @@ namespace AfriauscareWebsite.Controllers
                         Suburbs = objSuburbDao.GetSuburbs("0"),
                         Postcode = string.Empty
                     };
+
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "ContactInformation",
+                        Action_Excuted = "Modify",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                     TempData["ContactInformationAlertMessage"] = "Contact Information Modifed Successfully...";
 
                     return View("ModifyContactInformation", objEmptyModel);
@@ -289,6 +316,17 @@ namespace AfriauscareWebsite.Controllers
 
                     objEmptyBankModel.Banks = objBankDao.GetBanks();
 
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "BankInformation",
+                        Action_Excuted = "Create",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                     TempData["BankInformationAlertMessage"] = "Bank Information Created ...";
                     return View("CreateBankInformation", objEmptyBankModel);
                 }
@@ -361,6 +399,18 @@ namespace AfriauscareWebsite.Controllers
                         Bsb_number = string.Empty,
                         Is_default = false
                     };
+
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "BankInformation",
+                        Action_Excuted = "Modify",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                     TempData["BankInformationAlertMessage"] = "Bank Information Modifed Successfully...";
                     objEmptyModel.Banks = objBankDao.GetBanks();
 
@@ -388,6 +438,18 @@ namespace AfriauscareWebsite.Controllers
             {
                 objBankInformationDAO.DeleteBankInformation(BankInformationId);
                 result = true;
+
+                LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                {
+                    User_id = Int16.Parse(Session["UserId"].ToString()),
+                    Module_Name = "BankInformation",
+                    Action_Excuted = "Delete",
+                    Datetime_action = DateTime.Now
+                };
+
+                objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                 TempData["BankInformationAlertMessage"] = "Bank Information Deleted Successfully...";
 
                 return Json(result, JsonRequestBehavior.AllowGet);
@@ -409,6 +471,18 @@ namespace AfriauscareWebsite.Controllers
             {
                 objContactInformationDAO.DeleteContactInformation(ContactInformationId);
                 result = true;
+
+                LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                {
+                    User_id = Int16.Parse(Session["UserId"].ToString()),
+                    Module_Name = "ContactInformation",
+                    Action_Excuted = "Delete",
+                    Datetime_action = DateTime.Now
+                };
+
+                objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                 TempData["ContactInformationAlertMessage"] = "Contact Information Deleted Successfully...";
 
                 return Json(result, JsonRequestBehavior.AllowGet);

@@ -2,11 +2,11 @@
 using Afriauscare.BusinessLayer.User;
 using Afriauscare.DataBaseLayer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Afriauscare.BusinessLayer.Shared;
+using Afriauscare.DataBaseLayer.Shared;
+using System.Collections.Generic;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -34,15 +34,18 @@ namespace AfriauscareWebsite.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (objUserDao.getUserbyUserandPassword(objUserModel) == null)
+                    var user = objUserDao.getUserbyUserandPassword(objUserModel);
+                    if (user == null)
                     {
                         ModelState.AddModelError("Error", "The user email and password does not match or do not exists.");
                         return View();
                     }
                     else
                     {
-                        Session["UserEmail"] = objUserModel.UserEmail;
-                        return RedirectToAction("Index", "HomeAdminPortal");
+                        Session["UserEmail"] = user.UserEmail;
+                        Session["UserId"] = user.UserId;
+
+                        return RedirectToAction("Index","HomeAdminPortal");
                     }
 
                 }

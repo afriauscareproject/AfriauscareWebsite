@@ -1,10 +1,12 @@
-﻿@{
+﻿@model IEnumerable<Afriauscare.BusinessLayer.Shared.LogUserActivityModel>
+
+@{
     Layout = null;
 }
 
 
 <title>@ViewBag.Title Home Admin Portal</title>
-<link rel="stylesheet" href="~/Content/bootstrap.min.css"/>
+<link rel="stylesheet" href="~/Content/bootstrap.min.css" />
 
 @Html.Partial("_MenuBarAdminPortal")
 <div class="container">
@@ -22,18 +24,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">John doe</th>
-                <td>Disable</td>
-                <td>Gallery</td>
-                <td>01-04-2023 18:00</td>
-            </tr>
-            <tr>
-                <th scope="row">Mark Fong</th>
-                <td>Delete</td>
-                <td>User</td>
-                <td>02-04-2023 22:05</td>
-            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.User_Full_Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Action_Excuted)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Module_Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Datetime_action)</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

@@ -73,6 +73,7 @@
     <Compile Include="Gallery\GalleryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\ImageListValidation.cs" />
+    <Compile Include="Shared\LogUserActivityModel.cs" />
     <Compile Include="System\Configuration\ConfigurationManager.cs" />
     <Compile Include="User\UserBusiness.cs" />
     <Compile Include="User\UserModel.cs" />

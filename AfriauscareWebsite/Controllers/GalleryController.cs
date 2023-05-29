@@ -6,6 +6,7 @@ using Afriauscare.BusinessLayer.Error;
 using Afriauscare.DataBaseLayer;
 using System.IO;
 using Afriauscare.BusinessLayer.Shared;
+using Afriauscare.DataBaseLayer.Shared;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -94,6 +95,17 @@ namespace AfriauscareWebsite.Controllers
                         objGalleryContentDao.CreateGalleryContent(objGallerycontent, galleryId);
                         index = index + 1;
                     }
+
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "Gallery",
+                        Action_Excuted = "Create",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
 
                     ModelState.Clear();
                     TempData["GalleryAlertMessage"] = "Gallery Created Successfully...";
@@ -197,6 +209,17 @@ namespace AfriauscareWebsite.Controllers
                         objGalleryContentDao.AssignImagesIndexes(objGalleryModel.GalleryId);
                     }
 
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "Gallery",
+                        Action_Excuted = "Modify",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                     ModelState.Clear();
                     TempData["GalleryAlertMessage"] = "Gallery Updated Successfully...";
 
@@ -243,6 +266,18 @@ namespace AfriauscareWebsite.Controllers
             objGalleryDao.AssignImagesIndexes(galleryId);
             GalleryDAO objGalleryDAO = new GalleryDAO();
             var objGalleryModel = objGalleryDAO.GetGalleryById(galleryId);
+
+            LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+            LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+            {
+                User_id = Int16.Parse(Session["UserId"].ToString()),
+                Module_Name = "Gallery",
+                Action_Excuted = "DeleteImages",
+                Datetime_action = DateTime.Now
+            };
+
+            objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
             TempData["GalleryAlertMessage"] = "Images Deleted Successfully...";
 
             return View("ModifyGallery", objGalleryModel);
