@@ -21,7 +21,7 @@ namespace AfriauscareWebsite.Controllers
             }
             else
             {
-                RedirectToAction("EndSession", "HomeAdminPortal");
+                filterContext.Result = new RedirectResult("~/Session/EndSession");
             }
         }
 

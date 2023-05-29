@@ -52,7 +52,6 @@
                         <td>@Html.DisplayFor(modelItem => item.GalleryDescription)</td>
                         <td>
                             @Html.ActionLink("Edit", "ModifyGallery", new { GalleryId = item.GalleryId }, new { @class = "btn btn-info" })
-                            @*<a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.GalleryId)">Disable</a>*@
                             <button class="btnDeleteGallery btn btn-danger">Delete</button>
                         </td>
                     </tr>
@@ -74,7 +73,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <a href="#" id="btnConfirmDeleteGallery" class="btn btn-info mr-2">Deactivate User</a>
+                        <a href="#" id="btnConfirmDeleteGallery" class="btn btn-info mr-2">Delete Gallery</a>
                         <a href="#" id="btnCancelDeleteGalleryModal" class="btn btn-danger">Cancel</a>
                     </div>
                 </div>
