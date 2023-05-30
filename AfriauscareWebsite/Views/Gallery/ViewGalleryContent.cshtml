@@ -17,7 +17,7 @@
                         i++;
                         var active = i == 1 ? "active" : "";
                         <div class="carousel-item @active">
-                            <img src="data:image/jpg;base64,@Convert.ToBase64String(item.GalleryContentImage)" alt="">
+                            <img class="d-block w-100" src="data:image/jpg;base64,@Convert.ToBase64String(item.GalleryContentImage)" alt="">
                         </div>
 
                     }

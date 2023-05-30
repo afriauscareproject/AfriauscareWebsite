@@ -66,10 +66,14 @@ body {
     color: #444444;
 }
 
+/*
 a {
     color: #e96b56;
     text-decoration: none;
 }
+
+*/
+
 
     a:hover {
         color: #e6573f;
@@ -130,7 +134,7 @@ h6 {
 /**
 * Desktop Navigation 
 */
-.navbar {
+/*.navbar {
     padding: 0;
 }
 
@@ -273,7 +277,7 @@ h6 {
 
 /**
 * Mobile Navigation 
-*/
+
 .mobile-nav-toggle {
     color: #545454;
     font-size: 28px;
@@ -1218,7 +1222,7 @@ section {
     cursor: pointer;
 }
 body {
-    padding-top: 50px;
+    /*padding-top: 50px;*/
     padding-bottom: 20px;
 }
 
