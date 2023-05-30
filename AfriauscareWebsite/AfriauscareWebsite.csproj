@@ -137,6 +137,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -350,6 +351,8 @@
     <Content Include="Views\Gallery\ModifyGallery.cshtml" />
     <Content Include="Views\Gallery\DeleteImages.cshtml" />
     <Content Include="Views\Home\Donate.cshtml" />
+    <Content Include="Views\Session\ForgotPassword.cshtml" />
+    <Content Include="Views\Session\UpdatePasswordDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\Afriauscare.BusinessLayer.csproj">
@@ -375,7 +378,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

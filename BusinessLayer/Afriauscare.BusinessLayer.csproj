@@ -77,6 +77,7 @@
     <Compile Include="Shared\ViewModelBase.cs" />
     <Compile Include="System\Configuration\ConfigurationManager.cs" />
     <Compile Include="User\UserBusiness.cs" />
+    <Compile Include="User\ForgotPasswordModel.cs" />
     <Compile Include="User\UserModel.cs" />
   </ItemGroup>
   <ItemGroup>

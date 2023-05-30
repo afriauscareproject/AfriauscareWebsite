@@ -7,6 +7,7 @@ using Afriauscare.DataBaseLayer;
 using System.IO;
 using Afriauscare.BusinessLayer.Shared;
 using Afriauscare.DataBaseLayer.Shared;
+using System.Configuration;
 
 namespace AfriauscareWebsite.Controllers
 {
@@ -49,7 +50,7 @@ namespace AfriauscareWebsite.Controllers
             {
                 if (objGalleryModel.imageList[0] != null)
                 {
-                    int maxFileSize = int.Parse(System.Configuration.ConfigurationManager.AppSettings["MaxFileSize"]);
+                    int maxFileSize = int.Parse(ConfigurationManager.AppSettings["MaxFileSize"]);
                     ImageListValidation objImagelistVal = new ImageListValidation();
                     if (!objImagelistVal.FileSizeValidation(objGalleryModel.imageList, maxFileSize))
                     {

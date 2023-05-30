@@ -126,5 +126,85 @@ namespace Afriauscare.DataBaseLayer
                 DataBase.SaveChanges();
             }
         }
+
+        public bool getUserbyEmail(ForgotPasswordModel model)
+        {
+            bool flag = false;
+
+            using (var DataBase = new AfriAusEntities())
+            {
+                if (DataBase.Users.Any(u => u.UserEmail == model.UserEmail))
+                {
+                    flag = true;
+                }
+            }
+
+            return flag;
+        }
+
+        public void ChangeUserPassword(ForgotPasswordModel model)
+        {
+            using (var DataBase = new AfriAusEntities())
+            {
+                User objUser = new User()
+                {
+                    UserId = model.UserId,
+                    UserPassword = model.UserPassword,
+                    UserActive = false
+                };
+
+                DataBase.Users.Attach(objUser);
+                DataBase.Entry(objUser).Property(u => u.UserPassword).IsModified = true;
+                DataBase.Entry(objUser).Property(u => u.UserActive).IsModified = true;
+                DataBase.SaveChanges();
+            }
+        }
+
+        public void ActivateUser(ForgotPasswordModel model)
+        {
+            using (var DataBase = new AfriAusEntities())
+            {
+                User objUser = new User()
+                {
+                    UserId = model.UserId,
+                    UserPassword = model.UserPassword,
+                    UserActive = true
+
+                };
+
+                DataBase.Users.Attach(objUser);
+                DataBase.Entry(objUser).Property(u => u.UserPassword).IsModified = true;
+                DataBase.Entry(objUser).Property(u => u.UserActive).IsModified = true;
+                DataBase.SaveChanges();
+            }
+        }
+
+        public bool ValidateTemporaryPassword(ForgotPasswordModel model)
+        {
+            bool flag = false;
+
+            using (var DataBase = new AfriAusEntities())
+            {
+                if (DataBase.Users.Any(u => u.UserEmail == model.UserEmail && u.UserPassword == model.TemporaryPassword))
+                {
+                    flag = true;
+                }
+            }
+
+            return flag;
+        }
+
+        public int getUserIdByEmail(string emailAddress)
+        {
+            int userId = 0;
+
+            using (var DataBase = new AfriAusEntities())
+            {
+                var user = DataBase.Users.Where(u => u.UserEmail == emailAddress).SingleOrDefault();
+                userId = user.UserId;
+            }
+
+            return userId;
+        }
     }
 }

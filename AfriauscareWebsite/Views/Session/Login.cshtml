@@ -41,7 +41,8 @@
                     </div>
                     <hr class="hr" />
                     <div class="form-group row">
-                        <a href="#" class="link-primary col-sm-10">Forgot your password?</a>
+                        @*<a href="#" class="link-primary col-sm-10">Forgot your password?</a>*@
+                        <a>@Html.ActionLink("Forgot your password?", "ForgotPassword", "Session", null, new { @class = "link-primary col-sm-10" })</a>
                     </div>
                     <div class="float-right">
                         <button type="submit" class="btn btn-primary">Login</button>
