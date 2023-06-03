@@ -508,6 +508,7 @@
     <Content Include="Views\Home\KeyPartners.cshtml" />
     <Content Include="Views\Home\ProgramServices.cshtml" />
     <Content Include="Views\Home\Team.cshtml" />
+    <Content Include="Views\Home\ViewPictures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\Afriauscare.BusinessLayer.csproj">

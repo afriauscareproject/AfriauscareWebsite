@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Afriauscare.BusinessLayer.Gallery.GalleryContentModel>
+
+@{
+    ViewBag.Title = "More pictures";
+}
+
+<script src="~/Scripts/bootstrap.js"></script>
+
+<br />
+<br />
+<br />
+<section id="header">
+    <h3>Gallery Title : @Model.First().GalleryContentPath</h3>
+
+</section>
+
+<div class="container">
+    <div class="brand-carousel  owl-carousel">
+        @foreach (var item in Model)
+        {
+            <div class="view-pictures">
+                <img src="data:image/jpg;base64,@Convert.ToBase64String(item.GalleryContentImage)" class="img-fluid">
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $('.brand-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        autoplay: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            }
+        }
+    })
+</script>

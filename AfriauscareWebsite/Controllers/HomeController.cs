@@ -285,5 +285,13 @@ namespace AfriauscareWebsite.Controllers
             return View();
         }
 
+        public ActionResult ViewPictures(int galleryId)
+        {
+            GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
+            List<GalleryContentModel> list = objGalleryContentDao.getImagesFromGallery(galleryId);
+
+            return View("ViewPictures", list);
+        }
+
     }
 }

@@ -1583,6 +1583,14 @@ section {
     margin-bottom: 5%;
 }
 
+.view-pictures img {
+    width: 100%;
+    height: 400px !important;
+    object-fit: cover;
+    object-position: center;
+    margin-bottom: 3%;
+}
+
 .owl-text {
     text-align: center;
 }
