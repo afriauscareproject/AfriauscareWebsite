@@ -124,14 +124,6 @@ namespace AfriauscareWebsite.Controllers
             
         }
 
-        public ActionResult ViewGalleryContent(int galleryId)
-        {
-            GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
-            List<GalleryContentModel> list = objGalleryContentDao.getImagesFromGallery(galleryId);
-
-            return PartialView("ViewGalleryContent", list);
-        }
-
         [HttpGet]
         public ActionResult ModifyGallery(int GalleryId)
         {
@@ -317,6 +309,14 @@ namespace AfriauscareWebsite.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
 
+        }
+
+        public ActionResult ViewGalleryContent(int galleryId)
+        {
+            GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
+            List<GalleryContentModel> list = objGalleryContentDao.getImagesFromGallery(galleryId);
+
+            return PartialView("ViewGalleryContent", list);
         }
     }
 }
