@@ -289,10 +289,32 @@ namespace AfriauscareWebsite.Controllers
 
         public ActionResult ViewPictures(int galleryId)
         {
-            GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
-            List<GalleryContentModel> list = objGalleryContentDao.getImagesFromGallery(galleryId);
+            ContactInformationDAO objContactInformationDAO = new ContactInformationDAO();
+            StatesDAO objStateDao = new StatesDAO();
+            SuburbsDAO objSuburbDao = new SuburbsDAO();
 
-            return View("ViewPictures", list);
+            try
+            {
+                ContactInformationModel objContactModel = objContactInformationDAO.GetContactInformationDefault();
+
+                TempData["Address"] = objContactModel.Contact_address;
+                TempData["Suburb"] = objSuburbDao.GetSuburbNameById(Int16.Parse(objContactModel.Suburb_id));
+                TempData["State"] = objStateDao.GetStateNameById(Int16.Parse(objContactModel.State_id));
+                TempData["Postcode"] = objContactModel.Postcode;
+                TempData["Phone"] = objContactModel.Phone_number;
+                TempData["Email"] = objContactModel.Email_address;
+
+                GalleryContentDAO objGalleryContentDao = new GalleryContentDAO();
+                List<GalleryContentModel> list = objGalleryContentDao.getImagesFromGallery(galleryId);
+
+                return View("ViewPictures", list);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
         }
 
     }
