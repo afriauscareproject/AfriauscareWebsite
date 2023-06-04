@@ -5,6 +5,9 @@ using System.Web.Mvc;
 
 namespace Afriauscare.BusinessLayer.ContactInformation
 {
+    /// <summary>
+    /// Class model for Contact Information Creation
+    /// </summary>
     public class ContactInformationModel
     {
         public int Contact_id { get; set; }

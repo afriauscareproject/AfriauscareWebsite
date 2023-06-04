@@ -8,6 +8,10 @@ namespace Afriauscare.DataBaseLayer.Shared
 {
     public class StatesDAO
     {
+        /// <summary>
+        /// Method that obtains all the records from State table to populate the dropdown list
+        /// </summary>
+        /// <returns>IEnumerable<SelectListItem></returns>
         public IEnumerable<SelectListItem> GetStates()
         {
             using (var DataBase = new AfriAusEntities())

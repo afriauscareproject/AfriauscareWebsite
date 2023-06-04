@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Afriauscare.BusinessLayer.Shared
 {
+    /// <summary>
+    /// Log user activity class model
+    /// </summary>
     public class LogUserActivityModel
     {
         public int Log_user_id { get; set; }

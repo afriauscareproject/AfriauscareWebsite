@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Afriauscare.BusinessLayer.Gallery
 {
+    /// <summary>
+    /// Gallery content model class to store images which belong to a Gallery
+    /// </summary>
     public class GalleryContentModel
     {
         public int GalleryContentId { set; get; }

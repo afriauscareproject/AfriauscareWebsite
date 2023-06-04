@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Data.Objects.SqlClient;
 using System.Linq;
-
 using System.Web.Mvc;
 
 namespace Afriauscare.DataBaseLayer.Shared
 {
     public class BanksDAO
     {
+        /// <summary>
+        /// Method that obtains the records to populate the dropdown list of banks
+        /// </summary>
+        /// <returns>IEnumerable<SelectListItem></returns>
         public IEnumerable<SelectListItem> GetBanks()
         {
             using (var DataBase = new AfriAusEntities())

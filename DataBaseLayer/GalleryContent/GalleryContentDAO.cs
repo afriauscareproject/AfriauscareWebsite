@@ -9,6 +9,11 @@ namespace Afriauscare.DataBaseLayer
 {
     public class GalleryContentDAO
     {
+        /// <summary>
+        /// Method that creates a gallery_content record
+        /// </summary>
+        /// <param name="objModel"></param>
+        /// <param name="galleryId"></param>
         public void CreateGalleryContent(GalleryContentModel objModel, int galleryId)
         {
             using(var Database = new AfriAusEntities())
@@ -27,6 +32,10 @@ namespace Afriauscare.DataBaseLayer
             }
         }
 
+        /// <summary>
+        /// Method that returns a list of gallerycontents records without filter
+        /// </summary>
+        /// <returns>List Gallerycontent records</returns>
         public List<GalleryContentModel> getImagesAll()
         {
             List<GalleryContentModel> listGallery = new List<GalleryContentModel>();
@@ -49,6 +58,11 @@ namespace Afriauscare.DataBaseLayer
             return listGallery;
         }
 
+        /// <summary>
+        /// Method that obtains the first record that contains a image for a gallery.
+        /// </summary>
+        /// <param name="galleryId"></param>
+        /// <returns>GalleryContent model</returns>
         public GalleryContentModel getFirstImageFromGallery(int galleryId)
         {
             using (var Database = new AfriAusEntities())
@@ -65,6 +79,11 @@ namespace Afriauscare.DataBaseLayer
 
         }
 
+        /// <summary>
+        /// Method that obtains the gallery_content records based on the Gallery ID
+        /// </summary>
+        /// <param name="galleryId"></param>
+        /// <returns>List of GalleryContent model</returns>
         public List<GalleryContentModel> getImagesFromGallery(int galleryId)
         {
             List<GalleryContentModel> listGallery = new List<GalleryContentModel>();
@@ -90,6 +109,11 @@ namespace Afriauscare.DataBaseLayer
 
         }
 
+        /// <summary>
+        /// Method that obtains the gallery content records based on the Gallery ID and the ones that are active
+        /// </summary>
+        /// <param name="galleryId"></param>
+        /// <returns>List of GalleryContent model</returns>
         public List<GalleryContentModel> getImagesFromGalleryAll(int galleryId)
         {
             List<GalleryContentModel> listGallery = new List<GalleryContentModel>();
@@ -118,6 +142,10 @@ namespace Afriauscare.DataBaseLayer
 
         }
 
+        /// <summary>
+        /// Method that deletes a gallery content record.
+        /// </summary>
+        /// <param name="galleryContentId"></param>
         public void DeleteGalleryContent(int galleryContentId)
         {
             using (var DataBase = new AfriAusEntities())
@@ -131,6 +159,10 @@ namespace Afriauscare.DataBaseLayer
             }
         }
 
+        /// <summary>
+        /// Method that re-calculate the index for each gallery content record once one of them is deleted
+        /// </summary>
+        /// <param name="galleryId"></param>
         public void AssignImagesIndexes(int galleryId)
         {
             using (var Database = new AfriAusEntities())
@@ -147,6 +179,10 @@ namespace Afriauscare.DataBaseLayer
             }
         }
 
+        /// <summary>
+        /// Method that delete all the records associated to a gallery ID
+        /// </summary>
+        /// <param name="galleryId"></param>
         public void DeleteGalleryContentByGalleryId(int galleryId)
         {
             using (var DataBase = new AfriAusEntities())

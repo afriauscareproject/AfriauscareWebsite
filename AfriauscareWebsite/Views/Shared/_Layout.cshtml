@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="@Url.Content("~/favicon.ico")"/>
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
 
@@ -39,13 +40,14 @@
                         <li class="nav-item active px-2">
                             @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
                         </li>
-                        <li class="nav-item dropdown px-2">
-                            <a class="nav-link dropdown-toggle" href="@Url.Action("ProgramServices", "Home")">
+                        <li class="nav-item px-2">
+                            <a class="nav-link" href="@Url.Action("ProgramServices", "Home")">
                                 <span>Programs&Services</span>
                             </a>
-                            <ul class="dropdown-menu">
+                            @*not implemented yet*@
+                            @*<ul class="dropdown-menu">
                                 <li> @Html.ActionLink("Events", "Events", "Home", null, new { @class = "nav-link" }) </li>
-                            </ul>
+                            </ul>*@
                         </li>
                         <li class="nav-item px-2">
                             @Html.ActionLink("Gallery", "Gallery2", "Home", null, new { @class = "nav-link" })

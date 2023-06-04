@@ -6,6 +6,10 @@ namespace Afriauscare.DataBaseLayer
 {
     public class UserDAO
     {
+        /// <summary>
+        /// Method to create a User using Linq syntax and Entity Framework
+        /// </summary>
+        /// <param name="objUserModel"></param>
         public void CreateUser(UserModel objUserModel)
         {
             using (var DataBase = new AfriAusEntities())
@@ -25,6 +29,11 @@ namespace Afriauscare.DataBaseLayer
            
         }
 
+        /// <summary>
+        /// Method to obtain a User by Username and Password as parameters
+        /// </summary>
+        /// <param name="objUserModel"></param>
+        /// <returns></returns>
         public User getUserbyUserandPassword (UserModel objUserModel)
         {
             var user = new User();
@@ -37,6 +46,10 @@ namespace Afriauscare.DataBaseLayer
             return user;
         }
 
+        /// <summary>
+        /// Method which obtains all the users without filters
+        /// </summary>
+        /// <returns></returns>
         public List<UserModel> getUsersAll()
         {
             List<UserModel> listUser = new List<UserModel>();
@@ -63,6 +76,11 @@ namespace Afriauscare.DataBaseLayer
             return listUser;
         }
 
+        /// <summary>
+        /// Method to return a User active by its ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public User getUserbyUserIdActiveUser(int userId)
         {
             var user = new User();
@@ -75,6 +93,11 @@ namespace Afriauscare.DataBaseLayer
             return user;
         }
 
+        /// <summary>
+        /// Method to obtain a User by its ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public UserModel getUserbyUserId(int userId)
         {
             var user = new User();
@@ -94,6 +117,10 @@ namespace Afriauscare.DataBaseLayer
             return objUserModel;
         }
 
+        /// <summary>
+        /// Method which updates a User record on the database
+        /// </summary>
+        /// <param name="objUserPar"></param>
         public void ModifyUser (UserModel objUserPar)
         {
             using(var DataBase = new AfriAusEntities())
@@ -114,6 +141,10 @@ namespace Afriauscare.DataBaseLayer
             }
         }
 
+        /// <summary>
+        /// Method which disables a User from the User table
+        /// </summary>
+        /// <param name="id"></param>
         public void DisableUser (int id)
         {
             using (var DataBase = new AfriAusEntities())
@@ -126,7 +157,12 @@ namespace Afriauscare.DataBaseLayer
                 DataBase.SaveChanges();
             }
         }
-
+        
+        /// <summary>
+        /// Method which obtains a User records by its Email address
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public bool getUserbyEmail(ForgotPasswordModel model)
         {
             bool flag = false;
@@ -142,6 +178,10 @@ namespace Afriauscare.DataBaseLayer
             return flag;
         }
 
+        /// <summary>
+        /// Method which updates a User password
+        /// </summary>
+        /// <param name="model"></param>
         public void ChangeUserPassword(ForgotPasswordModel model)
         {
             using (var DataBase = new AfriAusEntities())
@@ -160,6 +200,10 @@ namespace Afriauscare.DataBaseLayer
             }
         }
 
+        /// <summary>
+        /// Method which activates a User by changing the IsActive flag to 1
+        /// </summary>
+        /// <param name="model"></param>
         public void ActivateUser(ForgotPasswordModel model)
         {
             using (var DataBase = new AfriAusEntities())
@@ -179,6 +223,11 @@ namespace Afriauscare.DataBaseLayer
             }
         }
 
+        /// <summary>
+        /// Method to check if the temporary password is correct depending on the parameters
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>True of False</returns>
         public bool ValidateTemporaryPassword(ForgotPasswordModel model)
         {
             bool flag = false;
@@ -194,6 +243,11 @@ namespace Afriauscare.DataBaseLayer
             return flag;
         }
 
+        /// <summary>
+        /// Method which returns the User Id based on the user email
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns>User Id</returns>
         public int getUserIdByEmail(string emailAddress)
         {
             int userId = 0;

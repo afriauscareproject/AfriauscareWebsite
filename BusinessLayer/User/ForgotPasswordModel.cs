@@ -7,6 +7,9 @@ using System.Web;
 
 namespace Afriauscare.BusinessLayer.User
 {
+    /// <summary>
+    /// Class model for Forgot Password view
+    /// </summary>
     public class ForgotPasswordModel
     {
         public int UserId { get; set; }

@@ -8,6 +8,11 @@ namespace Afriauscare.DataBaseLayer.Shared
 {
     public class SuburbsDAO
     {
+        /// <summary>
+        /// Method that obtains the list of suburbs based on the state ID and populates the Suburb dropdown list.
+        /// </summary>
+        /// <param name="state_id"></param>
+        /// <returns>IEnumerable<SelectListItem></returns>
         public IEnumerable<SelectListItem> GetSuburbs(string state_id)
         {
             int state_id_converted = Int16.Parse(state_id);
@@ -37,6 +42,11 @@ namespace Afriauscare.DataBaseLayer.Shared
             }
         }
 
+        /// <summary>
+        /// Method that obtains the Suburb name by ID
+        /// </summary>
+        /// <param name="suburbId"></param>
+        /// <returns>Suburb name as string</returns>
         public string GetSuburbNameById(int suburbId)
         {
             string suburbName = string.Empty;

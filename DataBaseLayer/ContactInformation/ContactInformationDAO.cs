@@ -7,6 +7,10 @@ namespace Afriauscare.DataBaseLayer.ContactInformation
 {
     public class ContactInformationDAO
     {
+        /// <summary>
+        /// Method that obtains all the contact_information records without parameters
+        /// </summary>
+        /// <returns>List of ContactInformation records</returns>
         public List<ContactInformationModel> GetContactInformationAll()
         {
             List<ContactInformationModel> listContact = new List<ContactInformationModel>();
@@ -37,6 +41,10 @@ namespace Afriauscare.DataBaseLayer.ContactInformation
             return listContact;
         }
 
+        /// <summary>
+        /// Method that creates a contact information record
+        /// </summary>
+        /// <param name="objContactModel"></param>
         public void CreateContactInformation(ContactInformationModel objContactModel)
         {
             using (var DataBase = new AfriAusEntities())
@@ -60,6 +68,11 @@ namespace Afriauscare.DataBaseLayer.ContactInformation
 
         }
 
+        /// <summary>
+        /// Method that obtains a contact information record based on its ID as parameter
+        /// </summary>
+        /// <param name="ContactId"></param>
+        /// <returns>Contact information model</returns>
         public ContactInformationModel GetContactInformationbyId(int ContactId)
         {
             var contactInformation = new contact_information();
@@ -83,6 +96,10 @@ namespace Afriauscare.DataBaseLayer.ContactInformation
             return objContactModel;
         }
 
+        /// <summary>
+        /// Method that updates a contact information record.
+        /// </summary>
+        /// <param name="objModel"></param>
         public void ModifyContactInformation(ContactInformationModel objModel)
         {
             using (var DataBase = new AfriAusEntities())
@@ -107,6 +124,9 @@ namespace Afriauscare.DataBaseLayer.ContactInformation
             }
         }
 
+        /// <summary>
+        /// Method that clears the IsDefault field in the contact_information table.
+        /// </summary>
         public void ClearIsDefaultField()
         {
             using (var Database = new AfriAusEntities())
@@ -120,6 +140,10 @@ namespace Afriauscare.DataBaseLayer.ContactInformation
             }
         }
 
+        /// <summary>
+        /// Method that returns a contact information record that is selected as default.
+        /// </summary>
+        /// <returns>ContactInformation model</returns>
         public ContactInformationModel GetContactInformationDefault()
         {
             using (var DataBase = new AfriAusEntities())
@@ -144,6 +168,10 @@ namespace Afriauscare.DataBaseLayer.ContactInformation
             }
         }
 
+        /// <summary>
+        /// Method that deletes a contact information record based on its ID.
+        /// </summary>
+        /// <param name="contactInformationId"></param>
         public void DeleteContactInformation(int contactInformationId)
         {
             using (var DataBase = new AfriAusEntities())

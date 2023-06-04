@@ -5,6 +5,9 @@ using System.Web.Mvc;
 
 namespace Afriauscare.BusinessLayer.BankInformation
 {
+    /// <summary>
+    /// Class model for Bank Information creation
+    /// </summary>
     public class BankInformationModel
     {
         public int Bank_information_id { get; set; }

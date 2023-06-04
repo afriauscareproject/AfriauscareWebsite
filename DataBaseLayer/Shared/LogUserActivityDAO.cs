@@ -9,6 +9,10 @@ namespace Afriauscare.DataBaseLayer.Shared
 {
     public class LogUserActivityDAO
     {
+        /// <summary>
+        /// Method that inserts a record in the log_user_activity table
+        /// </summary>
+        /// <param name="objLogUserModel"></param>
         public void CreateLogUserActivity(LogUserActivityModel  objLogUserModel)
         {
             using (var DataBase = new AfriAusEntities())
@@ -27,6 +31,10 @@ namespace Afriauscare.DataBaseLayer.Shared
 
         }
 
+        /// <summary>
+        /// Method that obtains all the logUser records.
+        /// </summary>
+        /// <returns>List<LogUserActivityModel></returns>
         public List<LogUserActivityModel> GetLogUserInformation()
         {
             List<LogUserActivityModel> listReturn = new List<LogUserActivityModel>();

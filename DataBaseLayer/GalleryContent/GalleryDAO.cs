@@ -7,6 +7,10 @@ namespace Afriauscare.DataBaseLayer
 {
     public class GalleryDAO
     {
+        /// <summary>
+        /// Method that returns all the records from the Gallery table.
+        /// </summary>
+        /// <returns>List<GalleryModel></returns>
         public List<GalleryModel> getGalleryAll()
         {
             List<GalleryModel> listReturn = new List<GalleryModel>();
@@ -30,6 +34,11 @@ namespace Afriauscare.DataBaseLayer
             return listReturn;
         }
 
+        /// <summary>
+        /// Method that creates a gallery record in the database and returns the gallery ID.
+        /// </summary>
+        /// <param name="objModel"></param>
+        /// <returns>Gallery ID as integer</returns>
         public int CreateGallery(GalleryModel objModel)
         {
             var galleryId = 0;
@@ -51,6 +60,11 @@ namespace Afriauscare.DataBaseLayer
             return galleryId;
         }
 
+        /// <summary>
+        /// Method that obtains the gallery record based on its ID. Note that this method is used for Modify Gallery only as it uses its own model
+        /// </summary>
+        /// <param name="GalleryId"></param>
+        /// <returns>GalleryModifyModel</returns>
         public GalleryModifyModel GetGalleryById(int GalleryId)
         {
             using (var DataBase = new AfriAusEntities())
@@ -70,6 +84,10 @@ namespace Afriauscare.DataBaseLayer
         
 }
 
+        /// <summary>
+        /// Method that updates a Gallery record.
+        /// </summary>
+        /// <param name="objGalleryModel"></param>
         public void ModifyGallery(GalleryModifyModel objGalleryModel)
         {
             using (var DataBase = new AfriAusEntities())
@@ -88,6 +106,10 @@ namespace Afriauscare.DataBaseLayer
             }
         }
 
+        /// <summary>
+        /// Method that deletes a gallery record.
+        /// </summary>
+        /// <param name="galleryId"></param>
         public void DeleteGallery(int galleryId)
         {
             using (var DataBase = new AfriAusEntities())

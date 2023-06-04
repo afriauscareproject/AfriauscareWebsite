@@ -7,6 +7,9 @@ using Afriauscare.BusinessLayer.Shared;
 
 namespace Afriauscare.BusinessLayer.Gallery
 {
+    /// <summary>
+    /// Gallery model class created for Modify gallery View. Image list is not mandatory
+    /// </summary>
     public class GalleryModifyModel
     {
         public int GalleryId { set; get; }

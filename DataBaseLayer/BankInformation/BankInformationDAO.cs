@@ -7,6 +7,10 @@ namespace Afriauscare.DataBaseLayer.BankInformation
 {
     public class BankInformationDAO
     {
+        /// <summary>
+        /// Method which returns all the Bank information records without filter
+        /// </summary>
+        /// <returns>List of BankInformationModel</returns>
         public List<BankInformationModel> GetBankInformationAll()
         {
             List<BankInformationModel> listReturn = new List<BankInformationModel>();
@@ -45,6 +49,10 @@ namespace Afriauscare.DataBaseLayer.BankInformation
             return listReturn;
         }
 
+        /// <summary>
+        /// Method that create a record for Bank Information
+        /// </summary>
+        /// <param name="objModel"></param>
         public void CreateBankInformation(BankInformationModel objModel)
         {
             using (var DataBase = new AfriAusEntities())
@@ -63,6 +71,9 @@ namespace Afriauscare.DataBaseLayer.BankInformation
             }
         }
 
+        /// <summary>
+        /// Method that clears the IsDefault field on bank_information table
+        /// </summary>
         public void ClearIsDefaultField()
         {
             using (var Database = new AfriAusEntities())
@@ -76,6 +87,11 @@ namespace Afriauscare.DataBaseLayer.BankInformation
             }
         }
 
+        /// <summary>
+        /// Method that obtains bank information entity by ID.
+        /// </summary>
+        /// <param name="bankInformationId"></param>
+        /// <returns>BankInformation Model</returns>
         public BankInformationModel GetBankInformationbyId(int bankInformationId)
         {
             var bankInformation = new bank_information();
@@ -95,6 +111,10 @@ namespace Afriauscare.DataBaseLayer.BankInformation
             return objBankModel;
         }
 
+        /// <summary>
+        /// Method that modify a bankInformation entity that comes as parameter
+        /// </summary>
+        /// <param name="objModel"></param>
         public void ModifyBankInformation(BankInformationModel objModel)
         {
             using (var DataBase = new AfriAusEntities())
@@ -115,6 +135,10 @@ namespace Afriauscare.DataBaseLayer.BankInformation
             }
         }
 
+        /// <summary>
+        /// Method that delete a bankInformation entity from the database.
+        /// </summary>
+        /// <param name="bankInformationId"></param>
         public void DeleteBankInformation(int bankInformationId)
         {
             using (var DataBase = new AfriAusEntities())
@@ -128,6 +152,10 @@ namespace Afriauscare.DataBaseLayer.BankInformation
             }
         }
 
+        /// <summary>
+        /// Method that returns a bankInformation entity that is selected as default
+        /// </summary>
+        /// <returns>BankInformation entity</returns>
         public BankInformationModel GetBankInformationDefault()
         {
             List<BankInformationModel> listReturn = new List<BankInformationModel>();

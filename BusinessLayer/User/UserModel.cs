@@ -7,6 +7,9 @@ using System.Web;
 
 namespace Afriauscare.BusinessLayer.User
 {
+    /// <summary>
+    /// User class model for User module
+    /// </summary>
     public class UserModel
     {
         public int UserId { get; set; }

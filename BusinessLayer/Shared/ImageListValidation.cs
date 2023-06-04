@@ -9,6 +9,9 @@ using System.IO;
 
 namespace Afriauscare.BusinessLayer.Shared
 {
+    /// <summary>
+    /// Class for validate image list objects
+    /// </summary>
     public class ImageListValidation : ValidationAttribute
     {
         public override bool IsValid(object value)
@@ -26,6 +29,12 @@ namespace Afriauscare.BusinessLayer.Shared
             return true;
         }
 
+        /// <summary>
+        /// Method for file size on Gallery creation
+        /// </summary>
+        /// <param name="fileList"></param>
+        /// <param name="maxFileSize"></param>
+        /// <returns></returns>
         public bool FileSizeValidation(HttpPostedFileBase[] fileList, int maxFileSize)
         {
             bool flag = true;
@@ -41,6 +50,11 @@ namespace Afriauscare.BusinessLayer.Shared
             return flag;
         }
 
+        /// <summary>
+        /// Method for file extension validation
+        /// </summary>
+        /// <param name="fileList"></param>
+        /// <returns></returns>
         public bool FileExtensionValidation(HttpPostedFileBase[] fileList)
         {
             bool flag = true;
