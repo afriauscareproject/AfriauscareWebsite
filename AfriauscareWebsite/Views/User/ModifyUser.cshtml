@@ -18,7 +18,7 @@
     <div class="container">
         @using (Html.BeginForm("ModifyUser", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
-            <div class="mx-auto col-12 col-md-10 col-lg-6">
+            <div class="mx-auto col-12 col-md-10 col-lg-6" style="padding-top:5em;">
                 <h2>Modify User</h2>
                 <br />
                 @Html.HiddenFor(model => model.UserId)
@@ -71,7 +71,7 @@
         }
     </div>
 
-    <script src="~/Scripts/jquery-3.7.0.slim.min.js"></script>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
     <script src="~/Scripts/popper.min.js" type="module"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
 
