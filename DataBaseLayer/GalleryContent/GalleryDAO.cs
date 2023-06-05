@@ -17,7 +17,8 @@ namespace Afriauscare.DataBaseLayer
 
             using (var DataBase = new AfriAusEntities())
             {
-                var galleryList = DataBase.Galleries.ToList();
+                var galleryList = DataBase.Galleries.OrderByDescending(g => g.GalleryEventDate)
+                    .ToList();
 
                 foreach (var item in galleryList)
                 {

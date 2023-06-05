@@ -10,37 +10,20 @@
 <br />
 <br />
 <section id="header">
-    <h3>Gallery Title : @Model.First().GalleryContentPath</h3>
-
+    <h3 style="text-align:center;">@Model.First().GalleryContentPath</h3>
 </section>
 
 <div class="container">
-    <div class="brand-carousel  owl-carousel">
+    <div class="row">
         @foreach (var item in Model)
         {
-            <div class="view-pictures">
-                <img src="data:image/jpg;base64,@Convert.ToBase64String(item.GalleryContentImage)" class="img-fluid">
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a>
+                        <img src="data:image/jpg;base64,@Convert.ToBase64String(item.GalleryContentImage)" alt="Image from gallery" style="width:100%">
+                    </a>
+                </div>
             </div>
         }
     </div>
 </div>
-
-<script type="text/javascript">
-
-    $('.brand-carousel').owlCarousel({
-        loop: true,
-        margin: 10,
-        autoplay: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            600: {
-                items: 1
-            },
-            1000: {
-                items: 1
-            }
-        }
-    })
-</script>
