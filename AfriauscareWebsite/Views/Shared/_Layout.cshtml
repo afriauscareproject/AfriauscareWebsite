@@ -24,56 +24,50 @@
 </head>
 
 <body id="header">
-    <div>
-        <nav class="navbar navbar-expand-md fixed-top">
-            <div class="container-fluid">
-                <div class="logo">
-                    <h1>
-                        @Html.ActionLink("AFRI-AUS CARE", "Index", "Home", null)
-                    </h1>
-                </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
-                    <ul class="navbar-nav d-flex px-3">
-                        <li class="nav-item active px-2">
-                            @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
-                        </li>
-                        <li class="nav-item px-2">
-                            <a class="nav-link" href="@Url.Action("ProgramServices", "Home")">
-                                <span>Programs&Services</span>
-                            </a>
-                            @*not implemented yet*@
-                            @*<ul class="dropdown-menu">
-                                <li> @Html.ActionLink("Events", "Events", "Home", null, new { @class = "nav-link" }) </li>
-                            </ul>*@
-                        </li>
-                        <li class="nav-item px-2">
-                            @Html.ActionLink("Gallery", "Gallery2", "Home", null, new { @class = "nav-link" })
-                        </li>
-                        <li class="nav-item dropdown px-2">
-                            <a class="nav-link dropdown-toggle" href="@Url.Action("About", "Home")">
-                                <span>About Us</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li> @Html.ActionLink("Board Members", "BoardMembers", "Home", null, new { @class = "nav-link" }) </li>
-                                <li>@Html.ActionLink("Team", "Team", "Home", null, new { @class = "nav-link" })</li>
-                                <li>@Html.ActionLink("Key Partners", "KeyPartners", "Home", null, new { @class = "nav-link" })</li>
-                            </ul>
-                        </li>
-                        <li class="nav-item px-2">
-                            @Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "nav-link" })
-                        </li>
-                        <li class="nav-item px-2">
-                            @Html.ActionLink("Donate", "Donate", "Home", null, new { @class = "nav-link" })
-                        </li>
-                        <li class="nav-item"> @Html.ActionLink("Login", "Login", "Session", null, new { @class = "nav-link" })</li>
-                    </ul>
-                </div>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="logo">
+                <h1>
+                    @Html.ActionLink("AFRI-AUS CARE", "Index", "Home", null)
+                </h1>
             </div>
-        </nav>
-    </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+                <ul class="navbar-nav d-flex px-3">
+                    <li class="nav-item active px-2">
+                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="@Url.Action("ProgramServices", "Home")">
+                            <span>Programs&Services</span>
+                        </a>
+                    </li>
+                    <li class="nav-item px-2">
+                        @Html.ActionLink("Gallery", "Gallery2", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item dropdown px-2">
+                        <a class="nav-link dropdown-toggle" href="@Url.Action("About", "Home")">
+                            <span>About Us</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li> @Html.ActionLink("Board Members", "BoardMembers", "Home", null, new { @class = "nav-link" }) </li>
+                            <li>@Html.ActionLink("Team", "Team", "Home", null, new { @class = "nav-link" })</li>
+                            <li>@Html.ActionLink("Key Partners", "KeyPartners", "Home", null, new { @class = "nav-link" })</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item px-2">
+                        @Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item px-2">
+                        @Html.ActionLink("Donate", "Donate", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item"> @Html.ActionLink("Login", "Login", "Session", null, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="body-content">
         @RenderBody()
@@ -124,20 +118,19 @@
                         <div class="col-lg-2 col-md-6 footer-links">
                             <h4>Quick Links</h4>
                             <ul>
-                                <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
-                                <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
-                                <li><i class="bi bi-chevron-right"></i> <a href="#">Programs & Services</a></li>
-                                <li><i class="bi bi-chevron-right"></i> <a href="#">NDIS</a></li>
-                                <li><i class="bi bi-chevron-right"></i> <a href="#">Contact Us</a></li>
+                                <li><i class="bi bi-chevron-right"></i> <a href="@Url.Action("Index","Home")">Home</a></li>
+                                <li><i class="bi bi-chevron-right"></i> <a href="@Url.Action("About","Home")">About us</a></li>
+                                <li><i class="bi bi-chevron-right"></i> <a href="@Url.Action("ProgramServices","Home")">Programs & Services</a></li>
+                                <li><i class="bi bi-chevron-right"></i> <a href="@Url.Action("Contact","Home")">Contact Us</a></li>
                             </ul>
                         </div>
 
                         <div class="col-lg-2 col-md-6 footer-links">
                             <h4>Regulations</h4>
                             <ul>
-                                <li><i class="bi bi-chevron-right"></i> <a href="#">Terms & Conditions</a></li>
-                                <li><i class="bi bi-chevron-right"></i> <a href="#">Privacy Policy</a></li>
-                                <li><i class="bi bi-chevron-right"></i> <a href="#">Careers</a></li>
+                                <li><i class="bi bi-chevron-right"></i>Terms & Conditions</li>
+                                <li><i class="bi bi-chevron-right"></i>Privacy Policy</li>
+                                <li><i class="bi bi-chevron-right"></i>Careers</li>
                             </ul>
                         </div>
                         <div class="col-lg-3 col-md-6 footer-links">
