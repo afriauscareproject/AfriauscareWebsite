@@ -81,36 +81,45 @@ namespace AfriauscareWebsite.Controllers
         [HttpPost]
         public ActionResult ForgotPassword(ForgotPasswordModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                UserDAO objUserDao = new UserDAO();
-
-                if(objUserDao.getUserbyEmail(model))
+                if (ModelState.IsValid)
                 {
-                    string temporaryPassword = Membership.GeneratePassword(8, 1);
-                    string FromEmail = string.Empty;
-                    string FromEmailPassword = string.Empty;
-                    string SMTPPort = string.Empty;
-                    string Host = string.Empty;
-                    string To = model.UserEmail;
-                
-                    string subject = "Afriauscare - Password Reset Request";
-                    string body = "<b> Please find your temporary password. </b> <br/>" + temporaryPassword;
+                    UserDAO objUserDao = new UserDAO();
 
-                    EmailManager.AppSettings(out FromEmail, out FromEmailPassword, out SMTPPort, out Host);
-                    EmailManager.SendEmail(FromEmail, subject, body, To, FromEmail, FromEmailPassword, SMTPPort, Host);
-                    TempData["ConfirmationMessageEmail"] = "We have sent you an email with a temporary password.";
+                    if (objUserDao.getUserbyEmail(model))
+                    {
+                        string temporaryPassword = Membership.GeneratePassword(8, 1);
+                        string FromEmail = string.Empty;
+                        string FromEmailPassword = string.Empty;
+                        string SMTPPort = string.Empty;
+                        string Host = string.Empty;
+                        string To = model.UserEmail;
 
-                    model.UserId = objUserDao.getUserIdByEmail(model.UserEmail);
-                    model.UserPassword = temporaryPassword;
-                    objUserDao.ChangeUserPassword(model);
+                        string subject = "Afriauscare - Password Reset Request";
+                        string body = "<b> Please find your temporary password. </b> <br/>" + temporaryPassword;
 
-                    return RedirectToAction("UpdatePasswordDetails", "Session", new { emailAddress = model.UserEmail });
+                        EmailManager.AppSettings(out FromEmail, out FromEmailPassword, out SMTPPort, out Host);
+                        EmailManager.SendEmail(FromEmail, subject, body, To, FromEmail, FromEmailPassword, SMTPPort, Host);
+                        TempData["ConfirmationMessageEmail"] = "We have sent you an email with a temporary password.";
+
+                        model.UserId = objUserDao.getUserIdByEmail(model.UserEmail);
+                        model.UserPassword = temporaryPassword;
+                        objUserDao.ChangeUserPassword(model);
+
+                        return RedirectToAction("UpdatePasswordDetails", "Session", new { emailAddress = model.UserEmail });
+                    }
+                    else
+                    {
+                        return View();
+                    }
                 }
-                else
-                {
-                    return View();
-                }
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
             }
 
             return View();
@@ -119,48 +128,68 @@ namespace AfriauscareWebsite.Controllers
         [HttpGet]
         public ActionResult UpdatePasswordDetails(string emailAddress)
         {
-            UserDAO objUserDao = new UserDAO();
-            ForgotPasswordModel model = new ForgotPasswordModel();
-            model.UserEmail = emailAddress;
-            model.UserId = objUserDao.getUserIdByEmail(emailAddress);
+            try
+            {
+                UserDAO objUserDao = new UserDAO();
+                ForgotPasswordModel model = new ForgotPasswordModel();
+                model.UserEmail = emailAddress;
+                model.UserId = objUserDao.getUserIdByEmail(emailAddress);
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
+            
         }
 
         [HttpPost]
         public ActionResult UpdatePasswordDetails(ForgotPasswordModel model)
         {
-            UserDAO objUserDao = new UserDAO();
-
-            if (!objUserDao.ValidateTemporaryPassword(model))
+            try
             {
-                ModelState.AddModelError("TemporaryPassword", "The temporary password entered does not match. Please check again.");
-            }
+                UserDAO objUserDao = new UserDAO();
 
-            if (ModelState.IsValid)
-            {
-                model.UserId = objUserDao.getUserIdByEmail(model.UserEmail);
-                objUserDao.ActivateUser(model);
-
-                LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
-                LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                if (!objUserDao.ValidateTemporaryPassword(model))
                 {
-                    User_id = model.UserId,
-                    Module_Name = "User",
-                    Action_Excuted = "PasswordChanged",
-                    Datetime_action = DateTime.Now
-                };
+                    ModelState.AddModelError("TemporaryPassword", "The temporary password entered does not match. Please check again.");
+                }
 
-                objLogUserDao.CreateLogUserActivity(objLogUserModel);
-                TempData["ConfirmationMessageEmail"] = "Password updated successfully. Please go back to Login page.";
-                ModelState.Clear();
+                if (ModelState.IsValid)
+                {
+                    model.UserId = objUserDao.getUserIdByEmail(model.UserEmail);
+                    objUserDao.ActivateUser(model);
 
-                return View();
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = model.UserId,
+                        Module_Name = "User",
+                        Action_Excuted = "PasswordChanged",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
+                    TempData["ConfirmationMessageEmail"] = "Password updated successfully. Please go back to Login page.";
+                    ModelState.Clear();
+
+                    return View();
+                }
+                else
+                {
+                    return View();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View();
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
             }
+            
         }
     }
 }
