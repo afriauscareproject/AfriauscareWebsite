@@ -11,22 +11,15 @@
     <title>CreateGallery</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @Styles.Render("~/Content/css")
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    @Styles.Render("~/Content/bootstrap")
-    <!-- Datepicker -->
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css' rel='stylesheet' type='text/css'>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js' type='text/javascript'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
     @Html.Partial("_MenuBarAdminPortal")
 
     <div class="container">
-        @using (Html.BeginForm("CreateGallery", "Gallery", FormMethod.Post))
+        @using (Html.BeginForm("CreateGallery", "Gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <div class="mx-auto col-12 col-md-10 col-lg-6">
+            <div class="mx-auto col-12 col-md-10 col-lg-6" style="padding-top:3em;">
                 <h2>Create Gallery</h2>
                 <br />
                 @if (TempData["GalleryAlertMessage"] != null)
@@ -49,19 +42,23 @@
                         @Html.ValidationMessageFor(model => model.GalleryDescription, null, new { @class = "text text-danger" })
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <label>Event date:</label>
-                        <input id="EventDate" type='text' class="form-control datepicker" data-provide="datepicker">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.GalleryEventDate)
+                        @Html.TextBoxFor(model => model.GalleryEventDate, new { type = "date", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.GalleryEventDate, null, new { @class = "text text-danger" })
                     </div>
                 </div>
                 <br />
                 <fieldset class="border p-1">
                     <legend class="w-auto">Select your files</legend>
-                    <div class="mb-lg-3">
-                        <input class="form-control" type="file" id="MultipleFileContent" multiple>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.imageList, "", new { @type = "file", @multiple = "multiple" })
+                        </div>
                     </div>
                 </fieldset>
+                @Html.ValidationMessageFor(model => model.imageList, "", new { @class = "text-danger" })
 
                 <div class="form-group">
                     @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
@@ -74,15 +71,16 @@
         }
     </div>
 
-    <!-- Script -->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#datepicker').datepicker({
-                locale: {
-                    format: 'DD/MM/YYYY'
-                }
-            });
-        });
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/popper.min.js" type="module"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    <script>
+        setTimeout(function () {
+
+            // Closing the alert message once the user is created
+            $('#CreateGalleryAlert').alert('close');
+        }, 5300);
     </script>
 </body>
 </html>

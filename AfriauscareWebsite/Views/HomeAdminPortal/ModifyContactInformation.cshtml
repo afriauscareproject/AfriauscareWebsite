@@ -1,0 +1,133 @@
+﻿@model Afriauscare.BusinessLayer.ContactInformation.ContactInformationModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+
+    <title>Modify Contact Information</title>
+</head>
+<body>
+    @Html.Partial("_MenuBarAdminPortal")
+
+    <div class="container">
+        @using (Html.BeginForm("ModifyContactInformation", "HomeAdminPortal", FormMethod.Post))
+        {
+            <div class="mx-auto col-12 col-md-10 col-lg-6" style="padding-top:3em;">
+                <h2>Modify Contact Information</h2>
+                <br />
+                @Html.HiddenFor(model => model.Contact_id)
+
+                @if (TempData["ContactInformationAlertMessage"] != null)
+                {
+                    <div id="CreateContactInformationAlert" class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Success!</strong> @TempData["ContactInformationAlertMessage"]
+                    </div>
+                }
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Email_address)
+                        @Html.TextBoxFor(model => model.Email_address, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Email_address, null, new { @class = "text text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Phone_number)
+                        @Html.TextBoxFor(model => model.Phone_number, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Phone_number, null, new { @class = "text text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Mobile_number)
+                        @Html.TextBoxFor(model => model.Mobile_number, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Mobile_number, null, new { @class = "text text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Fax_number)
+                        @Html.TextBoxFor(model => model.Fax_number, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Fax_number, null, new { @class = "text text-danger" })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Contact_address)
+                        @Html.TextBoxFor(model => model.Contact_address, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Contact_address, null, new { @class = "text text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Postcode)
+                        @Html.TextBoxFor(model => model.Postcode, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Postcode, null, new { @class = "text text-danger" })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.State_id)
+                        @Html.DropDownListFor(model => model.State_id, new SelectList(Model.States, "Value", "Text", Model.State_id), htmlAttributes: new { @class = "form-control", id = "States" })
+                        @Html.ValidationMessageFor(model => model.State_id, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.Suburb_id)
+                        @Html.DropDownListFor(model => model.Suburb_id, new SelectList(Model.Suburbs, "Value", "Text", Model.Suburb_id), htmlAttributes: new { @class = "form-control", @id = "Suburbs" })
+                        @Html.ValidationMessageFor(model => model.Suburb_id, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-check">
+                    @Html.CheckBoxFor(model => model.Is_default, new { @class = "form-check-input" })
+                    @Html.LabelFor(model => model.Is_default, new { @class = "form-check-label" })
+                    @Html.ValidationMessageFor(model => model.Is_default, null, new { @class = "text text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.ValidationMessage("Error", null, new { @class = "text text-danger col-sm-10" })
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Modify</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("ViewContactInformation", "HomeAdminPortal")'">Back</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/popper.min.js" type="module"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    <script type="text/javascript">
+
+        //Function that populates the Suburb when a state dropdownlist changes the selection
+        $('#States').change(function () {
+            var selectedState = $("#States").val();
+            var suburbsSelect = $('#Suburbs');
+            suburbsSelect.empty();
+            if (selectedState != null && selectedState != '') {
+                $.getJSON('@Url.Action("GetSuburbs")', { state_id: selectedState }, function (suburbs) {
+                    if (suburbs != null && !jQuery.isEmptyObject(suburbs))
+                    {
+                        $.each(suburbs, function (index, suburb) {
+                            suburbsSelect.append($('<option/>', {
+                                value: suburb.Value,
+                                text: suburb.Text
+                            }));
+                        });
+                    };
+                });
+            }
+        });
+
+        setTimeout(function () {
+
+            // Closing the alert message once the user is created
+            $('#CreateContactInformationAlert').alert('close');
+        }, 5300);
+    </script>
+</body>
+</html>

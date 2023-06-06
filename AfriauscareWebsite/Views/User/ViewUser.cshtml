@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Afriauscare.DataBaseLayer.User>
+﻿@model IEnumerable<Afriauscare.BusinessLayer.User.UserModel>
 
 @{
     Layout = null;
@@ -10,10 +10,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title View Users</title>
-    @Styles.Render("~/Content/css")
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
+    <title>View Users</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
     @Html.Partial("_MenuBarAdminPortal")
@@ -21,6 +19,14 @@
         <br />
         <h2>Users</h2>
         <br />
+        @if (TempData["UserAlertMessage"] != null)
+        {
+            <div id="DisableUserAlert" class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Success!</strong> @TempData["UserAlertMessage"]
+            </div>
+        }
+
         <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CreateUser", "User")'">Create User</button>
         <br />
         <br />
@@ -37,20 +43,21 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Username)</td>
-                    <td>@Html.DisplayFor(modelItem => item.UserLastName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
-                    <td>@Html.CheckBox(nameof(item.UserActive),item.UserActive ?? false, new { @class = "form-check-input", @disabled ="disabled" })</td>
-                    <td>
-                        @Html.ActionLink("Edit", "ModifyUser",new { Id = item.UserId }, new { @class = "btn btn-info"})
-                        <a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.UserId)">Disable</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="display:none">@Html.DisplayFor(modelItem => item.UserId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserLastName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserEmail)</td>
+                        <td>@Html.CheckBoxFor(modelItem => item.UserActive, new { @class = "form-check-input", @disabled = "disabled" })</td>
+                        <td>
+                            @Html.ActionLink("Edit", "ModifyUser", new { Id = item.UserId }, new { @class = "btn btn-info" })
+                            <button class="btnDeleteUser btn btn-danger">Deactivate</button>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
-        <input type="hidden" id="UserIdHidden"/>
+        <input type="hidden" id="UserIdHidden" />
     </div>
 
     <div class="modal fade" id="deleteUserModal">
@@ -61,17 +68,22 @@
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to disable the user?</p>
-                    <p id="userNameDisplay"></p>
+                    <strong><label id="lblName"></label></strong>
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
                         <a href="#" id="btnConfirmDeleteUser" class="btn btn-info mr-2">Deactivate User</a>
                         <a href="#" id="btnCancelDeleteUserModal" class="btn btn-danger">Cancel</a>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/popper.min.js" type="module"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -102,10 +114,22 @@
             })
         })
 
-        var Confirm = function (UserId) {
-            $("#UserIdHidden").val(UserId);
+        $(".btnDeleteUser").click(function () {
+            debugger;
+            var currentTds = $(this).closest("tr").find("td"); // find all td of selected row
+            var userId = $(currentTds).eq(0).text();
+            var userName = $(currentTds).eq(1).text(); // eq= cell , text = inner text
+            var userLastName = $(currentTds).eq(2).text();
+            $("#lblName").html(userName + ' ' + userLastName);
+            $("#UserIdHidden").val(userId);
             $("#deleteUserModal").modal('show');
-        }
+        });
+
+        setTimeout(function () {
+
+            // Closing the alert message once the user is created
+            $('#DisableUserAlert').alert('close');
+        }, 5300);
     </script>
 </body>
 </html>

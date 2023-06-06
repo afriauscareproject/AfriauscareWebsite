@@ -12,9 +12,7 @@
     <title>ViewGallery</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @Styles.Render("~/Content/css")
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
     @Html.Partial("_MenuBarAdminPortal")
@@ -23,6 +21,14 @@
         <br />
         <h2>Gallery Administration</h2>
         <br />
+        @if (TempData["GalleryAlertMessage"] != null)
+        {
+            <div id="DeleteGalleryAlert" class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Success!</strong> @TempData["GalleryAlertMessage"]
+            </div>
+        }
+
         <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CreateGallery", "Gallery")'">Create Gallery</button>
         <br />
         <br />
@@ -43,8 +49,8 @@
                         <td>@Html.DisplayFor(modelItem => item.GalleryTitle)</td>
                         <td>@Html.DisplayFor(modelItem => item.GalleryDescription)</td>
                         <td>
-                            @Html.ActionLink("Edit", "ModifyUser", new { Id = item.GalleryId }, new { @class = "btn btn-info" })
-                            <a href="#" id="btnShowDisableUserModal" class="btn btn-danger" onclick="Confirm(@item.GalleryId)">Disable</a>
+                            @Html.ActionLink("Edit", "ModifyGallery", new { GalleryId = item.GalleryId }, new { @class = "btn btn-info" })
+                            <button class="btnDeleteGallery btn btn-danger">Delete</button>
                         </td>
                     </tr>
                 }
@@ -52,5 +58,75 @@
         </table>
         <input type="hidden" id="GalleryIdHidden" />
     </div>
+
+    <div class="modal fade" id="deleteGalleryModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the gallery named as?</p>
+                    <strong><label id="lblGalleryName"></label></strong>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <a href="#" id="btnConfirmDeleteGallery" class="btn btn-info mr-2">Delete Gallery</a>
+                        <a href="#" id="btnCancelDeleteGalleryModal" class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/popper.min.js" type="module"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btnCancelDeleteGalleryModal").click(function () {
+                window.location.href = "/Gallery/ViewGallery";
+            })
+
+            //Function which is called when confirming disable a user - Jquery function added to the modal button
+            $("#btnConfirmDeleteGallery").click(function () {
+                var _id = $("#GalleryIdHidden").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Gallery/DeleteGalleryJson",
+                    data: { GalleryId: _id },
+                    success: function (result) {
+                        if (result) {
+                            $("#deleteGalleryModal").modal('hide');
+                            $("#GalleryIdHidden").val(null);
+                            window.location.href = "/Gallery/ViewGallery";
+                        }
+                        else {
+                            alert("The operation did not complete");
+                        }
+                    }
+                });
+            })
+        })
+
+        $(".btnDeleteGallery").click(function () {
+            debugger;
+            var currentTds = $(this).closest("tr").find("td"); // find all td of selected row
+            var galleryId = $(currentTds).eq(0).text();
+            var galleryName = $(currentTds).eq(1).text(); // eq= cell , text = inner text
+            $("#lblGalleryName").html(galleryName);
+            $("#GalleryIdHidden").val(galleryId);
+            $("#deleteGalleryModal").modal('show');
+        });
+
+        setTimeout(function () {
+
+            // Closing the alert message once the user is created
+            $('#DeleteGalleryAlert').alert('close');
+        }, 5300);
+    </script>
 </body>
 </html>

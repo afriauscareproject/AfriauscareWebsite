@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "Team";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Team</h2>
+
+<section id="mainSection">
+    <div class="hero-container">
+        <div class="div-inner">
+            <div class="div-item active" style="background-image: url(../Content/Images/Ab-Team/TeamTabSection.jpg);">
+                <div class="div-container">
+                    <div class="div-content">
+                        <h3 class="animate__animated animate__fadeInUp" style="color: white;font-size:16px;letter-spacing:1.2em;line-height:2.4em;font-weight:bold;">AFRI AUS CARE</h3>
+                        <h2 style="color: white;letter-spacing:1.2em;line-height:2.4em;" class="animate__animated animate__fadeInDown">OUR TEAM</h2>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<main id="main">
+    <section id="board-Member-About" class="about-keyPartners">
+        <div class="container">
+            <div class="row" style="background-color:black;margin-top:5.8%;margin-bottom:5.8%">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+                    <div class="keyP-div">
+                        <div class="keyP-div-inner"><h3>AFRI AUS CARE STAFF</h3></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+            <div class="brand-carousel  owl-carousel">
+                <div class="staff-pic">
+                    <img src="~/Content/Images/Ab-Team/cm.jpg" class="img-fluid">
+                    <div class="owl-text">
+                        <h4>Kwacha Luka</h4>
+                        <div>Centre Manager/Fashion Designer</div>
+                    </div>
+                </div>
+                <div class="staff-pic">
+                    <img src="~/Content/Images/Ab-Team/hr.jpg" class="img-fluid">
+                    <div class="owl-text">
+                        <h4>Kanika</h4>
+                        <div>Human Resource manager</div>
+                    </div>
+                </div>
+                <div class="staff-pic">
+                    <img src="~/Content/Images/Ab-Team/pw.jpg" class="img-fluid">
+                    <div class="owl-text">
+                        <h4>Veronica Agobong</h4>
+                        <div>Project Worker</div>
+                    </div>
+                </div>
+                <div class="staff-pic">
+                    <img src="~/Content/Images/Ab-Team/sw.jpg" class="img-fluid">
+                    <div class="owl-text">
+                        <h4>Angelina Diyo</h4>
+                        <div>Social worker</div>
+                    </div>
+                </div>
+                <div class="staff-pic">
+                    <img src="~/Content/Images/Ab-Team/sw1.jpg" class="img-fluid">
+                    <div class="owl-text">
+                        <h4>Vivian Ying Hang Tong</h4>
+                        <div>Social Worker</div>
+                    </div>
+                </div>
+                <div class="staff-pic">
+                    <img src="~/Content/Images/Ab-Team/t1.jpg" class="img-fluid">
+                    <div class="owl-text">
+                        <h4>Verne Krastins</h4>
+                        <div>Business Advisor</div>
+                    </div>
+                </div>
+                <div class="staff-pic">
+                    <img src="~/Content/Images/Ab-Team/t2.jpg" class="img-fluid">
+                    <div class="owl-text">
+                        <h4>Herbson Singo</h4>
+                        <div>NDIS Coordinator</div>
+                    </div>
+                </div>
+                <div class="staff-pic">
+                    <img src="~/Content/Images/Ab-Team/t3.jpg" class="img-fluid">
+                    <div class="owl-text">
+                        <h4>Selba Gondoza-Luka</h4>
+                        <div>CEO/Founder</div>
+                    </div>
+                </div>
+                <div class="staff-pic">
+                    <img src="~/Content/Images/Ab-Team/t4.jpg" class="img-fluid">
+                    <div class="owl-text">
+                        <h4>Afsaneh Jasmine Majidi</h4>
+                        <div>Counsellor, Psychotherapist and Behavioural Therapist</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section id="contact-About" class="about-keyPartners">
+        <div class="container">
+            <div class="row" style="margin-top:5.8%;margin-bottom:5.8%">
+                <div class="col-md-6">
+                    <div style="text-align:left;">
+                        <h3>CONNECT</h3>
+                        <p>Stay in touch with our social media platforms for all the latest up dates</p>
+                        <button type="button" class="btn btn-social-icon btn-facebook btn-rounded" style="font-size:xx-large;"><i class="bi bi-facebook"></i></button>
+                        <button type="button" class="btn btn-social-icon btn-youtube btn-rounded" style="font-size:xx-large;"><i class="bi bi-youtube"></i></button>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div style="text-align:left;">
+                        <h3>CONTACT</h3>
+                        <p><span>Mobile: @TempData["MobilePhone"]</span></p>
+                        <p><a href="mailto:@TempData["Email"]">@TempData["Email"]</a></p>
+                        <p><span>@TempData["Address"], @TempData["Suburb"], @TempData["State"], @TempData["Postcode"]</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script type="text/javascript">
+
+    $('.brand-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        autoplay: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 3
+            }
+        }
+    })
+</script>

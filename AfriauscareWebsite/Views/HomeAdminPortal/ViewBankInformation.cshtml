@@ -1,0 +1,142 @@
+﻿@model IEnumerable<Afriauscare.BusinessLayer.BankInformation.BankInformationModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Bank Information</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    @Html.Partial("_MenuBarAdminPortal")
+    <div class="container">
+        <br />
+        <h2>Bank Information</h2>
+        <br />
+        @if (TempData["BankInformationAlertMessage"] != null)
+        {
+            <div id="DeleteBankInformationAlert" class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Success!</strong> @TempData["BankInformationAlertMessage"]
+            </div>
+        }
+
+        <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CreateBankInformation", "HomeAdminPortal")'">Create Bank Information</button>
+        <br />
+        <br />
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Bank Information Id</th>
+                    <th scope="col">Bank Name</th>
+                    <th scope="col">BSB Number</th>
+                    <th scope="col">Account Number</th>
+                    <th scope="col">Is Default</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Bank_information_id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Bank_Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Bsb_number)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Account_number)</td>
+                        <td>@Html.CheckBoxFor(modelItem => item.Is_default, new { @class = "form-check-input", @disabled = "disabled" })</td>
+                        <td>
+                            @Html.ActionLink("Edit", "ModifyBankInformation", new { BankInformationId = item.Bank_information_id }, new { @class = "btn btn-info" })
+                            @if (item.Is_default)
+                            {
+                                <button class="btnDeleteBankInformation btn btn-danger" disabled title="A default record cannot be deleted">Delete</button>
+                            }
+                            else
+                            {
+                                <button class="btnDeleteBankInformation btn btn-danger">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <input type="hidden" id="BankInfoIdHidden" />
+    </div>
+
+    <div class="modal fade" id="deleteBankInformationModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the bank information selected?</p>
+                    <strong><label id="lblBankName"></label></strong>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <a href="#" id="btnConfirmDeleteBankInformation" class="btn btn-info mr-2">Confirm</a>
+                        <a href="#" id="btnCancelDeleteBankInformationModal" class="btn btn-danger">Cancel</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/popper.min.js" type="module"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btnCancelDeleteBankInformationModal").click(function () {
+                window.location.href = "/HomeAdminPortal/ViewBankInformation";
+            })
+
+            //Function which is called when confirming disable a user - Jquery function added to the modal button
+            $("#btnConfirmDeleteBankInformation").click(function () {
+                var _id = $("#BankInfoIdHidden").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/HomeAdminPortal/DeleteBankInformationJson",
+                    data: { BankInformationId: _id },
+                    success: function (result) {
+                        if (result) {
+                            $("#deleteBankInformationModal").modal('hide');
+                            $("#BankInfoIdHidden").val(null);
+                            window.location.href = "/HomeAdminPortal/ViewBankInformation";
+                        }
+                        else {
+                            alert("The operation did not complete");
+                        }
+                    }
+                });
+            })
+        })
+
+        $(".btnDeleteBankInformation").click(function () {
+            debugger;
+            var currentTds = $(this).closest("tr").find("td"); // find all td of selected row
+            var BankInformationId = $(currentTds).eq(0).text();
+            var BankName = $(currentTds).eq(1).text(); // eq= cell , text = inner text
+            $("#lblBankName").html(BankName);
+            $("#BankInfoIdHidden").val(BankInformationId);
+            $("#deleteBankInformationModal").modal('show');
+        });
+
+        setTimeout(function () {
+
+            // Closing the alert message once the user is created
+            $('#DeleteBankInformationAlert').alert('close');
+        }, 5300);
+    </script>
+
+</body>
+</html>

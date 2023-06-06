@@ -1,59 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Afriauscare.BusinessLayer.User;
 using Afriauscare.BusinessLayer.Error;
 using Afriauscare.DataBaseLayer;
+using Afriauscare.DataBaseLayer.Shared;
+using Afriauscare.BusinessLayer.Shared;
 
 namespace AfriauscareWebsite.Controllers
 {
     public class UserController : Controller
     {
-        // GET: User
-        public ActionResult Login()
+        //Function that validates if the session is created/active. If not active/valid, it will redirect to the EndSession View
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            UserModel objUserModel = new UserModel();
-            return View(objUserModel);
-        }
-
-        [HttpPost]
-        public ActionResult Login(UserModel objUserModel)
-        {
-            UserDAO objUserDao = new UserDAO();
-
-            try
+            if (Session["UserEmail"] != null)
             {
-                if (ModelState.IsValid)
-                {
-                    if (objUserDao.getUserbyUserandPassword(objUserModel) == null)
-                    {
-                        ModelState.AddModelError("Error", "The user email and password does not match or do not exists.");
-                        return View();
-                    }
-                    else
-                    {
-                        Session["Email"] = objUserModel.UserEmail;
-                        return RedirectToAction("Index", "HomeAdminPortal");
-                    }
-
-                }
+                base.OnActionExecuting(filterContext);
             }
-            catch (Exception ex)
+            else
             {
-                ErrorModel objErrorModel = new ErrorModel();
-                objErrorModel.ErrorMessage = ex.Message;
-                return RedirectToAction("Error", "Error", objErrorModel);
+                filterContext.Result = new RedirectResult("~/Session/EndSession");
             }
-
-            return View();
-        }
-
-        public ActionResult Logout()
-        {
-            Session.Abandon();
-            return RedirectToAction("Index", "HomeAdminPortal");
         }
 
         public ActionResult CreateUser()
@@ -82,6 +49,17 @@ namespace AfriauscareWebsite.Controllers
                         UserPassword = string.Empty,
                         UserActive = false
                     };
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "User",
+                        Action_Excuted = "Create",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
                     TempData["UserAlertMessage"] = "User Created Successfully...";
                     return View("CreateUser", objEmptyUserModel);
                 }
@@ -118,23 +96,64 @@ namespace AfriauscareWebsite.Controllers
         public ActionResult ModifyUser(int Id)
         {
             UserDAO objUserDAO = new UserDAO();
-
-            var objUserModel = objUserDAO.getUserbyUserId(Id);
-
-            return View(objUserModel);
+            try
+            {
+                var objUserModel = objUserDAO.getUserbyUserId(Id);
+                return View(objUserModel);
+            }
+            catch(Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
+            }
         }
 
         [HttpPost]
-        public ActionResult ModifyUser(User objUser)
+        public ActionResult ModifyUser(UserModel objUser)
         {
             UserDAO objUserDAO = new UserDAO();
 
-            if (ModelState.IsValid)
+            try
             {
-                objUserDAO.ModifyUser(objUser);
+                if (ModelState.IsValid)
+                {
+                    objUserDAO.ModifyUser(objUser);
+
+                    ModelState.Clear();
+                    UserModel objEmptyUserModel = new UserModel()
+                    {
+                        Username = string.Empty,
+                        UserLastName = string.Empty,
+                        UserEmail = string.Empty,
+                        UserPassword = string.Empty,
+                        UserActive = false
+                    };
+
+                    LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                    LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                    {
+                        User_id = Int16.Parse(Session["UserId"].ToString()),
+                        Module_Name = "User",
+                        Action_Excuted = "Modify",
+                        Datetime_action = DateTime.Now
+                    };
+
+                    objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
+                    TempData["UserAlertMessage"] = "User Modifed Successfully...";
+
+                    return View("ModifyUser", objEmptyUserModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorModel objErrorModel = new ErrorModel();
+                objErrorModel.ErrorMessage = ex.Message;
+                return RedirectToAction("Error", "Error", objErrorModel);
             }
 
-            return RedirectToAction("ViewUser", "User");
+            return View("ModifyUser");
         }
 
         [HttpGet]
@@ -155,6 +174,19 @@ namespace AfriauscareWebsite.Controllers
             {
                 objUserDAO.DisableUser(UserId);
                 result = true;
+
+                LogUserActivityDAO objLogUserDao = new LogUserActivityDAO();
+                LogUserActivityModel objLogUserModel = new LogUserActivityModel()
+                {
+                    User_id = Int16.Parse(Session["UserId"].ToString()),
+                    Module_Name = "User",
+                    Action_Excuted = "Disable",
+                    Datetime_action = DateTime.Now
+                };
+
+                objLogUserDao.CreateLogUserActivity(objLogUserModel);
+
+                TempData["UserAlertMessage"] = "User Deactivated Successfully...";
 
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
